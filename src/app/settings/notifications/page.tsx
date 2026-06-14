@@ -19,12 +19,6 @@ export default function NotificationsPage() {
     <div className="flex flex-col flex-1 p-4 gap-6 animate-in fade-in duration-500 pb-20">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Link
-          href="/settings"
-          className="w-8 h-8 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
-        >
-          <FaArrowLeft className="w-3.5 h-3.5" />
-        </Link>
         <h1 className="text-2xl font-semibold tracking-tight">Notifications</h1>
       </div>
 

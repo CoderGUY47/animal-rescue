@@ -1,14 +1,21 @@
 import axios from "axios";
+import type { 
+  Place, 
+  PlaceType, 
+  SearchResult, 
+  NominatimResult, 
+  OverpassElement 
+} from "@/types";
 
-// overpass api (find nearby places via openstreetmap)
-export const overpassApi = axios.create({
+// internal: http client for the overpass openstreetmap api
+const overpassApi = axios.create({
  baseURL: "https://overpass-api.de/api",
  timeout: 15000,
  headers: { "Content-Type": "application/x-www-form-urlencoded" },
 });
 
-// nominatim api (reverse geocoding: lat/lng → human address)
-export const nominatimApi = axios.create({
+// internal: http client for reverse geocoding and location search
+const nominatimApi = axios.create({
  baseURL: "https://nominatim.openstreetmap.org",
  timeout: 10000,
  headers: {
@@ -84,49 +91,10 @@ export async function fetchRoute(startLng: number, startLat: number, endLng: num
   return [[startLng, startLat], [endLng, endLat]];
 }
 
-// types
-export type PlaceType = "veterinary" | "shelter" | "pet_shop" | "hospital";
-
-export type Place = {
- id: number;
- lat: number;
- lng: number;
- name: string;
- type: PlaceType;
- phone?: string;
- hours?: string;
- website?: string;
-};
-
-type OverpassElement = {
- id: number;
- lat: number;
- lon: number;
- tags: {
- name?: string;
- amenity?: string;
- shop?: string;
- phone?: string;
- website?: string;
- "opening_hours"?: string;
- };
-};
-
-type NominatimResult = {
- display_name: string;
- lat: string;
- lon: string;
-};
-
-export type SearchResult = {
- name: string;
- lat: number;
- lng: number;
-};
-
+// helper: resolve types
 function resolveType(tags: OverpassElement["tags"]): PlaceType {
- if (tags.amenity === "veterinary") return "veterinary";
- if (tags.amenity === "animal_shelter") return "shelter";
- if (tags.shop === "pet") return "pet_shop";
- return "hospital";
+  if (tags.amenity === "veterinary") return "veterinary";
+  if (tags.amenity === "animal_shelter") return "shelter";
+  if (tags.shop === "pet") return "pet_shop";
+  return "hospital";
 }

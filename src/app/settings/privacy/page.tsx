@@ -17,12 +17,6 @@ export default function PrivacyPage() {
     <div className="flex flex-col flex-1 p-4 gap-6 animate-in fade-in duration-500 pb-20">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Link
-          href="/settings"
-          className="w-8 h-8 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
-        >
-          <FaArrowLeft className="w-3.5 h-3.5" />
-        </Link>
         <h1 className="text-2xl font-semibold tracking-tight">Privacy & Security</h1>
       </div>
 
@@ -53,7 +47,7 @@ export default function PrivacyPage() {
                 key={item.id}
                 className={`flex items-center justify-between p-4 ${i < arr.length - 1 ? "border-b" : ""}`}
               >
-                <Label htmlFor={item.id} className="flex flex-col cursor-pointer">
+                <Label htmlFor={item.id} className="flex flex-col items-start cursor-pointer text-left">
                   <span className="font-semibold text-sm">{item.label}</span>
                   <span className="text-xs text-muted-foreground">{item.desc}</span>
                 </Label>
@@ -91,7 +85,7 @@ export default function PrivacyPage() {
                 key={item.id}
                 className={`flex items-center justify-between p-4 ${i < arr.length - 1 ? "border-b" : ""}`}
               >
-                <Label htmlFor={item.id} className="flex flex-col cursor-pointer">
+                <Label htmlFor={item.id} className="flex flex-col items-start cursor-pointer text-left">
                   <span className="font-semibold text-sm">{item.label}</span>
                   <span className="text-xs text-muted-foreground">{item.desc}</span>
                 </Label>

@@ -1,4 +1,4 @@
-import { MapView } from './map-view';
+import { MapView } from '@/components/map/map-view';
 
 export const metadata = {
  title: 'Map - Rescue Connect',

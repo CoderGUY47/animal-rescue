@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/map";
 import { FaSearch, FaSpinner, FaMapMarkerAlt, FaMapPin, FaCrosshairs, FaClinicMedical, FaHome, FaStore, FaHospital, FaStar, FaPaperPlane } from "react-icons/fa";
 import { useState, useEffect, useRef, useMemo } from "react";
-import { fetchNearbyPlaces, reverseGeocode, searchLocation, fetchRoute, type Place, type PlaceType, type SearchResult } from "@/lib/api";
+import { fetchNearbyPlaces, reverseGeocode, searchLocation, fetchRoute } from "@/lib/api";
+import type { Place, PlaceType, SearchResult } from "@/types";
 import Link from "next/link";
 
 const TYPE_CONFIG: Record<PlaceType, { label: string; color: string; Icon: React.ElementType }> = {

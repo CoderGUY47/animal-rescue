@@ -3,11 +3,11 @@ import { Fredoka } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { BottomNav } from "@/components/layout/bottom-nav";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ReduxProvider } from "@/store/provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ReduxProvider } from "@/components/providers/store-provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { PermissionBootstrap } from "@/components/permission-bootstrap";
+import { PermissionBootstrap } from "@/components/providers/permission-bootstrap";
 
 const fredoka = Fredoka({
  subsets: ["latin"],
