@@ -3,11 +3,11 @@ import * as z from "zod";
 // ─── Emergency Report Schema ─────────────────────────────────────────────────
 export const reportSchema = z.object({
  animalType: z.enum(["dog", "cat", "bird", "rabbit", "other"], {
- required_error: "Please select an animal type",
+ error: "Please select an animal type",
  }),
  animalTypeOther: z.string().optional(),
  severity: z.enum(["critical", "moderate", "low"], {
- required_error: "Please select a severity level",
+ error: "Please select a severity level",
  }),
  condition: z
  .string()
@@ -41,7 +41,7 @@ export const volunteerSchema = z.object({
  .array(z.enum(["transport", "foster", "medical", "rescue", "feeding"]))
  .min(1, "Please select at least one skill"),
  availability: z.enum(["weekdays", "weekends", "both", "on-call"], {
- required_error: "Please select your availability",
+ error: "Please select your availability",
  }),
  message: z.string().max(300, "Message is too long (max 300 characters)").optional(),
 });
