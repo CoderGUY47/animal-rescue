@@ -1,69 +1,116 @@
 <div align="center">
-  <img src="./public/logo.svg" alt="Animal Rescue Connect Logo" width="72" height="72" />
-  <h1>Animal Rescue Connect</h1>
-  <p><strong>Emergency help platform for stray &amp; sick animals — report, locate, rescue.</strong></p>
 
-  <p>
-    <img src="https://img.shields.io/badge/Next.js-16.2.9-black?style=flat-square&logo=next.js" alt="Next.js" />
-    <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React" />
-    <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/badge/Deployed-Vercel-000000?style=flat-square&logo=vercel" alt="Vercel" />
-  </p>
+# 🐾 Animal Rescue Connect
 
-  <p>
-    <a href="https://animal-rescue-seven.vercel.app" target="_blank"><strong>🚀 Live Demo</strong></a>
-    &nbsp;·&nbsp;
-    <a href="https://github.com/CoderGUY47/animal-rescue" target="_blank"><strong>📂 Repository</strong></a>
-  </p>
+### Emergency Help Platform for Stray &amp; Sick Animals
+
+*Bridging fast visual emergency reporting with real-time geolocation discovery of vets and shelters.*
+
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-animal--rescue--seven.vercel.app-2563eb?style=for-the-badge)](https://animal-rescue-seven.vercel.app)
+&nbsp;
+[![Next.js 16](https://img.shields.io/badge/Next.js-16.2-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+&nbsp;
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+&nbsp;
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-06b6d4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+
 </div>
 
 ---
 
-## 📸 Screenshots
+## 📖 Table of Contents
 
-<div align="center">
-  <img src="./public/assets/home.png" alt="Home Page" width="30%" />
-   
-  <img src="./public/assets/map.png" alt="Map View" width="30%" />
-   
-  <img src="./public/assets/settings.png" alt="Settings Page" width="30%" />
-</div>
-
----
-
-## 📖 About
-
-**Animal Rescue Connect** is a mobile-first web application that bridges the gap between people who spot injured or abandoned animals and the local volunteers, vets, and shelters who can help them. It was built to feel like a native app — instant, responsive, and always within reach.
+- [✨ Overview](#-overview)
+- [🚀 Live Links](#-live-links)
+- [❌ The Problem &amp; ✅ The Solution](#-the-problem---the-solution)
+- [💡 Business Value &amp; SEO](#-business-value--seo)
+- [🚀 Key Features](#-key-features)
+- [📋 Project Tasks &amp; Phases](#-project-tasks--phases)
+- [📦 Tech Stack &amp; Architecture](#-tech-stack--architecture)
+- [📁 Project Structure](#-project-structure)
+- [🛠️ Installation &amp; Setup](#-installation--setup)
+- [🚢 Production Deployment](#-production-deployment)
+- [🤝 Social &amp; Contributing](#-social--contributing)
 
 ---
 
-## 💻 Tech Stack
+## ✨ Overview
 
-| Technology | Category | Purpose / Notes |
-| :--- | :--- | :--- |
-| **Next.js 16** | Frontend Framework | App Router, Server Components & SEO |
-| **React 19** | Library | Concurrent rendering, modern hooks |
-| **TypeScript** | Language | Strict type safety across components and store |
-| **Tailwind CSS 4** | Styling | Modern, fast utility-first styling system |
-| **Shadcn UI** | UI Primitives | Accessible and fully customizable base components |
-| **Redux Toolkit** | State Management | Centralized store for user profile and active reports |
-| **React Hook Form** | Form Handling | Performant form state management |
-| **Zod** | Validation | Strict schema validation for inputs |
-| **Axios** | API Client | HTTP requests for external services |
-| **MapLibre GL** | Maps | High-performance OpenStreetMap vector rendering |
-| **Overpass API** | Geolocation | Live queries for nearby vets/shelters |
-| **Nominatim** | Geolocation | Reverse geocoding (coordinates to address) |
-| **OSRM** | Routing | Route path creation with traffic-aware colors |
-| **Cloudinary** | Image Hosting | Next-Cloudinary widget for user photo uploads |
-| **Socket.io Client** | Real-time | Configured socket hooks (backend ready) |
-| **React Toastify** | Notifications | User-friendly alert and progress toast displays |
-| **Lucide React** | Icons | Modern and consistent iconography |
-| **Vercel** | Deployment | Automated deployments and hosting |
+**Animal Rescue Connect** is a mobile-first web application designed to assist sick, injured, or abandoned animals by quickly connecting concerned citizens with nearby veterinarians, animal shelters, rescue organizations, and volunteers. Meticulously designed with **Next.js 16**, **React 19**, **Tailwind CSS 4**, and **Redux Toolkit**, it delivers a native-app-like experience.
+
+Users can report animals in distress by uploading images, sharing GPS-based location information, and providing details about the animal's condition. The platform focuses on reducing rescue response times through real-time reporting, location-based service discovery, and routing tools.
 
 ---
 
-## 📋 Project Tasks
+## ❌ The Problem & ✅ The Solution
+
+> **Stray and injured animals deserve immediate coordination.**
+
+When an animal is in distress, traditional emergency response mechanisms are slow and fragmented. Communicating a precise street location is difficult, finding nearest open veterinary facilities takes precious time, and coordinating volunteer responses is highly disjointed.
+
+| ❌ The Problem | ✅ Animal Rescue Connect's Solution |
+| :--- | :--- |
+| Reporting animal emergencies is slow, with no central tracking | Instant reporting with animal type, severity, and photo uploads |
+| GPS location details are hard to communicate in text/calls | Automatic GPS detection and manual marker adjustment on a live map |
+| Nearby shelters and vets are hard to locate in a panic | Geolocation service finder showing vets, hospitals, and shelters on map |
+| Finding routes or directions to clinics takes crucial time | Integrated route drawing with traffic conditions and distance calculation |
+| Volunteer efforts are disjointed with no coordinate hub | Volunteer sign-up with dynamic availability and location coordination |
+
+---
+
+## 🚀 Live Links
+
+* **Live Client-Side App:** [https://animal-rescue-seven.vercel.app](https://animal-rescue-seven.vercel.app)
+
+<br/>
+
+<table>
+  <tr>
+    <td width="33.3%">
+      <img src="./public/assets/home.png" alt="Home Page" width="100%" style="border-radius:8px;aspect-ratio:9/16;object-fit:cover" />
+    </td>
+    <td width="33.3%">
+      <img src="./public/assets/map.png" alt="Map View" width="100%" style="border-radius:8px;aspect-ratio:9/16;object-fit:cover" />
+    </td>
+    <td width="33.3%">
+      <img src="./public/assets/settings.png" alt="Settings Page" width="100%" style="border-radius:8px;aspect-ratio:9/16;object-fit:cover" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><sub>🐾 Emergency Home Reporting</sub></td>
+    <td align="center"><sub>📍 Geolocation Map Discovery</sub></td>
+    <td align="center"><sub>⚙️ Settings & Privacy</sub></td>
+  </tr>
+</table>
+
+---
+
+## 💡 Business Value & SEO
+
+By balancing beautiful aesthetics with robust security, Animal Rescue Connect yields remarkable utility:
+
+| Feature | Impact |
+| :--- | :--- |
+| **Life-Saving Speed** | Fast report submittal reduces emergency response time by minutes |
+| **Eager Geolocation** | Direct live navigation saves critical transit time to the nearest vet clinic |
+| **SEO & Access Optimization** | Search Engine indexing and semantic structures maximize organic reach for lost animals |
+| **Resource Efficiency** | Active volunteer tracking prevents duplicate rescues and coordinates responses |
+
+---
+
+## 🚀 Key Features
+
+* 🚨 **Emergency Reporting** — Submit a rescue request with animal type, severity, condition, location, and photos.
+* 🗺️ **Interactive Geolocation Map** — Locate nearby vets, shelters, pet shops & hospitals using live OpenStreetMap data.
+* 🔍 **Location Search** — Search any location and get directions with color-coded traffic routing.
+* 🐾 **Rescue Tracker** — Browse and track active rescue cases in real time.
+* 📊 **Analytics Dashboard** — Community-wide rescue stats, adoption rates, and response time charts.
+* 🤝 **Volunteer Sign-Up** — Register as a volunteer with your skills and availability.
+* ⚙️ **Settings & Security** — Manage profile, privacy, location sharing, with DevTools inspecting disabled.
+
+---
+
+## 📋 Project Tasks & Phases
 
 ### Phase 1 — Animal Reporting & Location Tracking Foundation
 
@@ -128,17 +175,28 @@
 
 ---
 
-## 🗂️ Core Modules
+## 📦 Tech Stack & Architecture
 
-| Module | Features |
-|---|---|
-| 🚨 **Animal Reporting** | Report emergencies, upload images, submit rescue requests |
-| 📍 **Geolocation** | GPS tracking, location sharing, map integration |
-| 🏥 **Vet Discovery** | Vet search, nearby animal hospitals, service filtering |
-| 🏠 **Shelter & Rescue** | Shelter discovery, rescue organization directory |
-| 💬 **Communication** | Contact vets & shelters, status updates, messaging |
-| 🤝 **Volunteer** | Registration, rescue participation, coordination dashboard |
-| 📊 **Analytics** | Rescue reports, response metrics, community statistics |
+| Technology | Category | Purpose / Notes |
+| :--- | :--- | :--- |
+| **Next.js 16** | Frontend Framework | App Router, Server Components & SEO |
+| **React 19** | Library | Concurrent rendering, modern hooks |
+| **TypeScript** | Language | Strict type safety across components and store |
+| **Tailwind CSS 4** | Styling | Modern, fast utility-first styling system |
+| **Shadcn UI** | UI Primitives | Accessible and fully customizable base components |
+| **Redux Toolkit** | State Management | Centralized store for user profile and active reports |
+| **React Hook Form** | Form Handling | Performant form state management |
+| **Zod** | Validation | Strict schema validation for inputs |
+| **Axios** | API Client | HTTP requests for external services |
+| **MapLibre GL** | Maps | High-performance OpenStreetMap vector rendering |
+| **Overpass API** | Geolocation | Live queries for nearby vets/shelters |
+| **Nominatim** | Geolocation | Reverse geocoding (coordinates to address) |
+| **OSRM** | Routing | Route path creation with traffic-aware colors |
+| **Cloudinary** | Image Hosting | Next-Cloudinary widget for user photo uploads |
+| **Socket.io Client** | Real-time | Configured socket hooks (backend ready) |
+| **React Toastify** | Notifications | User-friendly alert and progress toast displays |
+| **Lucide React** | Icons | Modern and consistent iconography |
+| **Vercel** | Deployment | Automated deployments and hosting |
 
 ---
 
@@ -173,7 +231,7 @@ src/
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Installation & Setup
 
 ### Prerequisites
 - Node.js `v18+`
@@ -211,32 +269,21 @@ NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
 
 ---
 
-## 📜 Scripts
+## 🚢 Production Deployment
 
-```bash
-npm run dev       # Start development server
-npm run build     # Build for production
-npm run start     # Start production server
-```
+* **Frontend Hosting (Next.js):** Deployed on **Vercel** (`animal-rescue-seven.vercel.app`).
+* **Deployment Pipeline:** Automatic CI/CD pipeline integrated directly via GitHub.
 
 ---
 
-## 🗺️ Roadmap
+## 🤝 Social & Contributing
 
-- [ ] **Backend** — Express.js + Socket.io for real-time rescue updates
-- [ ] **Authentication** — User accounts with rescue history
-- [ ] **Push Notifications** — Browser push API for rescue alerts
-- [ ] **Data Persistence** — Database integration
-- [ ] **Admin Panel** — Manage and assign rescue cases
+<div align="center">
 
----
+Produced with absolute dedication and precision by **[CoderGUY47](https://github.com/CoderGUY47)**.
 
-## 👤 Author
+*Join us in engineering the future of animal welfare!*
 
-**Hridoy** — [@CoderGUY47](https://github.com/CoderGUY47)
+[![GitHub](https://img.shields.io/badge/GitHub-CoderGUY47-181717?style=for-the-badge&logo=github)](https://github.com/CoderGUY47)
 
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+</div>
