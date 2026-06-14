@@ -19,6 +19,7 @@ import {
 } from "react-icons/fa";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "react-toastify";
+import { useSound } from "@/hooks/use-sound";
 import {
   Dialog,
   DialogContent,
@@ -31,6 +32,20 @@ export default function HomePage() {
   const [donateAmount, setDonateAmount] = useState<string>("25");
   const [customAmount, setCustomAmount] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("card");
+
+  const { playTap, playSiren } = useSound();
+  const [isSirenPlaying, setIsSirenPlaying] = useState(false);
+  const stopSirenRef = useRef<(() => void) | null>(null);
+
+  const toggleSiren = () => {
+    if (isSirenPlaying) {
+      stopSirenRef.current?.();
+      setIsSirenPlaying(false);
+    } else {
+      stopSirenRef.current = playSiren();
+      setIsSirenPlaying(true);
+    }
+  };
 
   // Pointer dragging refs for categories swiper (matches map filter scroll exactly)
   const categoriesRef = useRef<HTMLDivElement>(null);
@@ -64,6 +79,7 @@ export default function HomePage() {
   };
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    playTap();
     if (dragInfo.current.dragged) {
       e.preventDefault();
     }
@@ -88,15 +104,28 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col flex-1 p-4 gap-6 animate-in fade-in duration-500 pb-8">
+    <div className="flex flex-col flex-1 p-4 gap-6 pb-8">
       {/* Hero Text */}
       <section className="w-full">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 leading-tight">
-            Help Animals <br />
-            <span className="text-primary">In Need</span>
-          </h1>
-          <p className="text-sm text-muted-foreground font-medium leading-relaxed mt-1">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-start justify-between">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 leading-tight">
+              Help Animals <br />
+              <span className="text-primary">In Need</span>
+            </h1>
+            <button
+              onClick={() => { playTap(); toggleSiren(); }}
+              className={`flex items-center justify-center p-3 rounded-full shadow-md border ${
+                isSirenPlaying 
+                  ? "bg-rose-600 text-white border-rose-600 animate-pulse" 
+                  : "bg-white text-rose-500 border-rose-100 dark:bg-slate-800 dark:border-slate-700"
+              }`}
+              title="Sound Siren"
+            >
+              <FaBell className="w-6 h-6" />
+            </button>
+          </div>
+          <p className="text-sm text-muted-foreground font-medium leading-relaxed">
             Quickly report sick, injured, or abandoned animals to nearby rescues and volunteers.
           </p>
         </div>
@@ -106,7 +135,8 @@ export default function HomePage() {
       <section className="w-full -mt-2">
         <Link
           href="/report"
-          className="block w-full overflow-hidden shadow-md active:scale-[0.99] hover:scale-[1.01] transition-all relative"
+          onClick={playTap}
+          className="block w-full overflow-hidden shadow-md relative"
         >
           <div className="relative w-full aspect-[16/7]">
             <Image
@@ -126,10 +156,10 @@ export default function HomePage() {
       <section>
         <div className="grid grid-cols-3 gap-3">
           {/* Card 1: Adopt */}
-          <Link href="/rescues" className="group block">
-            <Card className="h-[160px] border border-slate-100 dark:border-slate-800 bg-card rounded-2xl shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200">
+          <Link href="/rescues" onClick={playTap} className="block">
+            <Card className="h-[160px] border border-slate-100 dark:border-slate-800 bg-card rounded-2xl shadow-sm">
               <CardContent className="p-3 flex flex-col items-center justify-center text-center h-full gap-3">
-                <div className="w-12 h-12 rounded-full bg-[#f43f5e] text-white flex items-center justify-center shadow-md shadow-[#f43f5e]/30 group-hover:scale-110 transition-transform duration-200">
+                <div className="w-12 h-12 rounded-full bg-[#f43f5e] text-white flex items-center justify-center shadow-md shadow-[#f43f5e]/30">
                   <FaHome className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col gap-0.5">
@@ -145,10 +175,10 @@ export default function HomePage() {
           </Link>
 
           {/* Card 2: Volunteer */}
-          <Link href="/volunteer" className="group block">
-            <Card className="h-[160px] border border-slate-100 dark:border-slate-800 bg-card rounded-2xl shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200">
+          <Link href="/volunteer" onClick={playTap} className="block">
+            <Card className="h-[160px] border border-slate-100 dark:border-slate-800 bg-card rounded-2xl shadow-sm">
               <CardContent className="p-3 flex flex-col items-center justify-center text-center h-full gap-3">
-                <div className="w-12 h-12 rounded-full bg-[#f59e0b] text-white flex items-center justify-center shadow-md shadow-[#f59e0b]/30 group-hover:scale-110 transition-transform duration-200">
+                <div className="w-12 h-12 rounded-full bg-[#f59e0b] text-white flex items-center justify-center shadow-md shadow-[#f59e0b]/30">
                   <FaHandHoldingHeart className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col gap-0.5">
@@ -165,12 +195,12 @@ export default function HomePage() {
 
           {/* Card 3: Donate */}
           <button
-            onClick={() => setDonateOpen(true)}
-            className="group block w-full focus:outline-none"
+            onClick={() => { playTap(); setDonateOpen(true); }}
+            className="block w-full focus:outline-none"
           >
-            <Card className="h-[160px] border border-slate-100 dark:border-slate-800 bg-card rounded-2xl shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200 pointer-events-none w-full">
+            <Card className="h-[160px] border border-slate-100 dark:border-slate-800 bg-card rounded-2xl shadow-sm pointer-events-none w-full">
               <CardContent className="p-3 flex flex-col items-center justify-center text-center h-full gap-3">
-                <div className="w-12 h-12 rounded-full bg-[#3b82f6] text-white flex items-center justify-center shadow-md shadow-[#3b82f6]/30 group-hover:scale-110 transition-transform duration-200">
+                <div className="w-12 h-12 rounded-full bg-[#3b82f6] text-white flex items-center justify-center shadow-md shadow-[#3b82f6]/30">
                   <FaHeart className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col gap-0.5">
@@ -196,6 +226,7 @@ export default function HomePage() {
           </h3>
           <Link
             href="/rescues"
+            onClick={playTap}
             className="text-sm text-primary flex items-center"
           >
             See all <FaArrowRight className="w-4 h-4 ml-1" />
@@ -204,8 +235,8 @@ export default function HomePage() {
 
         <div className="flex flex-col gap-3">
           {/* mock item 1 */}
-          <Link href="/rescues/1" className="block">
-            <Card className="overflow-hidden active:scale-[0.99] transition-transform">
+          <Link href="/rescues/1" onClick={playTap} className="block">
+            <Card className="overflow-hidden">
               <div className="flex h-28">
                 <div className="w-2/5 bg-muted relative">
                   <Image
@@ -238,8 +269,8 @@ export default function HomePage() {
           </Link>
 
           {/* mock item 2 */}
-          <Link href="/rescues/2" className="block">
-            <Card className="overflow-hidden active:scale-[0.99] transition-transform">
+          <Link href="/rescues/2" onClick={playTap} className="block">
+            <Card className="overflow-hidden">
               <div className="flex h-28">
                 <div className="w-2/5 bg-muted relative">
                   <Image
@@ -332,8 +363,8 @@ export default function HomePage() {
       <Dialog open={donateOpen} onOpenChange={setDonateOpen}>
         <DialogContent className="max-w-xs p-5 rounded-3xl overflow-hidden bg-card border shadow-2xl relative">
           <button
-            onClick={() => setDonateOpen(false)}
-            className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors p-1"
+            onClick={() => { playTap(); setDonateOpen(false); }}
+            className="absolute top-4 right-4 text-muted-foreground p-1"
           >
             <FaTimes className="w-3.5 h-3.5" />
           </button>
@@ -359,13 +390,14 @@ export default function HomePage() {
                   key={amt}
                   type="button"
                   onClick={() => {
+                    playTap();
                     setDonateAmount(amt);
                     setCustomAmount("");
                   }}
-                  className={`py-2 px-1 rounded-xl text-xs font-bold text-center border transition-all ${
+                  className={`py-2 px-1 rounded-xl text-xs font-bold text-center border ${
                     donateAmount === amt
                       ? "bg-teal-600 border-teal-600 text-white shadow-sm"
-                      : "bg-muted/30 border-muted-foreground/10 hover:bg-muted text-slate-800 dark:text-slate-200"
+                      : "bg-muted/30 border-muted-foreground/10 text-slate-800 dark:text-slate-200"
                   }`}
                 >
                   ${amt}
@@ -377,11 +409,11 @@ export default function HomePage() {
             <div className="flex flex-col gap-2">
               <button
                 type="button"
-                onClick={() => setDonateAmount("custom")}
-                className={`py-2 px-3 rounded-xl text-xs font-bold text-center border transition-all ${
+                onClick={() => { playTap(); setDonateAmount("custom"); }}
+                className={`py-2 px-3 rounded-xl text-xs font-bold text-center border ${
                   donateAmount === "custom"
                     ? "bg-teal-600 border-teal-600 text-white"
-                    : "bg-muted/30 border-muted-foreground/10 hover:bg-muted text-slate-800 dark:text-slate-200"
+                    : "bg-muted/30 border-muted-foreground/10 text-slate-800 dark:text-slate-200"
                 }`}
               >
                 Custom Amount
@@ -419,11 +451,11 @@ export default function HomePage() {
                   <button
                     key={method.id}
                     type="button"
-                    onClick={() => setPaymentMethod(method.id)}
-                    className={`py-1.5 rounded-lg text-[10px] font-extrabold border transition-all text-center ${
+                    onClick={() => { playTap(); setPaymentMethod(method.id); }}
+                    className={`py-1.5 rounded-lg text-[10px] font-extrabold border text-center ${
                       paymentMethod === method.id
                         ? "bg-slate-800 dark:bg-slate-200 dark:text-slate-900 text-white border-transparent"
-                        : "bg-muted/10 border-muted-foreground/10 hover:bg-muted/30 text-slate-700 dark:text-slate-300"
+                        : "bg-muted/10 border-muted-foreground/10 text-slate-700 dark:text-slate-300"
                     }`}
                   >
                     {method.label}
@@ -435,7 +467,8 @@ export default function HomePage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs py-3 rounded-xl transition-all shadow-md shadow-teal-600/10 active:scale-[0.98] mt-2 flex items-center justify-center gap-1.5"
+              onClick={playTap}
+              className="w-full bg-teal-600 text-white font-extrabold text-xs py-3 rounded-xl shadow-md shadow-teal-600/10 mt-2 flex items-center justify-center gap-1.5"
             >
               <FaHeart className="w-3.5 h-3.5" />
               Complete Donation
