@@ -1,12 +1,17 @@
 "use client";
 
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { FaMoon, FaSun, FaDesktop, FaBell, FaInfoCircle, FaShieldAlt, FaChevronRight } from 'react-icons/fa';
+import { FaMoon, FaSun, FaDesktop, FaBell, FaInfoCircle, FaShieldAlt, FaChevronRight, FaTrophy, FaStar, FaUsers } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+
+const TOP_CONTRIBUTORS = [
+  { name: "Sarah Jenkins", rescues: 45, role: "Senior Volunteer", rank: 1 },
+  { name: "Michael Chen",  rescues: 38, role: "Transport Specialist", rank: 2 },
+  { name: "Emma Woods",    rescues: 29, role: "Foster Parent", rank: 3 },
+];
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
@@ -109,6 +114,43 @@ export default function SettingsPage() {
               </div>
               <FaChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
             </div>
+          </CardContent>
+        </Card>
+      </div>
+      {/* Contributors Section */}
+      <div className="space-y-3">
+        <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+          <FaTrophy className="text-amber-500" /> Top Contributors
+        </h3>
+        <Card>
+          <CardContent className="p-0">
+            {TOP_CONTRIBUTORS.map((user, i) => (
+              <div key={i} className={cn("flex items-center gap-3 p-4 hover:bg-muted/40 transition-colors", i < 2 && "border-b")}>
+                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm shrink-0">
+                  {user.rank}
+                </div>
+                <div className="flex flex-col flex-1 min-w-0">
+                  <span className="font-semibold text-sm truncate">{user.name}</span>
+                  <span className="text-xs text-muted-foreground">{user.role}</span>
+                </div>
+                <div className="flex items-center gap-1 text-amber-500 shrink-0">
+                  <FaStar className="w-3.5 h-3.5" />
+                  <span className="text-sm font-bold">{user.rescues}</span>
+                </div>
+              </div>
+            ))}
+            <Link href="/community" className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors border-t">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
+                  <FaUsers className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="font-semibold text-sm">View Community</span>
+                  <span className="text-xs text-muted-foreground">Full dashboard & activity</span>
+                </div>
+              </div>
+              <FaChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+            </Link>
           </CardContent>
         </Card>
       </div>

@@ -24,9 +24,9 @@ export function BottomNav() {
  <MdPets className="h-5 w-5 mb-1" />
  <span className="text-[10px] ">Rescues</span>
  </Link>
- <Link href="/community" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary active:text-primary transition-colors">
- <FaUsers className="h-5 w-5 mb-1" />
- <span className="text-[10px] ">Community</span>
+ <Link href="/settings" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary active:text-primary transition-colors">
+ <FaCog className="h-5 w-5 mb-1" />
+ <span className="text-[10px] ">Settings</span>
  </Link>
  </div>
  </nav>

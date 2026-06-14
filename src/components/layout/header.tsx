@@ -55,7 +55,10 @@ const MOCK_NOTIFICATIONS = [
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const showBack = pathname !== '/';
+  // Only show back arrow on sub-pages (e.g. /settings/notifications, /rescues/[id])
+  // Not on top-level tabs like /map, /settings, /rescues, /report, /analytics
+  const segments = pathname.split('/').filter(Boolean);
+  const showBack = segments.length >= 2;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
