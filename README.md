@@ -40,159 +40,91 @@
 
 ## 💻 Tech Stack
 
-### Frontend Framework
-🟢 React.js
-🟢 Next.js
-
-### Language
-🟢 TypeScript
-
-### Styling
-🟢 Tailwind CSS
-
-### UI Components
-🟢 ShadCN UI
-
-### State Management
-🟢 Redux Toolkit
-
-### Forms & Validation
-🟢 React Hook Form
-🟢 Zod
-
-### API Integration
-🟢 Axios
-
-### Maps & Geolocation
-🟢 MapLibre GL (open-source, OpenStreetMap)
-🟢 Overpass API (nearby vets, shelters, hospitals)
-🟢 Nominatim (geocoding & reverse geocoding)
-🟢 OSRM (routing & directions)
-
-### Image Upload
-🟢 Cloudinary (via next-cloudinary)
-
-### Real-Time Features
-🟢 Socket.io Client *(backend integration — roadmap)*
-
-### Notifications
-🟢 React Toastify
-
-### Icons
-🟢 React Icons / Lucide React
-
-### Deployment
-🟢 Vercel
-
-### Version Control
-🟢 Git & GitHub
+| Technology | Category | Purpose / Notes |
+| :--- | :--- | :--- |
+| **Next.js 16** | Frontend Framework | App Router, Server Components & SEO |
+| **React 19** | Library | Concurrent rendering, modern hooks |
+| **TypeScript** | Language | Strict type safety across components and store |
+| **Tailwind CSS 4** | Styling | Modern, fast utility-first styling system |
+| **Shadcn UI** | UI Primitives | Accessible and fully customizable base components |
+| **Redux Toolkit** | State Management | Centralized store for user profile and active reports |
+| **React Hook Form** | Form Handling | Performant form state management |
+| **Zod** | Validation | Strict schema validation for inputs |
+| **Axios** | API Client | HTTP requests for external services |
+| **MapLibre GL** | Maps | High-performance OpenStreetMap vector rendering |
+| **Overpass API** | Geolocation | Live queries for nearby vets/shelters |
+| **Nominatim** | Geolocation | Reverse geocoding (coordinates to address) |
+| **OSRM** | Routing | Route path creation with traffic-aware colors |
+| **Cloudinary** | Image Hosting | Next-Cloudinary widget for user photo uploads |
+| **Socket.io Client** | Real-time | Configured socket hooks (backend ready) |
+| **React Toastify** | Notifications | User-friendly alert and progress toast displays |
+| **Lucide React** | Icons | Modern and consistent iconography |
+| **Vercel** | Deployment | Automated deployments and hosting |
 
 ---
 
-## ✅ Project Tasks
+## 📋 Project Tasks
 
-### 📅 Phase 1 — Animal Reporting & Location Tracking Foundation
+### Phase 1 — Animal Reporting & Location Tracking Foundation
 
-**Project Setup**
-🟢 Next.js Project
-🟢 TypeScript
-🟢 Tailwind CSS
-🟢 Git Repository
-🟢 Mobile-First Design System
-
-**Homepage Development**
-🟢 Quick Report Button
-🟢 Emergency Help Section
-🟢 Nearby Rescue Overview
-🟢 How-to-Use Guide Section
-
-**Animal Reporting Module**
-🟢 Upload Animal Photos (Cloudinary)
-🟢 Describe Animal Condition
-🟢 Select Animal Type
-🟢 Select Severity Level
-🟢 Submit Rescue Requests
-
-**Geolocation Integration**
-🟢 GPS Location Detection
-🟢 Location Permission Handling
-🟢 Interactive Map Preview
-🟢 Manual Location Search
-
-**Report Details Page**
-🟢 Uploaded Images
-🟢 Animal Information
-🟢 Location Information
-🟢 Report Status
-🟢 Contact Reporter & Share
-
-**Responsive Mobile Experience**
-🟢 Smartphones
-🟢 Tablets
-🟢 Desktop Browsers
+* **Project Setup**
+  * [x] Next.js project bootstrap with TypeScript & Tailwind CSS
+  * [x] Clean directory structure & mobile-first design configuration
+* **Homepage Development**
+  * [x] Quick action report button
+  * [x] Emergency help & immediate assistance guidelines
+  * [x] Dynamic nearby rescue overview card
+* **Animal Reporting Module**
+  * [x] Photo upload integration with Cloudinary widget
+  * [x] Detailed fields for condition, type, and severity selection
+* **Geolocation Integration**
+  * [x] Automatic GPS-based location detection
+  * [x] Location permission handling and manual marker adjustment
+* **Report Details Page**
+  * [x] Uploaded image preview carousel
+  * [x] Detailed case status, reporter name, and share options
+* **Mobile Experience**
+  * [x] Responsive layouts tailored for smartphones, tablets, and desktop
 
 ---
 
-### 📅 Phase 2 — Vet & Shelter Discovery System
+### Phase 2 — Vet & Shelter Discovery System
 
-**Nearby Services Module**
-🟢 Veterinarians
-🟢 Animal Hospitals
-🟢 Rescue Centers
-🟢 Shelters & Pet Shops
-
-**Interactive Map Integration**
-🟢 Service Markers with icons
-🟢 Route Visualization (colour-coded traffic)
-🟢 Distance Calculation
-🟢 Get Directions button
-
-**Advanced Search & Filters**
-🟢 Filter by type (Vet, Shelter, Hospital, Pet Shop)
-🟢 Filter by 24/7 Emergency availability
-🟢 Location name search with suggestions
-
-**Service Details Page**
-🟢 Contact Information
-🟢 Operating Hours
-🟢 Rating Display
-🟢 Website & Phone links
-
-**Emergency Contact Module**
-🟢 One-Tap Calling
-🟢 Direct Messaging UI
-🟢 Rescue Request Sharing
-
-**Rescue Dashboard**
-🟢 Submitted Reports
-🟢 Rescue Status
-🟢 Redux Toolkit State Management
+* **Nearby Services Module**
+  * [x] List veterinarians, animal hospitals, rescue centers, and shelters
+* **Interactive Map Integration**
+  * [x] Live markers for verified animal services
+  * [x] OSRM route drawing with color-coded traffic overlay (Red/Green)
+  * [x] Interactive popup cards with ratings, directions button, and address
+* **Advanced Search & Filtering**
+  * [x] Filter service list by type (Vet, Shelter, Hospital, Pet Shop)
+  * [x] Filter by 24/7 availability
+  * [x] Location search autocompletion
+* **Service Details Page**
+  * [x] Detailed view of contact info, hours, website, and phone
+* **Emergency Contact Features**
+  * [x] One-tap direct phone calls
+  * [x] Direct messaging UI
+* **Rescue Dashboard**
+  * [x] Manage submitted cases, update status, and track Redux state
 
 ---
 
-### 📅 Phase 3 — Rescue Coordination & Analytics
+### Phase 3 — Rescue Coordination & Analytics
 
-**Volunteer Coordination Module**
-🟢 Volunteer Registration Form
-🟢 Rescue Participation
-🟢 Availability Preferences
-
-**Community Dashboard**
-🟢 Animals Rescued Stats
-🟢 Active Rescue Requests
-🟢 Community Contributions
-🟢 Leaderboard
-
-**Analytics Dashboard**
-🟢 Monthly Rescues Bar Chart
-🟢 Adoption Rate Metrics
-🟢 Response Time Line Chart
-🟢 KPI Cards (Total Rescues, Active Volunteers, Avg Response)
-
-**Deployment & Documentation**
-🟢 Deployed on Vercel
-🟢 README Documentation
-🟢 Clean Folder Architecture
+* **Volunteer Coordination**
+  * [x] Sign-up form with skills, availability, and preferences
+  * [x] Active participation tracking in nearby cases
+* **Community & Leaderboards**
+  * [x] Live community board showing recent activities
+  * [x] Contribution counter and leaderboards
+* **Analytics Dashboard**
+  * [x] Interactive charts built with Recharts (Monthly Rescues, Adoption Rate)
+  * [x] Key Performance Indicators (Total Rescues, Active Volunteers, Avg Response Time)
+* **Production Optimization**
+  * [x] TypeScript compiler error checking
+  * [x] Security measures (Inspect elements & drag-and-drop disabled)
+  * [x] Deployment pipeline configuration on Vercel
 
 ---
 
