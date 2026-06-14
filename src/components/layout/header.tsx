@@ -1,8 +1,8 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
-import { MdPets } from 'react-icons/md';
 import { FaBell, FaPaw, FaExclamationTriangle, FaCheckCircle, FaArrowLeft } from 'react-icons/fa';
 import {
   Dialog,
@@ -55,8 +55,8 @@ const MOCK_NOTIFICATIONS = [
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  // Only show back arrow on sub-pages (e.g. /settings/notifications, /rescues/[id])
-  // Not on top-level tabs like /map, /settings, /rescues, /report, /analytics
+  // only show back arrow on sub-pages (e.g. /settings/notifications, /rescues/[id])
+  // not on top-level tabs like /map, /settings, /rescues, /report, /analytics
   const segments = pathname.split('/').filter(Boolean);
   const showBack = segments.length >= 2;
 
@@ -74,7 +74,7 @@ export function Header() {
             </button>
           )}
           <Link href="/" className="flex items-center space-x-2">
-            <MdPets className="h-6 w-6 text-primary" />
+            <Image src="/logo.svg" alt="RescueConnect Logo" width={24} height={24} />
             <span className="font-semibold text-lg">RescueConnect</span>
           </Link>
         </div>

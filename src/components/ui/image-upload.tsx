@@ -25,7 +25,7 @@ export function ImageUpload({ onUpload, maxImages = 3, className }: ImageUploadP
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
-  // If env vars not set yet, show a placeholder
+  // if env vars not set yet, show a placeholder
   if (!cloudName || !uploadPreset) {
     return (
       <div className={cn("flex flex-col gap-2", className)}>
@@ -57,7 +57,7 @@ export function ImageUpload({ onUpload, maxImages = 3, className }: ImageUploadP
 
  return (
  <div className={cn("flex flex-col gap-3", className)}>
- {/* Uploaded previews */}
+ {/* uploaded previews */}
  {images.length > 0 && (
  <div className="grid grid-cols-3 gap-2">
  {images.map((img, i) => (
@@ -81,7 +81,7 @@ export function ImageUpload({ onUpload, maxImages = 3, className }: ImageUploadP
  </div>
  )}
 
- {/* Upload trigger — only show if under limit */}
+ {/* upload trigger — only show if under limit */}
  {images.length < maxImages && (
  <CldUploadWidget
  uploadPreset={uploadPreset}

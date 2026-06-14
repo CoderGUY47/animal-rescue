@@ -64,9 +64,9 @@ export function ReportForm() {
  const onSubmit = async (data: ReportFormValues) => {
  setIsSubmitting(true);
  try {
- // Simulate API delay — swap with real Axios POST when backend is ready
+ // simulate api delay — swap with real axios post when backend is ready
  await new Promise((r) => setTimeout(r, 1200));
- // Dispatch to Redux store
+ // dispatch to redux store
  dispatch(addReport({
  animalType: data.animalType === "other" ? (data.animalTypeOther ?? "other") : data.animalType,
  severity: data.severity,
@@ -106,7 +106,7 @@ export function ReportForm() {
  return (
  <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
 
- {/* ── Animal Type ─────────────────────────────────── */}
+ {/*////////======= animal type start =======\\\\\\\\\*/}
  <div className="space-y-2">
  <Label className="font-semibold">Animal Type <span className="text-destructive">*</span></Label>
  <div className="grid grid-cols-5 gap-2">
@@ -140,8 +140,9 @@ export function ReportForm() {
  />
  )}
  </div>
+ {/*\\\\\\\\======= animal type end =======/////////*/}
 
- {/* ── Severity ─────────────────────────────────────── */}
+ {/*////////======= severity start =======\\\\\\\\\*/}
  <div className="space-y-2">
  <Label className="font-semibold">Severity <span className="text-destructive">*</span></Label>
  <div className="flex gap-2">
@@ -168,8 +169,9 @@ export function ReportForm() {
  </p>
  )}
  </div>
+ {/*\\\\\\\\======= severity end =======/////////*/}
 
- {/* ── Condition ────────────────────────────────────── */}
+ {/*////////======= condition start =======\\\\\\\\\*/}
  <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label htmlFor="condition" className="font-semibold">
@@ -225,8 +227,9 @@ export function ReportForm() {
  <span className="text-xs text-muted-foreground">{conditionValue.length}/500</span>
  </div>
  </div>
+ {/*\\\\\\\\======= condition end =======/////////*/}
 
- {/* ── Location ─────────────────────────────────────── */}
+ {/*////////======= location start =======\\\\\\\\\*/}
  <div className="space-y-2">
  <Label htmlFor="locationInfo" className="font-semibold">
  Location Details <span className="text-destructive">*</span>
@@ -242,8 +245,9 @@ export function ReportForm() {
  </p>
  )}
  </div>
+ {/*\\\\\\\\======= location end =======/////////*/}
 
- {/* ── Photo Upload (Cloudinary) ─────────────────────── */}
+ {/*////////======= photo upload start =======\\\\\\\\\*/}
  <div className="space-y-2">
  <Label className="font-semibold">
  Upload Photos
@@ -254,8 +258,9 @@ export function ReportForm() {
  maxImages={3}
  />
  </div>
+ {/*\\\\\\\\======= photo upload end =======/////////*/}
 
- {/* ── Reporter Info ─────────────────────────────────── */}
+ {/*////////======= reporter info start =======\\\\\\\\\*/}
  <div className="space-y-3 pt-1 border-t">
  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider pt-1">
  Your Information
@@ -292,8 +297,9 @@ export function ReportForm() {
  )}
  </div>
  </div>
+ {/*\\\\\\\\======= reporter info end =======/////////*/}
 
- {/* ── Submit ────────────────────────────────────────── */}
+ {/*////////======= submit start =======\\\\\\\\\*/}
  <Button type="submit" className="w-full h-12 text-base" disabled={isSubmitting}>
  {isSubmitting ? (
  <>
@@ -303,6 +309,7 @@ export function ReportForm() {
  "🚨 Submit Emergency Report"
  )}
  </Button>
+ {/*\\\\\\\\======= submit end =======/////////*/}
  </form>
  );
 }

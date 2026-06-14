@@ -7,7 +7,7 @@ let socket: Socket | null = null;
 export function getSocket(): Socket {
  if (!socket) {
  socket = io(process.env.NEXT_PUBLIC_SOCKET_URL ?? "http://localhost:4000", {
- autoConnect: false, // We connect manually when needed
+ autoConnect: false, // we connect manually when needed
  reconnectionAttempts: 5,
  reconnectionDelay: 2000,
  transports: ["websocket"],
@@ -28,10 +28,10 @@ export function disconnectSocket() {
  }
 }
 
-// ─── Event name constants (avoids typos) ─────────────────────────────────────
+// event name constants
 export const SOCKET_EVENTS = {
- NEW_REPORT: "new_report", // Server broadcasts when new rescue submitted
- STATUS_UPDATE: "status_update", // Server broadcasts when rescue status changes
- JOIN_ROOM: "join_room", // Client joins a rescue-specific room
+ NEW_REPORT: "new_report", // server broadcasts when new rescue submitted
+ STATUS_UPDATE: "status_update", // server broadcasts when rescue status changes
+ JOIN_ROOM: "join_room", // client joins a rescue-specific room
  LEAVE_ROOM: "leave_room",
 } as const;

@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, L
 import { FaChartLine, FaArrowUp, FaUsers, FaShieldAlt } from "react-icons/fa";
 
 
-// Mock Data
+// mock data
 const monthlyRescues = [
  { month: "Jan", rescues: 45, adopted: 30 },
  { month: "Feb", rescues: 52, adopted: 35 },
@@ -38,7 +38,7 @@ export default function AnalyticsPage() {
  </p>
  </div>
 
- {/* KPI Cards */}
+ {/*////////======= kpi cards start =======\\\\\\\\\*/}
  <div className="grid grid-cols-2 gap-3">
  <Card>
  <CardContent className="p-4 flex flex-col gap-1">
@@ -70,10 +70,10 @@ export default function AnalyticsPage() {
  </Card>
  </div>
 
- {/* Charts */}
+ {/*////////======= charts start =======\\\\\\\\\*/}
  <div className="flex flex-col gap-5">
  
- {/* Monthly Rescues Chart */}
+ {/* monthly rescues chart */}
  <Card className="overflow-hidden">
  <CardHeader className="p-4 pb-2">
  <CardTitle className="text-sm text-muted-foreground font-semibold">Monthly Rescues & Adoptions</CardTitle>
@@ -93,7 +93,7 @@ export default function AnalyticsPage() {
  </CardContent>
  </Card>
 
- {/* Response Time Chart */}
+ {/* response time chart */}
  <Card className="overflow-hidden">
  <CardHeader className="p-4 pb-2">
  <CardTitle className="text-sm text-muted-foreground font-semibold">Avg Response Time (Minutes)</CardTitle>
@@ -112,6 +112,7 @@ export default function AnalyticsPage() {
  </Card>
  
  </div>
+ { /*\\\\\\\\======= charts end =======/////////*/}
  </div>
  );
 }

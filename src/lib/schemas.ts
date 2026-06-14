@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-// ─── Emergency Report Schema ─────────────────────────────────────────────────
+// emergency report schema
 export const reportSchema = z.object({
  animalType: z.enum(["dog", "cat", "bird", "rabbit", "other"], {
  error: "Please select an animal type",
@@ -30,7 +30,7 @@ export const reportSchema = z.object({
 
 export type ReportFormValues = z.infer<typeof reportSchema>;
 
-// ─── Volunteer Registration Schema ───────────────────────────────────────────
+// volunteer registration schema
 export const volunteerSchema = z.object({
  name: z.string().min(2, "Name must be at least 2 characters"),
  email: z.string().email("Please enter a valid email address"),

@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 export default function HomePage() {
  return (
  <div className="flex flex-col flex-1 p-4 gap-6 animate-in fade-in duration-500 pb-8">
- {/* Hero Section */}
+ {/*////////======= hero section start =======\\\\\\\\\*/}
  <section className="flex flex-col gap-4">
  <div className="flex flex-col gap-2">
  <h1 className="text-3xl font-semibold tracking-tight">Help Animals <br/><span className="text-primary">In Need</span></h1>
@@ -26,8 +26,9 @@ export default function HomePage() {
  </div>
  </Link>
  </section>
+ {/*\\\\\\\\======= hero section end =======/////////*/}
 
- {/* Quick Actions */}
+ {/*////////======= quick actions start =======\\\\\\\\\*/}
  <section className="grid grid-cols-3 gap-3">
  <Link href="/map" className="block">
  <Card className="active:scale-[0.98] transition-transform bg-primary/5 border-primary/20">
@@ -54,8 +55,9 @@ export default function HomePage() {
  </Card>
  </Link>
  </section>
+ {/*\\\\\\\\======= quick actions end =======/////////*/}
 
- {/* Active Rescues Near You */}
+ {/*////////======= active rescues near you start =======\\\\\\\\\*/}
  <section className="flex flex-col gap-3">
  <div className="flex items-center justify-between">
  <h3 className="font-semibold text-lg flex items-center gap-2">
@@ -68,7 +70,7 @@ export default function HomePage() {
  </div>
 
  <div className="flex flex-col gap-3">
- {/* Mock Item 1 */}
+ {/* mock item 1 */}
  <Link href="/rescues/1" className="block">
  <Card className="overflow-hidden active:scale-[0.99] transition-transform">
  <div className="flex h-28">
@@ -100,7 +102,7 @@ export default function HomePage() {
  </Card>
  </Link>
 
-          {/* Mock Item 2 */}
+          {/* mock item 2 */}
           <Link href="/rescues/2" className="block">
             <Card className="overflow-hidden active:scale-[0.99] transition-transform">
               <div className="flex h-28">
@@ -133,8 +135,9 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+      {/*\\\\\\\\======= active rescues near you end =======/////////*/}
 
-      {/* How To Use Guide */}
+      {/*////////======= how to use guide start =======\\\\\\\\\*/}
       <section className="flex flex-col gap-3 mt-2">
         <div className="flex items-center justify-between">
           <h3 className="text-lg flex items-center gap-2 font-semibold">
@@ -169,6 +172,7 @@ export default function HomePage() {
           </CardContent>
         </Card>
       </section>
+      {/*\\\\\\\\======= how to use guide end =======/////////*/}
     </div>
  );
 }

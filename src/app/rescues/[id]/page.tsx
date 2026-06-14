@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowLeft, FaMapMarkerAlt, FaClock, FaExclamationTriangle, FaPhone, FaCheckCircle, FaShareAlt, FaCommentAlt, FaPaperPlane } from "react-icons/fa";
+import { FaMapMarkerAlt, FaClock, FaExclamationTriangle, FaPhone, FaCheckCircle, FaShareAlt, FaCommentAlt, FaPaperPlane } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-// Mock data for the example
+// mock data for the example
 const MOCK_RESCUE = {
  id: "1",
  animalType: "cat",
@@ -46,7 +46,7 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
 
  return (
  <div className="flex flex-col flex-1 bg-muted/10 pb-20 animate-in fade-in duration-500">
- {/* Header Image */}
+ {/* header image */}
  <div className="relative h-64 w-full bg-muted">
  <Image
  src={rescue.images[0]}
@@ -55,13 +55,6 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
  className="object-cover"
  unoptimized
  />
- <div className="absolute top-4 left-4 z-10">
- <Link href="/rescues">
- <Button variant="secondary" size="icon" className="rounded-full shadow-md bg-background/80 backdrop-blur">
- <FaArrowLeft className="w-5 h-5" />
- </Button>
- </Link>
- </div>
  <div className="absolute top-4 right-4 z-10 flex gap-2">
  <Badge variant="destructive" className="shadow-md text-xs px-2 py-1 uppercase tracking-wider">
  {rescue.severity}
@@ -71,7 +64,7 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
 
  <div className="flex flex-col p-5 gap-6 -mt-6 bg-background rounded-t-3xl relative z-20 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
  
- {/* Title & Status */}
+ {/* title & status */}
  <div className="flex justify-between items-start gap-4">
  <div>
  <h1 className="text-2xl font-semibold leading-tight">{rescue.title}</h1>
@@ -87,7 +80,7 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
  </div>
  </div>
 
- {/* Location */}
+ {/* location */}
  <div className="flex items-start gap-3 p-3.5 bg-muted/30 rounded-xl border border-muted/50">
  <div className="bg-primary/10 p-2 rounded-full">
  <FaMapMarkerAlt className="w-5 h-5 text-primary" />
@@ -98,7 +91,7 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
  </div>
  </div>
 
- {/* Condition details */}
+ {/* condition details */}
  <div className="space-y-2.5">
  <h3 className="font-semibold text-lg border-b pb-1">Condition</h3>
  <p className="text-sm leading-relaxed text-muted-foreground">
@@ -106,7 +99,7 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
  </p>
  </div>
 
- {/* Reporter Info */}
+ {/* reporter info */}
  <div className="space-y-2.5">
  <h3 className="font-semibold text-lg border-b pb-1">Reported By</h3>
  <div className="flex justify-between items-center bg-card border rounded-xl p-3 shadow-sm">
@@ -128,7 +121,7 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
  </div>
  </div>
 
- {/* Actions */}
+ {/* actions */}
  <div className="pt-4 flex flex-col gap-3">
  <Button size="lg" className="w-full text-base font-semibold shadow-md h-14 rounded-xl">
  <FaCheckCircle className="w-5 h-5 mr-2" /> Respond to Rescue
@@ -144,7 +137,7 @@ export default function RescueDetailPage({ params }: { params: Promise<{ id: str
  </div>
  </div>
 
- {/* Message Dialog */}
+ {/* message dialog */}
  <Dialog open={isMessageOpen} onOpenChange={setIsMessageOpen}>
  <DialogContent className="sm:max-w-md w-[90vw] rounded-2xl">
  <DialogHeader>

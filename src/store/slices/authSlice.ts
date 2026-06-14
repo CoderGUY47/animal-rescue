@@ -10,7 +10,7 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-  // Mock logged-in user for demonstration of Redux usage
+  // mock logged-in user for demonstration of redux usage
   user: {
     id: "u-1234",
     name: "John Doe",

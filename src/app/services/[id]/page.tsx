@@ -9,7 +9,7 @@ export const metadata = {
 export default async function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   
-  // Mock Data since we do not have a real backend to fetch by ID
+  // mock data since we do not have a real backend to fetch by id
   const service = {
     id,
     name: "Citywide Emergency Veterinary",

@@ -20,17 +20,16 @@ const TYPE_CONFIG: Record<PlaceType, { label: string; color: string; Icon: React
  hospital: { label: "Animal Hospital", color: "bg-rose-600", Icon: () => <FaHospital className="w-3 h-3 text-white" /> },
 };
 
-const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128]; // NYC fallback
-
-// Cache location across page navigations
+const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128]; // nyc fallback
+// cache location across page navigations
 let cachedCoords: [number, number] | null = null;
 
 export function MapView({ searchQuery }: { searchQuery: string }) {
  const [center, setCenter] = useState<[number, number]>(cachedCoords ?? DEFAULT_CENTER);
  const [address, setAddress] = useState<string>("");
  const [places, setPlaces] = useState<Place[]>([]);
- const [loading, setLoading] = useState(false); // Don't block map render
- const [locating, setLocating] = useState(!cachedCoords); // Skip if already cached
+ const [loading, setLoading] = useState(false); // don't block map render
+ const [locating, setLocating] = useState(!cachedCoords); // skip if already cached
  const [query, setQuery] = useState(searchQuery);
  const [locationSuggestions, setLocationSuggestions] = useState<SearchResult[]>([]);
  const [isSearchingLocations, setIsSearchingLocations] = useState(false);
@@ -40,11 +39,10 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  const hasFetched = useRef(false); // guard: runs only once
  const mapRef = useRef<import("maplibre-gl").Map | null>(null);
 
- // Filter Scrolling Logic
- // Filter Scrolling Logic
+ // filter scrolling logic
  const filtersRef = useRef<HTMLDivElement>(null);
 
- // Swipe to scroll logic for filters
+ // swipe to scroll logic for filters
  const filterDrag = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
 
  const handleFilterPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -65,7 +63,7 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  filterDrag.current.isDragging = false;
  };
 
- // Dragging logic for legend
+ // dragging logic for legend
  const legendRef = useRef<HTMLDivElement>(null);
  const dragPos = useRef({ x: 0, y: 0 });
  const isDragging = useRef(false);
@@ -92,7 +90,7 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  if (hasFetched.current) return;
  hasFetched.current = true;
 
- // If we already have cached coords, load data immediately
+ // if we already have cached coords, load data immediately
  if (cachedCoords) {
  const [lng, lat] = cachedCoords;
  setLocating(false);

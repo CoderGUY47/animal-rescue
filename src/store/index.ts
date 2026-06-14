@@ -9,6 +9,6 @@ export const store = configureStore({
  },
 });
 
-// Inferred types — use these throughout the app instead of plain RootState/AppDispatch
+// inferred types — use these throughout the app instead of plain rootstate/appdispatch
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
