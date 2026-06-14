@@ -1,0 +1,78 @@
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+export type Severity = "critical" | "moderate" | "low";
+
+export type RescueReport = {
+ id: string;
+ animalType: string;
+ severity: Severity;
+ condition: string;
+ locationInfo: string;
+ reporterName: string;
+ images: string[];
+ status: "pending" | "in-progress" | "resolved";
+ createdAt: string;
+};
+
+type ReportsState = {
+ items: RescueReport[];
+ loading: boolean;
+ error: string | null;
+};
+
+const initialState: ReportsState = {
+ items: [
+ {
+ id: "1",
+ animalType: "cat",
+ severity: "critical",
+ condition: "Injured stray cat with visible wounds near Downtown Alley.",
+ locationInfo: "Downtown Alley, near 5th Ave",
+ reporterName: "John D.",
+ images: ["https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=400"],
+ status: "pending",
+ createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 min ago
+ },
+ {
+ id: "2",
+ animalType: "dog",
+ severity: "moderate",
+ condition: "Abandoned puppy found near City Park, appears healthy but malnourished.",
+ locationInfo: "City Park, North Gate",
+ reporterName: "Sara M.",
+ images: ["https://images.unsplash.com/photo-1561037404-61cd46aa615b?q=80&w=400"],
+ status: "in-progress",
+ createdAt: new Date(Date.now() - 1000 * 60 * 90).toISOString(), // 90 min ago
+ },
+ ],
+ loading: false,
+ error: null,
+};
+
+const reportsSlice = createSlice({
+ name: "reports",
+ initialState,
+ reducers: {
+ addReport(state, action: PayloadAction<Omit<RescueReport, "id" | "createdAt" | "status">>) {
+ state.items.unshift({
+ ...action.payload,
+ id: crypto.randomUUID(),
+ status: "pending",
+ createdAt: new Date().toISOString(),
+ });
+ },
+ updateStatus(state, action: PayloadAction<{ id: string; status: RescueReport["status"] }>) {
+ const report = state.items.find((r) => r.id === action.payload.id);
+ if (report) report.status = action.payload.status;
+ },
+ setLoading(state, action: PayloadAction<boolean>) {
+ state.loading = action.payload;
+ },
+ setError(state, action: PayloadAction<string | null>) {
+ state.error = action.payload;
+ },
+ },
+});
+
+export const { addReport, updateStatus, setLoading, setError } = reportsSlice.actions;
+export default reportsSlice.reducer;
