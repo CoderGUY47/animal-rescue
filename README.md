@@ -1,9 +1,9 @@
 <div align="center">
   <img src="./public/logo.svg" alt="Animal Rescue Connect Logo" width="72" height="72" />
   <h1>Animal Rescue Connect</h1>
-  <p><strong>Emergency help platform for stray &amp; sick animals — report, locate, rescue.</strong></p>
+  <p><strong>Emergency help platform for stray & sick animals — report, locate, rescue.</strong></p>
 
-  <p>
+<p>
     <img src="https://img.shields.io/badge/Next.js-16.2.9-black?style=flat-square&logo=next.js" alt="Next.js" />
     <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React" />
     <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
@@ -11,9 +11,9 @@
     <img src="https://img.shields.io/badge/Deployed-Vercel-000000?style=flat-square&logo=vercel" alt="Vercel" />
   </p>
 
-  <p>
+<p>
     <a href="https://animal-rescue-seven.vercel.app" target="_blank"><strong>🚀 Live Demo</strong></a>
-    &nbsp;·&nbsp;
+     · 
     <a href="https://github.com/CoderGUY47/animal-rescue" target="_blank"><strong>📂 Repository</strong></a>
   </p>
 </div>
@@ -23,11 +23,11 @@
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="./public/assets/Animal Rescue Connect.png" alt="Home Page" width="30%" />
-  &nbsp;
-  <img src="./public/assets/Map - Rescue Connect.png" alt="Map View" width="30%" />
-  &nbsp;
-  <img src="./public/assets/Setting-Animal Rescue Connect.png" alt="Settings Page" width="30%" />
+  <img src="./public/assets/home.png" alt="Home Page" width="30%" />
+   
+  <img src="./public/assets/map.png" alt="Map View" width="30%" />
+   
+  <img src="./public/assets/settings.png" alt="Settings Page" width="30%" />
 </div>
 
 ---
@@ -40,23 +40,24 @@
 
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| 🚨 **Emergency Reporting** | Submit a rescue request with animal type, severity, condition, location, and photos |
-| 🗺️ **Interactive Map** | Find nearby vets, shelters, pet shops & hospitals using live OpenStreetMap data |
-| 🔍 **Location Search** | Search any location and get directions with colour-coded traffic routing |
-| 🐾 **Rescue Tracker** | Browse and track all active rescue cases in real time |
-| 📊 **Analytics Dashboard** | Community-wide rescue stats, adoption rates, and response time charts |
-| 🤝 **Volunteer Sign-Up** | Register as a volunteer with your skills and availability |
-| 🔔 **Notifications** | In-app notification centre for rescue alerts and updates |
-| ⚙️ **Settings** | Manage your profile, privacy, location sharing, and notification preferences |
-| 🌙 **Dark / Light Mode** | System-aware theme that can be overridden manually |
+| Feature                         | Description                                                                         |
+| ------------------------------- | ----------------------------------------------------------------------------------- |
+| 🚨**Emergency Reporting** | Submit a rescue request with animal type, severity, condition, location, and photos |
+| 🗺️**Interactive Map**   | Find nearby vets, shelters, pet shops & hospitals using live OpenStreetMap data     |
+| 🔍**Location Search**     | Search any location and get directions with colour-coded traffic routing            |
+| 🐾**Rescue Tracker**      | Browse and track all active rescue cases in real time                               |
+| 📊**Analytics Dashboard** | Community-wide rescue stats, adoption rates, and response time charts               |
+| 🤝**Volunteer Sign-Up**   | Register as a volunteer with your skills and availability                           |
+| 🔔**Notifications**       | In-app notification centre for rescue alerts and updates                            |
+| ⚙️**Settings**          | Manage your profile, privacy, location sharing, and notification preferences        |
+| 🌙**Dark / Light Mode**   | System-aware theme that can be overridden manually                                  |
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **[Next.js 16](https://nextjs.org/)** — App Router, server components, and static generation
 - **[React 19](https://react.dev/)** — Latest concurrent features
 - **[TypeScript 5](https://www.typescriptlang.org/)** — Strict type safety throughout
@@ -64,22 +65,26 @@
 - **[shadcn/ui](https://ui.shadcn.com/)** — Accessible, composable component primitives
 
 ### State & Forms
+
 - **[Redux Toolkit](https://redux-toolkit.js.org/)** — Centralised state for reports and user session
 - **[React Hook Form](https://react-hook-form.com/)** + **[Zod](https://zod.dev/)** — Performant form handling with schema validation
 
 ### Maps & Location
+
 - **[MapLibre GL](https://maplibre.org/)** — Open-source vector tile maps
 - **[Overpass API](https://overpass-api.de/)** — Live OSM data for nearby animal services
 - **[Nominatim](https://nominatim.org/)** — Free geocoding and reverse geocoding
 - **[OSRM](https://project-osrm.org/)** — Open-source routing with traffic colour overlay
 
 ### Media & UI
+
 - **[Cloudinary](https://cloudinary.com/)** (via `next-cloudinary`) — Image uploads for rescue reports
 - **[Recharts](https://recharts.org/)** — Analytics charts
 - **[React Toastify](https://fkhadra.github.io/react-toastify/)** — Toast notifications
 - **[Fredoka Font](https://fonts.google.com/specimen/Fredoka)** — Custom friendly typeface
 
 ### Deployment
+
 - **[Vercel](https://vercel.com/)** — Zero-config CI/CD deployment
 
 ---
@@ -118,6 +123,7 @@ src/
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js `v18+`
 - npm or yarn
 
@@ -182,7 +188,7 @@ npm run start     # Start production server
 
 ## 👤 Author
 
-**Hridoy** — [@CoderGUY47](https://github.com/CoderGUY47)
+**S.M.HASAN -** [@CoderGUY47](https://github.com/CoderGUY47)
 
 ---
 
