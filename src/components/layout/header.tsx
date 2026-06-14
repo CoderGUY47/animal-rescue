@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
-import { FaBell, FaPaw, FaExclamationTriangle, FaCheckCircle, FaArrowLeft } from 'react-icons/fa';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import { FaBell, FaPaw, FaExclamationTriangle, FaCheckCircle, FaArrowLeft, FaSun, FaMoon } from 'react-icons/fa';
 import {
   Dialog,
   DialogContent,
@@ -25,6 +27,13 @@ export function Header() {
   const showBack = segments.length >= 2;
 
   const unreadCount = MOCK_NOTIFICATIONS.filter((n) => n.unread).length;
+  
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,19 +54,30 @@ export function Header() {
           </Link>
         </div>
 
-        <Dialog>
-          <DialogTrigger
-            aria-label="Notifications"
-            className={`relative p-2 ${buttonVariants({ variant: 'ghost', size: 'icon-sm' })}`}
-          >
-            <FaBell className="h-5 w-5 text-muted-foreground" />
-            {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 flex h-2 w-2 rounded-full bg-rose-500">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-              </span>
-            )}
-          </DialogTrigger>
-          <DialogContent className="p-0 max-w-sm gap-0 overflow-hidden">
+        <div className="flex items-center gap-1">
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={`p-2 relative ${buttonVariants({ variant: 'ghost', size: 'icon-sm' })}`}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <FaSun className="h-5 w-5 text-muted-foreground" /> : <FaMoon className="h-5 w-5 text-muted-foreground" />}
+            </button>
+          )}
+
+          <Dialog>
+            <DialogTrigger
+              aria-label="Notifications"
+              className={`relative p-2 ${buttonVariants({ variant: 'ghost', size: 'icon-sm' })}`}
+            >
+              <FaBell className="h-5 w-5 text-muted-foreground" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 flex h-2 w-2 rounded-full bg-rose-500">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                </span>
+              )}
+            </DialogTrigger>
+            <DialogContent className="p-0 max-w-sm gap-0 overflow-hidden">
             <DialogHeader className="px-4 pt-4 pb-3 border-b">
               <div className="flex items-center justify-between pr-6">
                 <DialogTitle className="text-base font-semibold">Notifications</DialogTitle>
@@ -109,6 +129,7 @@ export function Header() {
             )}
           </DialogContent>
         </Dialog>
+        </div>
       </div>
     </header>
   );
