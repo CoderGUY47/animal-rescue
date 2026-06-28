@@ -41,3 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# project specific custom documents
+CLAUDE.md
+/Animal Rescue Connect – Emergency Help Platform for Stray & Sick Animals (Frontend Project).txt
+/tsconfig.tsbuildinfo
+/src/components/layout/dist/
+
