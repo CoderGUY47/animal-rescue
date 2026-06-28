@@ -21,7 +21,7 @@ export function SosOverlay() {
   if (!isActive) return null;
 
   return (
-    <div className="absolute inset-0 z-[9999] bg-red-400 flex items-center justify-center">
+    <div className="absolute inset-0 z-9999 bg-red-400 flex items-center justify-center">
       <button
         onClick={() => setIsActive(false)}
         className="w-14 h-14 rounded-full bg-white/20 border border-white/30 backdrop-blur-md text-white flex items-center justify-center shadow-lg hover:bg-white/30 active:scale-95 transition-all pointer-events-auto"

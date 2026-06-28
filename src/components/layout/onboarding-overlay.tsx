@@ -146,7 +146,7 @@ export function OnboardingOverlay() {
   };
 
   return (
-    <div className="absolute inset-0 min-h-screen z-[100] flex flex-col justify-between overflow-hidden bg-slate-950 text-white select-none">
+    <div className="absolute inset-0 min-h-screen z-100 flex flex-col justify-between overflow-hidden bg-slate-950 text-white select-none">
       
       {/* STEP 1: Welcome Splash */}
       {step === 1 && (
@@ -161,7 +161,7 @@ export function OnboardingOverlay() {
               priority
               unoptimized
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/70" />
+            <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-slate-950/70" />
           </div>
 
           {/* Top Info */}
@@ -420,7 +420,7 @@ export function OnboardingOverlay() {
                 priority
                 unoptimized
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/10 to-transparent" />
             </div>
 
             <div className="space-y-1.5 px-4">
@@ -442,7 +442,7 @@ export function OnboardingOverlay() {
             <div className="w-full h-2.5 bg-slate-900 border border-white/5 rounded-full overflow-hidden">
               <div 
                 style={{ width: `${loadingProgress}%` }}
-                className="h-full bg-gradient-to-r from-primary to-violet-500 rounded-full transition-all duration-300"
+                className="h-full bg-linear-to-r from-primary to-violet-500 rounded-full transition-all duration-300"
               />
             </div>
           </div>

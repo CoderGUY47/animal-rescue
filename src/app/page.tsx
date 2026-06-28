@@ -139,7 +139,7 @@ export default function HomePage() {
           onClick={playTap}
           className="block w-full overflow-hidden shadow-md relative"
         >
-          <div className="relative w-full aspect-[16/7]">
+          <div className="relative w-full aspect-16/7">
             <Image
               src="/assets/emergency.png"
               alt="Emergency Alert Banner"
