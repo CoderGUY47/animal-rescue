@@ -2,11 +2,13 @@
 
 import { useEffect } from "react";
 import { useEagerLocation } from "@/hooks/use-eager-location";
+import { useSocket } from "@/hooks/use-socket";
 
 // this component runs on mount to request location permission early
 // and also applies site-wide security protections
 export function PermissionBootstrap() {
   useEagerLocation();
+  useSocket();
 
   useEffect(() => {
     /*////////======= disable right-click context menu start =======\\\\\\\\\*/

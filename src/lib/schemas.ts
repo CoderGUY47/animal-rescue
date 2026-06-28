@@ -26,6 +26,8 @@ export const reportSchema = z.object({
  .regex(/^[+]?[\d\s\-()]{7,15}$/, "Please enter a valid phone number")
  .optional()
  .or(z.literal("")),
+ lat: z.number().optional(),
+ lng: z.number().optional(),
 });
 
 export type ReportFormValues = z.infer<typeof reportSchema>;

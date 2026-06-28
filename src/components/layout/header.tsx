@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import { FaBell, FaPaw, FaExclamationTriangle, FaCheckCircle, FaArrowLeft, FaSun, FaMoon } from 'react-icons/fa';
+import { FaBell, FaPaw, FaExclamationTriangle, FaCheckCircle, FaArrowLeft, FaSun, FaMoon, FaTimes } from 'react-icons/fa';
 import {
   Dialog,
   DialogContent,
@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { buttonVariants } from '@/components/ui/button';
+import { useLanguage } from '@/components/providers/language-provider';
 
 // To test populated notifications, add objects to this array
 const MOCK_NOTIFICATIONS: any[] = [];
@@ -21,6 +22,7 @@ const MOCK_NOTIFICATIONS: any[] = [];
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useLanguage();
   // only show back arrow on sub-pages (e.g. /settings/notifications, /rescues/[id])
   // not on top-level tabs like /map, /settings, /rescues, /report, /analytics
   const segments = pathname.split('/').filter(Boolean);
@@ -30,6 +32,10 @@ export function Header() {
   
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+
+  const triggerSos = () => {
+    window.dispatchEvent(new CustomEvent('sos-trigger', { detail: true }));
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -50,11 +56,17 @@ export function Header() {
           )}
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/logo.svg" alt="RescueConnect Logo" width={24} height={24} />
-            <span className="font-semibold text-lg">RescueConnect</span>
+            <span className="font-semibold text-lg">{t("app.title")}</span>
           </Link>
         </div>
 
         <div className="flex items-center gap-1">
+          <button
+            onClick={triggerSos}
+            className="px-2.5 py-1 mr-1 text-[11px] font-bold text-red-500 bg-white/10 dark:bg-white/10 border border-white/20 backdrop-blur-md rounded-full shadow-inner hover:bg-white/20 active:scale-95 transition-all"
+          >
+            SOS
+          </button>
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

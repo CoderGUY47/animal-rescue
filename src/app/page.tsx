@@ -26,8 +26,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function HomePage() {
+  const { t } = useLanguage();
   const [donateOpen, setDonateOpen] = useState(false);
   const [donateAmount, setDonateAmount] = useState<string>("25");
   const [customAmount, setCustomAmount] = useState<string>("");
@@ -110,8 +112,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-2">
           <div className="flex items-start justify-between">
             <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 leading-tight">
-              Help Animals <br />
-              <span className="text-primary">In Need</span>
+              {t("home.welcome")}
             </h1>
             <button
               onClick={() => { playTap(); toggleSiren(); }}
@@ -126,7 +127,7 @@ export default function HomePage() {
             </button>
           </div>
           <p className="text-sm text-muted-foreground font-medium leading-relaxed">
-            Quickly report sick, injured, or abandoned animals to nearby rescues and volunteers.
+            {t("home.sub")}
           </p>
         </div>
       </section>
@@ -164,10 +165,10 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col gap-0.5">
                   <span className="font-extrabold text-[12px] text-slate-800 dark:text-slate-200 leading-tight">
-                    Adopt
+                    {t("home.adopt")}
                   </span>
                   <span className="text-[9px] text-muted-foreground leading-tight">
-                    Find your companion
+                    {t("home.adoptSub")}
                   </span>
                 </div>
               </CardContent>
@@ -183,10 +184,10 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col gap-0.5">
                   <span className="font-extrabold text-[12px] text-slate-800 dark:text-slate-200 leading-tight">
-                    Volunteer
+                    {t("home.volunteer")}
                   </span>
                   <span className="text-[9px] text-muted-foreground leading-tight">
-                    Make a difference
+                    {t("home.volunteerSub")}
                   </span>
                 </div>
               </CardContent>
@@ -205,10 +206,10 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col gap-0.5">
                   <span className="font-extrabold text-[12px] text-slate-800 dark:text-slate-200 leading-tight">
-                    Donate
+                    {t("home.donate")}
                   </span>
                   <span className="text-[9px] text-muted-foreground leading-tight">
-                    Support rescues
+                    {t("home.donateSub")}
                   </span>
                 </div>
               </CardContent>
@@ -222,14 +223,14 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-lg flex items-center gap-2">
             <FaExclamationCircle className="w-5 h-5 text-orange-500" />
-            Urgent Rescues
+            {t("home.urgentRescues")}
           </h3>
           <Link
             href="/rescues"
             onClick={playTap}
             className="text-sm text-primary flex items-center"
           >
-            See all <FaArrowRight className="w-4 h-4 ml-1" />
+            {t("home.seeAll")} <FaArrowRight className="w-4 h-4 ml-1" />
           </Link>
         </div>
 
@@ -247,7 +248,7 @@ export default function HomePage() {
                     unoptimized
                   />
                   <div className="absolute top-2 left-2 bg-destructive text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
-                    Critical
+                    {t("report.severityCritical")}
                   </div>
                 </div>
                 <div className="w-3/5 p-3 flex flex-col justify-between">
@@ -281,7 +282,7 @@ export default function HomePage() {
                     unoptimized
                   />
                   <div className="absolute top-2 left-2 bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
-                    Moderate
+                    {t("report.severityModerate")}
                   </div>
                 </div>
                 <div className="w-3/5 p-3 flex flex-col justify-between">
@@ -308,7 +309,7 @@ export default function HomePage() {
       <section className="flex flex-col gap-3 mt-2">
         <div className="flex items-center justify-between">
           <h3 className="text-lg flex items-center gap-2 font-semibold">
-            How to Use RescueConnect
+            {t("home.howItWorks")}
           </h3>
         </div>
         <Card>
@@ -320,11 +321,10 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-semibold text-sm">
-                    Report an Emergency
+                    {t("home.step1Title")}
                   </span>
                   <span className="text-xs text-muted-foreground mt-0.5">
-                    Fill out the quick emergency form and capture a clear image
-                    of the animal in need.
+                    {t("home.step1Desc")}
                   </span>
                 </div>
               </div>
@@ -334,11 +334,10 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-semibold text-sm">
-                    Find Nearby Help
+                    {t("home.step2Title")}
                   </span>
                   <span className="text-xs text-muted-foreground mt-0.5">
-                    Search the interactive map to locate rescue buildings,
-                    shelters, and veterinary clinics nearby.
+                    {t("home.step2Desc")}
                   </span>
                 </div>
               </div>
@@ -347,10 +346,9 @@ export default function HomePage() {
                   3
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-sm">Track Progress</span>
+                  <span className="font-semibold text-sm">{t("home.step3Title")}</span>
                   <span className="text-xs text-muted-foreground mt-0.5">
-                    Check the rescues tab to see when help is on the way and
-                    communicate in real-time.
+                    {t("home.step3Desc")}
                   </span>
                 </div>
               </div>

@@ -7,7 +7,10 @@ export type RescueReport = {
   severity: Severity;
   condition: string;
   locationInfo: string;
+  lat?: number;
+  lng?: number;
   reporterName: string;
+  reporterPhone?: string;
   images: string[];
   status: "pending" | "in-progress" | "resolved";
   createdAt: string;

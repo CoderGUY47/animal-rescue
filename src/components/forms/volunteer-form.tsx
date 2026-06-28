@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { FaExclamationTriangle, FaCheckCircle, FaSpinner } from "react-icons/fa";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useAppDispatch } from "@/store/hooks";
+import { registerVolunteer } from "@/store/slices/volunteersSlice";
 
 const SKILLS = [
  { value: "transport", emoji: "🚗", label: "Transport" },
@@ -26,7 +28,8 @@ const AVAILABILITY = [
  { value: "on-call", label: "On-Call" },
 ] as const;
 
-export function VolunteerForm() {
+ export function VolunteerForm() {
+ const dispatch = useAppDispatch();
  const [submitted, setSubmitted] = useState(false);
  const [isSubmitting, setSubmitting] = useState(false);
 
@@ -55,7 +58,14 @@ export function VolunteerForm() {
  const onSubmit = async (data: VolunteerFormValues) => {
  setSubmitting(true);
  await new Promise((r) => setTimeout(r, 1200));
- console.log("Volunteer registered:", data);
+ dispatch(registerVolunteer({
+   name: data.name,
+   email: data.email,
+   phone: data.phone,
+   skills: data.skills,
+   availability: data.availability,
+   message: data.message,
+ }));
  setSubmitting(false);
  setSubmitted(true);
  };

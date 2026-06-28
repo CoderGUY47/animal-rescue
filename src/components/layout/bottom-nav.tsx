@@ -1,34 +1,51 @@
+"use client";
+
 import Link from 'next/link';
-import { FaHome, FaPlusCircle, FaMap, FaCog, FaUsers } from 'react-icons/fa';
+import { usePathname } from 'next/navigation';
+import { FaHome, FaBullhorn, FaMap, FaCog } from 'react-icons/fa';
 import { MdPets } from 'react-icons/md';
+import { cn } from '@/lib/utils';
 
 export function BottomNav() {
- return (
- <nav className="fixed bottom-0 z-50 w-full border-t bg-background max-w-md mx-auto left-0 right-0">
- <div className="flex justify-around items-center h-16 px-2">
- <Link href="/" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary active:text-primary transition-colors">
- <FaHome className="h-5 w-5 mb-1" />
- <span className="text-[10px] ">Home</span>
- </Link>
- <Link href="/map" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary active:text-primary transition-colors">
- <FaMap className="h-5 w-5 mb-1" />
- <span className="text-[10px] ">Map</span>
- </Link>
- <Link href="/report" className="flex flex-col items-center justify-center w-full h-full text-primary relative top-[-10px]">
- <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-lg active:scale-95 transition-transform">
- <FaPlusCircle className="h-7 w-7" />
- </div>
- <span className="text-[10px] mt-1">Report</span>
- </Link>
- <Link href="/rescues" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary active:text-primary transition-colors">
- <MdPets className="h-5 w-5 mb-1" />
- <span className="text-[10px] ">Rescues</span>
- </Link>
- <Link href="/settings" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary active:text-primary transition-colors">
- <FaCog className="h-5 w-5 mb-1" />
- <span className="text-[10px] ">Settings</span>
- </Link>
- </div>
- </nav>
- );
+  const pathname = usePathname();
+
+  const isTabActive = (path: string, exact = false) => {
+    return exact ? pathname === path : pathname.startsWith(path);
+  };
+
+  const getTabClass = (path: string, exact = false) => {
+    const active = isTabActive(path, exact);
+    return cn(
+      "flex items-center justify-center p-3 rounded-full transition-all duration-300 relative border border-transparent",
+      active
+        ? "bg-white/10 backdrop-blur-md border-white/15 text-white scale-110 shadow-md"
+        : "text-white active:scale-95"
+    );
+  };
+
+  return (
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-[416px] bg-black/20 border border-white/10 backdrop-blur-lg rounded-full shadow-2xl">
+      <div className="flex justify-between items-center h-16 px-4">
+        <Link href="/" className={getTabClass("/", true)}>
+          <FaHome className="h-5.5 w-5.5" />
+        </Link>
+
+        <Link href="/map" className={getTabClass("/map")}>
+          <FaMap className="h-5.5 w-5.5" />
+        </Link>
+
+        <Link href="/report" className={getTabClass("/report")}>
+          <FaBullhorn className="h-5.5 w-5.5" />
+        </Link>
+
+        <Link href="/rescues" className={getTabClass("/rescues")}>
+          <MdPets className="h-5.5 w-5.5" />
+        </Link>
+
+        <Link href="/settings" className={getTabClass("/settings")}>
+          <FaCog className="h-5.5 w-5.5" />
+        </Link>
+      </div>
+    </nav>
+  );
 }

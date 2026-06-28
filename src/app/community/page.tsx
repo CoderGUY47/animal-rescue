@@ -1,10 +1,19 @@
-import { FaHeart, FaHandsHelping, FaTrophy, FaStar } from "react-icons/fa";
+"use client";
 
-export const metadata = {
-  title: "Community Dashboard - Rescue Connect",
-};
+import { FaHeart, FaHandsHelping, FaTrophy, FaStar } from "react-icons/fa";
+import { useAppSelector } from "@/store/hooks";
 
 export default function CommunityPage() {
+  const reports = useAppSelector((state) => state.reports.items);
+  const volunteers = useAppSelector((state) => state.volunteers.items);
+
+  const resolvedRescues = reports.filter(r => r.status === "resolved").length;
+  const totalAnimalsRescued = 1204 + resolvedRescues;
+  const activeVolunteersCount = 339 + volunteers.length;
+
+  // sort volunteers by rescues count descending
+  const sortedVolunteers = [...volunteers].sort((a, b) => b.rescues - a.rescues);
+
   return (
     <div className="flex flex-col flex-1 p-4 pb-20 animate-in fade-in duration-500 gap-6">
       <div className="flex flex-col gap-1">
@@ -17,12 +26,12 @@ export default function CommunityPage() {
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-primary/10 rounded-2xl p-4 flex flex-col items-center justify-center text-center border border-primary/20">
           <FaHeart className="w-6 h-6 text-primary mb-2" />
-          <span className="text-2xl font-bold text-primary">1,204</span>
+          <span className="text-2xl font-bold text-primary">{totalAnimalsRescued.toLocaleString()}</span>
           <span className="text-xs font-semibold uppercase text-primary/80 tracking-wider">Animals Rescued</span>
         </div>
         <div className="bg-amber-500/10 rounded-2xl p-4 flex flex-col items-center justify-center text-center border border-amber-500/20">
           <FaHandsHelping className="w-6 h-6 text-amber-500 mb-2" />
-          <span className="text-2xl font-bold text-amber-500">342</span>
+          <span className="text-2xl font-bold text-amber-500">{activeVolunteersCount}</span>
           <span className="text-xs font-semibold uppercase text-amber-500/80 tracking-wider">Active Volunteers</span>
         </div>
       </div>
@@ -32,12 +41,8 @@ export default function CommunityPage() {
           <FaTrophy className="text-amber-500" /> Top Contributors
         </h2>
         <div className="flex flex-col gap-2">
-          {[
-            { name: "Sarah Jenkins", rescues: 45, role: "Senior Volunteer" },
-            { name: "Michael Chen", rescues: 38, role: "Transport Specialist" },
-            { name: "Emma Woods", rescues: 29, role: "Foster Parent" },
-          ].map((user, i) => (
-            <div key={i} className="flex items-center gap-3 p-3 bg-card border rounded-xl shadow-sm">
+          {sortedVolunteers.slice(0, 5).map((user, i) => (
+            <div key={user.id} className="flex items-center gap-3 p-3 bg-card border rounded-xl shadow-sm">
               <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
                 {i + 1}
               </div>

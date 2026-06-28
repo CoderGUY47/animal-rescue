@@ -13,12 +13,28 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { fetchNearbyPlaces, reverseGeocode, searchLocation, fetchRoute } from "@/lib/api";
 import type { Place, PlaceType, SearchResult } from "@/types";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useAppSelector } from "@/store/hooks";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { FaCheckCircle } from "react-icons/fa";
+import { useLanguage } from "@/components/providers/language-provider";
 
 const TYPE_CONFIG: Record<PlaceType, { label: string; color: string; Icon: React.ElementType }> = {
- veterinary: { label: "Veterinary", color: "bg-blue-600", Icon: () => <FaClinicMedical className="w-3 h-3 text-white" /> },
- shelter: { label: "Animal Shelter", color: "bg-amber-500", Icon: () => <FaHome className="w-3 h-3 text-white" /> },
- pet_shop: { label: "Pet Shop", color: "bg-green-600", Icon: () => <FaStore className="w-3 h-3 text-white" /> },
- hospital: { label: "Animal Hospital", color: "bg-rose-600", Icon: () => <FaHospital className="w-3 h-3 text-white" /> },
+  veterinary: { label: "Veterinary", color: "bg-blue-600", Icon: () => <FaClinicMedical className="w-3 h-3 text-white" /> },
+  shelter: { label: "Animal Shelter", color: "bg-amber-500", Icon: () => <FaHome className="w-3 h-3 text-white" /> },
+  pet_shop: { label: "Pet Shop", color: "bg-green-600", Icon: () => <FaStore className="w-3 h-3 text-white" /> },
+  hospital: { label: "Animal Hospital", color: "bg-rose-600", Icon: () => <FaHospital className="w-3 h-3 text-white" /> },
+};
+
+const getPlaceTypeTranslation = (type: PlaceType, t: (k: string) => string) => {
+  switch (type) {
+    case "veterinary": return t("map.veterinary");
+    case "shelter": return t("map.animalShelter");
+    case "pet_shop": return t("map.petShop");
+    case "hospital": return t("map.animalHospital");
+    default: return type;
+  }
 };
 
 const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128]; // nyc fallback
@@ -26,11 +42,30 @@ const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128]; // nyc fallback
 let cachedCoords: [number, number] | null = null;
 
 export function MapView({ searchQuery }: { searchQuery: string }) {
- const [center, setCenter] = useState<[number, number]>(cachedCoords ?? DEFAULT_CENTER);
+  const searchParams = useSearchParams();
+  const reports = useAppSelector((state) => state.reports.items);
+  const { t } = useLanguage();
+
+ const latParam = searchParams.get("lat");
+ const lngParam = searchParams.get("lng");
+
+ const [center, setCenter] = useState<[number, number]>(() => {
+   if (latParam && lngParam) {
+     const lat = parseFloat(latParam);
+     const lng = parseFloat(lngParam);
+     if (!isNaN(lat) && !isNaN(lng)) {
+       return [lng, lat];
+     }
+   }
+   return cachedCoords ?? DEFAULT_CENTER;
+ });
  const [address, setAddress] = useState<string>("");
  const [places, setPlaces] = useState<Place[]>([]);
  const [loading, setLoading] = useState(false); // don't block map render
- const [locating, setLocating] = useState(!cachedCoords); // skip if already cached
+ const [locating, setLocating] = useState(() => {
+   if (latParam && lngParam) return false;
+   return !cachedCoords;
+ });
  const [query, setQuery] = useState(searchQuery);
  const [locationSuggestions, setLocationSuggestions] = useState<SearchResult[]>([]);
  const [isSearchingLocations, setIsSearchingLocations] = useState(false);
@@ -39,6 +74,21 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  const [routeData, setRouteData] = useState<{ coordinates: [number, number][], color: string } | null>(null);
  const hasFetched = useRef(false); // guard: runs only once
  const mapRef = useRef<import("maplibre-gl").Map | null>(null);
+
+ // Fly to coordinates if query parameters change
+ useEffect(() => {
+   if (latParam && lngParam) {
+     const lat = parseFloat(latParam);
+     const lng = parseFloat(lngParam);
+     if (!isNaN(lat) && !isNaN(lng)) {
+       cachedCoords = [lng, lat];
+       setCenter([lng, lat]);
+       setLocating(false);
+       mapRef.current?.flyTo({ center: [lng, lat], zoom: 15, duration: 1200 });
+       loadData(lat, lng);
+     }
+   }
+ }, [latParam, lngParam]);
 
  // filter scrolling logic
  const filtersRef = useRef<HTMLDivElement>(null);
@@ -216,7 +266,7 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  setShowSuggestions(true);
  }}
  onFocus={() => { if (locationSuggestions.length > 0) setShowSuggestions(true); }}
- placeholder="Search vets, shelters, or locations..."
+ placeholder={t("map.searchPlaceholder")}
  className="flex-1 h-12 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
  />
  {(loading || isSearchingLocations) && (
@@ -231,27 +281,27 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  onPointerMove={handleFilterPointerMove}
  onPointerUp={handleFilterPointerUp}
  onPointerLeave={handleFilterPointerUp}
- className="flex gap-2 overflow-x-auto pb-1 snap-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full px-1 cursor-grab active:cursor-grabbing select-none"
+ className="flex gap-2 overflow-x-auto pb-1 snap-x scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full px-1 cursor-grab active:cursor-grabbing select-none"
  >
  <button
  onClick={() => setActiveFilter("all")}
  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap snap-start transition-colors border ${activeFilter === "all" ? "bg-primary text-primary-foreground border-primary" : "bg-background/90 backdrop-blur border-border text-muted-foreground hover:bg-muted"}`}
  >
- All
+ {t("map.filterAll")}
  </button>
  <button
  onClick={() => setActiveFilter("emergency")}
  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap snap-start transition-colors border ${activeFilter === "emergency" ? "bg-rose-600 text-white border-rose-600" : "bg-background/90 backdrop-blur border-border text-rose-600 hover:bg-rose-50"}`}
  >
- 🚨 24/7 Emergency
+ 🚨 {t("map.filterEmergency")}
  </button>
- {(Object.entries(TYPE_CONFIG) as [PlaceType, typeof TYPE_CONFIG[PlaceType]][]).map(([type, { label }]) => (
+ {(Object.entries(TYPE_CONFIG) as [PlaceType, typeof TYPE_CONFIG[PlaceType]][]).map(([type]) => (
  <button
  key={type}
  onClick={() => setActiveFilter(type)}
  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap snap-start transition-colors border ${activeFilter === type ? "bg-primary text-primary-foreground border-primary" : "bg-background/90 backdrop-blur border-border text-muted-foreground hover:bg-muted"}`}
  >
- {label}
+ {getPlaceTypeTranslation(type, t)}
  </button>
  ))}
  </div>
@@ -286,7 +336,7 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  {/* Result count */}
  {!loading && (
  <div className="bg-background/90 backdrop-blur rounded-full px-3 py-1 text-xs text-muted-foreground self-start shadow border">
- {filteredPlaces.length} place{filteredPlaces.length !== 1 ? "s" : ""} found nearby
+ {filteredPlaces.length} {t("map.placesFound")}
  </div>
  )}
  </div>
@@ -299,25 +349,25 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  onPointerUp={handlePointerUp}
  className="absolute bottom-20 left-3 z-10 bg-background/95 backdrop-blur rounded-xl border shadow-lg p-3 flex flex-col gap-1.5 text-xs cursor-grab active:cursor-grabbing touch-none select-none"
  >
- <span className="font-semibold text-[10px] uppercase text-muted-foreground tracking-wider mb-1">Places</span>
- {(Object.entries(TYPE_CONFIG) as [PlaceType, typeof TYPE_CONFIG[PlaceType]][]).map(([type, { label, color, Icon }]) => (
+ <span className="font-semibold text-[10px] uppercase text-muted-foreground tracking-wider mb-1">{t("map.places")}</span>
+ {(Object.entries(TYPE_CONFIG) as [PlaceType, typeof TYPE_CONFIG[PlaceType]][]).map(([type, { color, Icon }]) => (
  <div key={type} className="flex items-center gap-2">
  <div className={`${color} p-1 rounded-full`}>
  <Icon className="w-3 h-3 text-white" />
  </div>
- <span className="text-muted-foreground">{label}</span>
+ <span className="text-muted-foreground">{getPlaceTypeTranslation(type, t)}</span>
  </div>
  ))}
  
  <div className="h-px w-full bg-border my-1" />
- <span className="font-semibold text-[10px] uppercase text-muted-foreground tracking-wider mb-0.5">Traffic</span>
+ <span className="font-semibold text-[10px] uppercase text-muted-foreground tracking-wider mb-0.5">{t("map.traffic")}</span>
  <div className="flex items-center gap-2">
  <div className="w-5 h-1.5 bg-[#22c55e] rounded-full" />
- <span className="text-muted-foreground">Clear</span>
+ <span className="text-muted-foreground">{t("map.trafficClear")}</span>
  </div>
  <div className="flex items-center gap-2">
  <div className="w-5 h-1.5 bg-[#ef4444] rounded-full" />
- <span className="text-muted-foreground">Heavy</span>
+ <span className="text-muted-foreground">{t("map.trafficHeavy")}</span>
  </div>
  </div>
 
@@ -402,6 +452,47 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  </MapMarker>
  );
  })}
+
+  {/* Active Redux Rescue Markers */}
+  {reports.filter(r => r.lat && r.lng && r.status !== "resolved").map((rescue) => {
+    const isCritical = rescue.severity === "critical";
+    const statusColor = rescue.status === "in-progress" ? "bg-blue-500" : "bg-rose-500";
+    return (
+      <MapMarker key={rescue.id} latitude={rescue.lat!} longitude={rescue.lng!}>
+        <MarkerContent>
+          <div className="relative flex items-center justify-center cursor-pointer">
+            <div className={`w-6 h-6 ${statusColor} border-2 border-white rounded-full shadow-lg z-10 flex items-center justify-center text-white text-[10px]`}>
+              🐾
+            </div>
+            <div className={`absolute w-10 h-10 ${isCritical ? "bg-rose-400" : "bg-blue-400"} rounded-full animate-ping opacity-45`} />
+          </div>
+        </MarkerContent>
+        <MarkerPopup closeButton className="w-52">
+          <div className="flex flex-col gap-1.5">
+            <div className="flex justify-between items-center">
+              <span className={cn(
+                "text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full text-white",
+                rescue.severity === "critical" ? "bg-rose-600" : "bg-amber-500"
+              )}>
+                {rescue.severity}
+              </span>
+              <span className="text-[10px] text-muted-foreground capitalize font-medium">{rescue.status}</span>
+            </div>
+            <Link href={`/rescues/${rescue.id}`} className="hover:underline">
+              <h3 className="font-semibold text-xs leading-tight capitalize text-blue-600 dark:text-blue-400">{rescue.animalType} in distress</h3>
+            </Link>
+            <p className="text-[11px] text-muted-foreground line-clamp-2 leading-snug">{rescue.condition}</p>
+            <p className="text-[10px] font-semibold text-muted-foreground">📍 {rescue.locationInfo}</p>
+            <Link href={`/rescues/${rescue.id}`} className="w-full">
+              <Button size="sm" className="mt-1.5 w-full text-[10px] h-7 font-bold">
+                View Rescue Details &rarr;
+              </Button>
+            </Link>
+          </div>
+        </MarkerPopup>
+      </MapMarker>
+    );
+  })}
 
  {/* Route Line */}
  {routeData && (

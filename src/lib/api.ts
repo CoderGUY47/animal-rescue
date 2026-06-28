@@ -91,6 +91,38 @@ export async function fetchRoute(startLng: number, startLat: number, endLng: num
   return [[startLng, startLat], [endLng, endLat]];
 }
 
+// helper: fetch place details by OSM node ID
+export async function fetchPlaceDetails(id: string): Promise<Place | null> {
+  try {
+    const query = `
+    [out:json][timeout:15];
+    node(${id});
+    out body;
+    `;
+    const { data } = await overpassApi.post<{ elements: OverpassElement[] }>(
+      "/interpreter",
+      `data=${encodeURIComponent(query)}`
+    );
+    if (data.elements && data.elements.length > 0) {
+      const el = data.elements[0];
+      const tags = (el.tags || {}) as Record<string, string | undefined>;
+      return {
+        id: el.id,
+        lat: el.lat,
+        lng: el.lon,
+        name: tags.name || "Verified Rescue Facility",
+        type: resolveType(el.tags || {}),
+        phone: tags.phone || tags["contact:phone"],
+        hours: tags.opening_hours || "Open (Hours unlisted)",
+        website: tags.website || tags["contact:website"],
+      };
+    }
+  } catch (e) {
+    console.error("Failed to fetch place details", e);
+  }
+  return null;
+}
+
 // helper: resolve types
 function resolveType(tags: OverpassElement["tags"]): PlaceType {
   if (tags.amenity === "veterinary") return "veterinary";
