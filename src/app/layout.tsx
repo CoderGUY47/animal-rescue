@@ -61,7 +61,7 @@ export default function RootLayout({
               </div>
               <PermissionBootstrap />
               <ToastContainer
-                position="bottom-center"
+                position="top-center"
                 autoClose={4000}
                 hideProgressBar={false}
                 newestOnTop
@@ -70,7 +70,6 @@ export default function RootLayout({
                 draggable
                 pauseOnHover
                 theme="colored"
-                style={{ marginBottom: "80px" }} // Clears bottom nav
               />
             </LanguageProvider>
           </ReduxProvider>

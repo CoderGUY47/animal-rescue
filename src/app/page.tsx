@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -31,6 +31,22 @@ import { useLanguage } from "@/components/providers/language-provider";
 export default function HomePage() {
   const { t } = useLanguage();
   const [donateOpen, setDonateOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = [
+    "/assets/banner-1.png",
+    "/assets/banner-2.png",
+    "/assets/banner-3.png",
+    "/assets/banner-4.png",
+    "/assets/banner-5.png",
+    "/assets/banner-6.png",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [slides.length]);
   const [donateAmount, setDonateAmount] = useState<string>("25");
   const [customAmount, setCustomAmount] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("card");
@@ -132,22 +148,50 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Hero Banner Image */}
+      {/* Hero Banner Image Slider */}
       <section className="w-full -mt-2">
         <Link
           href="/report"
           onClick={playTap}
-          className="block w-full overflow-hidden shadow-md relative"
+          className="block w-full overflow-hidden shadow-md relative rounded-2xl"
         >
-          <div className="relative w-full aspect-16/7">
-            <Image
-              src="/assets/emergency.png"
-              alt="Emergency Alert Banner"
-              fill
-              className="object-cover object-center"
-              priority
-              unoptimized
-            />
+          <div className="relative w-full aspect-16/7 bg-muted overflow-hidden rounded-2xl">
+            {slides.map((src, idx) => (
+              <div
+                key={src}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                  idx === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+              >
+                <Image
+                  src={src}
+                  alt={`Emergency Alert Banner ${idx + 1}`}
+                  fill
+                  className="object-cover object-center"
+                  priority={idx === 0}
+                  unoptimized
+                />
+              </div>
+            ))}
+
+            {/* Slider Dots */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    playTap();
+                    setCurrentSlide(idx);
+                  }}
+                  className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                    idx === currentSlide ? "bg-white w-4" : "bg-white/50"
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </Link>
       </section>
@@ -359,13 +403,8 @@ export default function HomePage() {
 
       {/* Donation Dialog */}
       <Dialog open={donateOpen} onOpenChange={setDonateOpen}>
-        <DialogContent className="max-w-xs p-5 rounded-3xl overflow-hidden bg-card border shadow-2xl relative">
-          <button
-            onClick={() => { playTap(); setDonateOpen(false); }}
-            className="absolute top-4 right-4 text-muted-foreground p-1"
-          >
-            <FaTimes className="w-3.5 h-3.5" />
-          </button>
+        <DialogContent className="max-w-xs p-5 rounded-3xl overflow-hidden bg-card border shadow-2xl dialog-bottom">
+
 
           <DialogHeader className="mb-4">
             <div className="w-12 h-12 rounded-full bg-teal-500/10 text-teal-600 flex items-center justify-center mb-2 mx-auto">
