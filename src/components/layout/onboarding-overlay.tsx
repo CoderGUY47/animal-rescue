@@ -192,6 +192,10 @@ export function OnboardingOverlay() {
   return (
     <div className="absolute inset-0 min-h-screen z-100 flex flex-col justify-between overflow-hidden bg-slate-950 text-white select-none">
       
+      {/* Decorative Premium Glow Background Spots */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/10 rounded-full filter blur-3xl animate-pulse pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-violet-600/10 rounded-full filter blur-3xl animate-pulse pointer-events-none [animation-delay:2s]" />
+
       {/* STEP 1: Welcome Splash */}
       {step === 1 && (
         <div className="relative flex-1 flex flex-col justify-between p-6">
@@ -201,28 +205,40 @@ export function OnboardingOverlay() {
               src="/onboarding_bg_1.png"
               alt="Welcome Background"
               fill
-              className="object-cover opacity-80"
+              className="object-cover opacity-60 mix-blend-lighten"
               priority
               unoptimized
             />
-            <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-slate-950/70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/80" />
           </div>
 
-          {/* Top Info */}
-          <div className="relative z-10 pt-10 flex flex-col items-center text-center">
-            <span className="bg-primary/20 backdrop-blur-md border border-primary/30 px-3.5 py-1 rounded-full text-xs font-semibold text-primary uppercase tracking-widest animate-pulse">
-              Animal Rescue Connect
-            </span>
+          {/* Top Info & Stepper */}
+          <div className="relative z-10 pt-10 flex flex-col items-center gap-4 text-center">
+            <div className="flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-inner">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <span className="text-[10px] font-bold text-slate-300 tracking-widest uppercase">
+                Welcome
+              </span>
+            </div>
+            
+            {/* Dots Indicator */}
+            <div className="flex items-center gap-2">
+              <span className="w-6 h-1 rounded-full bg-primary transition-all duration-300 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+              <span className="w-2 h-1 rounded-full bg-slate-800 transition-all duration-300" />
+              <span className="w-2 h-1 rounded-full bg-slate-800 transition-all duration-300" />
+            </div>
           </div>
 
           {/* Bottom Heading & Swipe Slider */}
-          <div className="relative z-10 pb-8 flex flex-col gap-6">
-            <div className="space-y-3">
-              <h1 className="text-4xl font-extrabold tracking-tight leading-tight">
+          <div className="relative z-10 pb-8 flex flex-col gap-8">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-extrabold tracking-tight leading-tight bg-gradient-to-br from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
                 Save Stray Animals <br />
-                <span className="text-primary bg-clip-text">with Confidence</span>
+                <span className="bg-gradient-to-r from-primary via-rose-400 to-violet-500 bg-clip-text text-transparent shadow-sm">
+                  with Confidence
+                </span>
               </h1>
-              <p className="text-sm text-slate-300 max-w-sm">
+              <p className="text-xs text-slate-300/90 max-w-xs leading-relaxed">
                 Instantly report emergencies, map nearby animal shelters, and stay connected to rescue volunteers on the ground.
               </p>
             </div>
@@ -230,7 +246,7 @@ export function OnboardingOverlay() {
             {/* Premium Swipe Track */}
             <div 
               ref={trackRef}
-              className="h-14 bg-slate-900/60 backdrop-blur-md border border-white/10 rounded-full p-1 flex items-center justify-between relative select-none overflow-hidden touch-none"
+              className="h-14 bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-full p-1 flex items-center justify-between relative select-none overflow-hidden touch-none shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
               onTouchStart={(e) => handleStart(e.touches[0].clientX)}
               onTouchMove={(e) => handleMove(e.touches[0].clientX)}
               onTouchEnd={handleEnd}
@@ -241,25 +257,31 @@ export function OnboardingOverlay() {
               onMouseUp={handleEnd}
               onMouseLeave={handleEnd}
             >
-              {/* White Sliding Handle */}
+              {/* Swipe Progress Fill */}
+              <div 
+                className="absolute left-1 top-1 bottom-1 bg-gradient-to-r from-primary/30 to-violet-500/30 rounded-full transition-all pointer-events-none"
+                style={{ width: `${swipeX + 22}px` }}
+              />
+
+              {/* Glowing Swipe Handle */}
               <div 
                 style={{ transform: `translateX(${swipeX}px)` }}
                 className={cn(
-                  "w-11 h-11 rounded-full bg-white text-slate-900 flex items-center justify-center shadow-lg cursor-grab transition-all absolute left-1 z-20",
-                  isSwiping ? "cursor-grabbing scale-95" : ""
+                  "w-11 h-11 rounded-full bg-gradient-to-r from-primary to-violet-600 text-white flex items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.4)] cursor-grab transition-all absolute left-1 z-20 hover:scale-105 active:scale-95 border border-white/20",
+                  isSwiping ? "cursor-grabbing shadow-[0_0_20px_rgba(239,68,68,0.6)]" : ""
                 )}
               >
-                <FaCompass className="w-5.5 h-5.5 text-blue-600 dark:text-blue-600" />
+                <FaArrowRight className="w-4 h-4 text-white animate-pulse" />
               </div>
 
               {/* Centered Guide Text */}
-              <div className="w-full text-center text-xs font-semibold text-slate-300 pointer-events-none select-none z-10">
+              <div className="w-full text-center text-xs font-bold text-slate-300/80 pointer-events-none select-none z-10 tracking-wide">
                 Swipe to Explore
               </div>
 
               {/* Right Arrow Endcap */}
-              <div className="w-11 h-11 rounded-full bg-primary/25 backdrop-blur-sm border border-primary/45 text-white flex items-center justify-center absolute right-1 select-none pointer-events-none z-0">
-                <FaArrowRight className="w-4 h-4 text-white/95 animate-pulse" />
+              <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center absolute right-1 select-none pointer-events-none z-0">
+                <FaCompass className="w-4 h-4 text-primary animate-spin-slow" />
               </div>
             </div>
           </div>
@@ -275,18 +297,27 @@ export function OnboardingOverlay() {
               src="/onboarding_bg_2_new.png"
               alt="Permissions Background"
               fill
-              className="object-cover opacity-60"
+              className="object-cover opacity-45 mix-blend-lighten"
               priority
               unoptimized
             />
-            <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-slate-950/70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/80" />
           </div>
 
           {/* Top Title & OS badge */}
-          <div className="relative z-10 pt-10 space-y-2">
+          <div className="relative z-10 pt-10 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-extrabold">Grant Permissions</h2>
-              <span className="flex items-center gap-1.5 px-3 py-1 bg-white/10 rounded-full border border-white/20 text-xs font-semibold text-slate-300">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-1 rounded-full bg-slate-800" />
+                  <span className="w-6 h-1 rounded-full bg-primary shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+                  <span className="w-2 h-1 rounded-full bg-slate-800" />
+                </div>
+                <h2 className="text-3xl font-black bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+                  Access Permissions
+                </h2>
+              </div>
+              <span className="flex items-center gap-1.5 px-3 py-1 bg-white/5 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-bold text-slate-300 tracking-wider shadow-inner uppercase">
                 {osName.includes("Mobile") || osName.includes("Android") || osName.includes("iOS") ? (
                   <FaMobileAlt className="w-3 h-3 text-primary" />
                 ) : (
@@ -295,92 +326,108 @@ export function OnboardingOverlay() {
                 {osName}
               </span>
             </div>
-            <p className="text-sm text-slate-400">
-              Please grant the following device permissions to enable rapid rescues and location coordination.
+            <p className="text-xs text-slate-400 leading-relaxed max-w-xs">
+              Rapid rescues and coordinates require access to essential device sensors. Please allow the features below.
             </p>
           </div>
 
           {/* Permissions Form */}
-          <div className="relative z-10 flex flex-col gap-4 my-auto">
+          <div className="relative z-10 flex flex-col gap-3 my-auto">
+            
             {/* Permission 1: GPS Location */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-4">
+            <div className={cn(
+              "p-4 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-4 backdrop-blur-md",
+              permissions.location
+                ? "bg-emerald-500/[0.03] border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.05)]"
+                : "bg-white/[0.02] border-white/5 hover:border-white/15"
+            )}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-primary relative shadow-md">
                   <FaMapMarkerAlt className="w-5 h-5" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-sm">GPS Location Services</span>
-                  <span className="text-xs text-slate-400">Pinpoints animals in distress on map.</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-sm text-slate-100">GPS Location Services</span>
+                  <span className="text-[11px] text-slate-400">Pinpoints animals in distress on the map.</span>
                 </div>
               </div>
               <button
                 onClick={() => !permissions.location && requestPermission('location')}
                 className={cn(
-                  "px-4 py-2 rounded-full text-xs font-bold transition-all",
+                  "px-4 py-2 rounded-xl text-xs font-extrabold transition-all duration-300 active:scale-95",
                   permissions.location 
-                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1"
-                    : "bg-primary text-primary-foreground hover:bg-primary/95"
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+                    : "bg-white/10 hover:bg-primary hover:text-primary-foreground border border-white/10 text-white cursor-pointer"
                 )}
               >
                 {permissions.location ? (
                   <>
-                    <FaCheckCircle className="w-3.5 h-3.5" /> Granted
+                    <FaCheckCircle className="w-3.5 h-3.5 animate-pulse" /> Granted
                   </>
                 ) : "Grant"}
               </button>
             </div>
 
             {/* Permission 2: Contacts / Dialing */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-4">
+            <div className={cn(
+              "p-4 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-4 backdrop-blur-md",
+              permissions.contacts
+                ? "bg-emerald-500/[0.03] border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.05)]"
+                : "bg-white/[0.02] border-white/5 hover:border-white/15"
+            )}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-primary relative shadow-md">
                   <FaAddressBook className="w-5 h-5" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-sm">Call & Contacts Access</span>
-                  <span className="text-xs text-slate-400">Dial local shelters and rescue drivers.</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-sm text-slate-100">Call & Contacts Access</span>
+                  <span className="text-[11px] text-slate-400">Dial local shelters and rescue drivers.</span>
                 </div>
               </div>
               <button
                 onClick={() => !permissions.contacts && requestPermission('contacts')}
                 className={cn(
-                  "px-4 py-2 rounded-full text-xs font-bold transition-all",
+                  "px-4 py-2 rounded-xl text-xs font-extrabold transition-all duration-300 active:scale-95",
                   permissions.contacts 
-                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1"
-                    : "bg-primary text-primary-foreground hover:bg-primary/95"
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+                    : "bg-white/10 hover:bg-primary hover:text-primary-foreground border border-white/10 text-white cursor-pointer"
                 )}
               >
                 {permissions.contacts ? (
                   <>
-                    <FaCheckCircle className="w-3.5 h-3.5" /> Granted
+                    <FaCheckCircle className="w-3.5 h-3.5 animate-pulse" /> Granted
                   </>
                 ) : "Grant"}
               </button>
             </div>
 
             {/* Permission 3: Gallery Photos */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-4">
+            <div className={cn(
+              "p-4 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-4 backdrop-blur-md",
+              permissions.gallery
+                ? "bg-emerald-500/[0.03] border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.05)]"
+                : "bg-white/[0.02] border-white/5 hover:border-white/15"
+            )}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-primary relative shadow-md">
                   <FaImage className="w-5 h-5" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-sm">Gallery Media Access</span>
-                  <span className="text-xs text-slate-400">Upload evidence photos of the animal.</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-sm text-slate-100">Gallery Media Access</span>
+                  <span className="text-[11px] text-slate-400">Upload evidence photos of the animal.</span>
                 </div>
               </div>
               <button
                 onClick={() => !permissions.gallery && requestPermission('gallery')}
                 className={cn(
-                  "px-4 py-2 rounded-full text-xs font-bold transition-all",
+                  "px-4 py-2 rounded-xl text-xs font-extrabold transition-all duration-300 active:scale-95",
                   permissions.gallery 
-                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1"
-                    : "bg-primary text-primary-foreground hover:bg-primary/95"
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+                    : "bg-white/10 hover:bg-primary hover:text-primary-foreground border border-white/10 text-white cursor-pointer"
                 )}
               >
                 {permissions.gallery ? (
                   <>
-                    <FaCheckCircle className="w-3.5 h-3.5" /> Granted
+                    <FaCheckCircle className="w-3.5 h-3.5 animate-pulse" /> Granted
                   </>
                 ) : "Grant"}
               </button>
@@ -393,10 +440,10 @@ export function OnboardingOverlay() {
               onClick={() => permissions.location && permissions.contacts && permissions.gallery && setStep(3)}
               disabled={!(permissions.location && permissions.contacts && permissions.gallery)}
               className={cn(
-                "w-full py-4 rounded-full text-center font-bold text-sm transition-all duration-300 shadow-lg",
+                "w-full py-4 rounded-2xl text-center font-bold text-sm transition-all duration-300 shadow-lg cursor-pointer",
                 (permissions.location && permissions.contacts && permissions.gallery)
-                  ? "bg-primary text-primary-foreground hover:bg-primary/95 hover:shadow-primary/20 scale-100"
-                  : "bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed scale-95"
+                  ? "bg-gradient-to-r from-primary to-violet-600 text-white hover:brightness-110 shadow-[0_4px_20px_rgba(239,68,68,0.25)] scale-100 active:scale-98"
+                  : "bg-slate-900/50 text-slate-500 border border-slate-800/80 cursor-not-allowed scale-95"
               )}
             >
               Continue to Rescue Connect
@@ -405,31 +452,32 @@ export function OnboardingOverlay() {
 
           {/* Mock Prompt Popup Panel */}
           {activePrompt && (
-            <div className="absolute inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-6">
-              <div className="w-full max-w-xs bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-2xl animate-in scale-in duration-200">
-                <div className="flex flex-col items-center text-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+            <div className="absolute inset-0 z-50 bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-6">
+              <div className="w-full max-w-xs bg-slate-900/95 border border-white/10 rounded-3xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-in zoom-in-95 duration-200">
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 text-primary flex items-center justify-center shadow-inner relative">
+                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-primary rounded-full animate-ping" />
                     {activePrompt === 'location' && <FaMapMarkerAlt className="w-6 h-6" />}
                     {activePrompt === 'contacts' && <FaAddressBook className="w-6 h-6" />}
                     {activePrompt === 'gallery' && <FaImage className="w-6 h-6" />}
                   </div>
-                  <div className="space-y-1">
-                    <span className="font-extrabold text-sm block">Permission Request</span>
-                    <p className="text-xs text-slate-400">
-                      Animal Rescue Connect is requesting access to your device's {" "}
-                      <span className="font-semibold text-white capitalize">{activePrompt}</span> info.
+                  <div className="space-y-2">
+                    <span className="font-black text-base text-slate-100 block">Permission Prompt</span>
+                    <p className="text-xs text-slate-400 leading-relaxed px-1">
+                      Allow Animal Rescue Connect to utilize your device's {" "}
+                      <span className="font-extrabold text-primary capitalize">{activePrompt}</span> sensor.
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-2.5 w-full mt-2">
+                  <div className="grid grid-cols-2 gap-3 w-full mt-3">
                     <button
                       onClick={handleDeny}
-                      className="py-2.5 rounded-full border border-slate-800 hover:bg-white/5 text-xs font-bold text-slate-400"
+                      className="py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-xs font-bold text-slate-400 transition-colors cursor-pointer"
                     >
                       Deny
                     </button>
                     <button
                       onClick={handleAllow}
-                      className="py-2.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-bold"
+                      className="py-2.5 rounded-xl bg-gradient-to-r from-primary to-violet-600 text-white hover:brightness-115 text-xs font-bold transition-all shadow-md cursor-pointer"
                     >
                       Allow Access
                     </button>
@@ -440,6 +488,7 @@ export function OnboardingOverlay() {
           )}
         </div>
       )}
+
 
       {/* STEP 3: Loading Screen (Helping Animal Illustration) */}
       {step === 3 && (
