@@ -1,15 +1,78 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-// Try multiple Overpass mirrors in order — use fastest that responds
-const OVERPASS_MIRRORS = [
-  "https://overpass.kumi.systems/api/interpreter",
-  "https://overpass.private.coffee/api/interpreter",
-  "https://overpass-api.de/api/interpreter",
-];
+const FSQ_KEY = process.env.FOURSQUARE_API_KEY;
 
-async function queryOverpass(query: string): Promise<any[] | null> {
-  for (const endpoint of OVERPASS_MIRRORS) {
+// Foursquare category IDs for animal/pet places
+// 17069 = Veterinarian, 11134 = Pet Store, 17067 = Animal Shelter, 15014 = Animal Rescue Service
+const FSQ_CATEGORIES = "17069,11134,17067,15014";
+
+async function fetchFromFoursquare(lat: string, lng: string, radius: string) {
+  if (!FSQ_KEY) return null;
+
+  const { data } = await axios.get("https://api.foursquare.com/v3/places/search", {
+    headers: {
+      Authorization: FSQ_KEY,
+      Accept: "application/json",
+    },
+    params: {
+      ll: `${lat},${lng}`,
+      radius: Math.min(Number(radius), 15000),
+      categories: FSQ_CATEGORIES,
+      limit: 50,
+      fields: "fsq_id,name,geocodes,categories,location,tel,website,hours",
+    },
+    timeout: 8000,
+  });
+
+  const results = data.results ?? [];
+
+  return results.map((p: any) => {
+    const cat = p.categories?.[0]?.id ?? 0;
+    let type: string;
+    if (cat === 11134) type = "pet_shop";
+    else if (cat === 17067 || cat === 15014) type = "shelter";
+    else type = "veterinary";
+
+    return {
+      id: p.fsq_id,
+      type,
+      lat: p.geocodes?.main?.latitude,
+      lon: p.geocodes?.main?.longitude,
+      tags: {
+        name: p.name,
+        amenity: type === "pet_shop" ? "shop" : "veterinary",
+        phone: p.tel,
+        website: p.website,
+        "opening_hours": p.hours?.display ?? undefined,
+      },
+    };
+  }).filter((p: any) => p.lat && p.lon);
+}
+
+// Overpass fallback with fast mirrors
+async function fetchFromOverpass(lat: string, lng: string, radius: string) {
+  const mirrors = [
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
+    "https://overpass-api.de/api/interpreter",
+  ];
+
+  const r = Math.min(Number(radius), 15000);
+  const query = `
+[out:json][timeout:6];
+(
+  node["amenity"="veterinary"](around:${r},${lat},${lng});
+  way["amenity"="veterinary"](around:${r},${lat},${lng});
+  node["shop"="pet"](around:${r},${lat},${lng});
+  way["shop"="pet"](around:${r},${lat},${lng});
+  node["amenity"="animal_shelter"](around:${r},${lat},${lng});
+  node["healthcare"="veterinary"](around:${r},${lat},${lng});
+);
+out center;
+`;
+
+  for (const endpoint of mirrors) {
     try {
       const { data } = await axios.post(
         endpoint,
@@ -17,19 +80,23 @@ async function queryOverpass(query: string): Promise<any[] | null> {
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "AnimalRescueConnect/1.0 (rescueconnect@email.com)",
+            "User-Agent": "AnimalRescueConnect/1.0",
           },
-          timeout: 7000, // 7s per mirror — well within Vercel's 10s limit
+          timeout: 7000,
         }
       );
-      const elements = data.elements ?? [];
-      if (elements.length >= 0) return elements; // accept even empty result
+      return (data.elements ?? [])
+        .map((el: any) => ({
+          ...el,
+          lat: el.lat ?? el.center?.lat,
+          lon: el.lon ?? el.center?.lon,
+        }))
+        .filter((el: any) => el.lat && el.lon);
     } catch {
-      // try next mirror
       continue;
     }
   }
-  return null;
+  return [];
 }
 
 export async function GET(request: Request) {
@@ -42,42 +109,22 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Missing lat/lng" }, { status: 400 });
   }
 
-  const r = Math.min(Number(radius), 15000); // cap at 15km for speed
-
-  // Simple focused query — only the most common OSM tags for animal places
-  const query = `
-[out:json][timeout:6];
-(
-  node["amenity"="veterinary"](around:${r},${lat},${lng});
-  way["amenity"="veterinary"](around:${r},${lat},${lng});
-  node["shop"="pet"](around:${r},${lat},${lng});
-  way["shop"="pet"](around:${r},${lat},${lng});
-  node["amenity"="animal_shelter"](around:${r},${lat},${lng});
-  way["amenity"="animal_shelter"](around:${r},${lat},${lng});
-  node["healthcare"="veterinary"](around:${r},${lat},${lng});
-  node["animal"="yes"](around:${r},${lat},${lng});
-  node["name"~"vet|animal|pet|পশু|clinic",i]["amenity"](around:${r},${lat},${lng});
-);
-out center;
-`;
-
   try {
-    const elements = await queryOverpass(query);
-
-    if (elements === null) {
-      return NextResponse.json({ elements: [] });
+    // 1. Try Foursquare (free, no billing, great Bangladesh coverage)
+    if (FSQ_KEY) {
+      try {
+        const fsqResults = await fetchFromFoursquare(lat, lng, radius);
+        if (fsqResults && fsqResults.length > 0) {
+          return NextResponse.json({ elements: fsqResults, source: "foursquare" });
+        }
+      } catch (e: any) {
+        console.error("Foursquare error:", e.message);
+      }
     }
 
-    // Normalize: ways have center coords, nodes have lat/lon directly
-    const normalized = elements
-      .map((el: any) => ({
-        ...el,
-        lat: el.lat ?? el.center?.lat,
-        lon: el.lon ?? el.center?.lon,
-      }))
-      .filter((el: any) => el.lat && el.lon);
-
-    return NextResponse.json({ elements: normalized });
+    // 2. Fallback: OpenStreetMap Overpass
+    const elements = await fetchFromOverpass(lat, lng, radius);
+    return NextResponse.json({ elements, source: "osm" });
   } catch (error: any) {
     console.error("Places proxy error:", error.message);
     return NextResponse.json({ elements: [] });
