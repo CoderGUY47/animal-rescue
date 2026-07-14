@@ -172,7 +172,7 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  setLoading(true);
  const [addr, results] = await Promise.allSettled([
  reverseGeocode(lat, lng),
- fetchNearbyPlaces(lat, lng, 5000),
+ fetchNearbyPlaces(lat, lng, 100000),
  ]);
  if (addr.status === "fulfilled") setAddress(addr.value);
  if (results.status === "fulfilled") setPlaces(results.value);

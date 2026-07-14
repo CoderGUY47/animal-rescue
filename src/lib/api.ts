@@ -26,7 +26,7 @@ const nominatimApi = axios.create({
 });
 
 // helper: find nearby animal-related places via overpass
-export async function fetchNearbyPlaces(lat: number, lng: number, radiusMeters = 5000) {
+export async function fetchNearbyPlaces(lat: number, lng: number, radiusMeters = 100000) {
  const query = `
  [out:json][timeout:25];
  (
