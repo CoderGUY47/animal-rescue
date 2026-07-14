@@ -405,9 +405,10 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
 
  {/* Nearby place markers */}
  {filteredPlaces.map((place) => {
- const cfg = TYPE_CONFIG[place.type];
- const rating = (3.5 + (place.id % 15) / 10).toFixed(1); // Mock pseudo-random deterministic rating
- return (
+    const cfg = TYPE_CONFIG[place.type];
+    const numericId = typeof place.id === "number" ? place.id : place.id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const rating = (3.5 + (numericId % 15) / 10).toFixed(1); // Mock pseudo-random deterministic rating
+    return (
  <MapMarker key={place.id} latitude={place.lat} longitude={place.lng}>
  <MarkerContent>
  <div className={`p-1.5 rounded-full shadow-lg border-2 border-white ${cfg.color}`}>

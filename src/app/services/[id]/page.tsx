@@ -37,8 +37,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   const formattedType = typeLabelMap[service.type] || "Rescue Service";
   
   // mock rating details derived deterministically from ID
-  const rating = (3.8 + (Number(service.id) % 12) / 10).toFixed(1);
-  const reviews = 20 + (Number(service.id) % 80);
+  const numericId = typeof service.id === "number" ? service.id : String(service.id).split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const rating = (3.8 + (numericId % 12) / 10).toFixed(1);
+  const reviews = 20 + (numericId % 80);
 
   return (
     <div className="flex flex-col flex-1 bg-muted/10 pb-20 animate-in fade-in duration-500 p-5 gap-6">

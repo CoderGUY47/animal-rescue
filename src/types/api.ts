@@ -1,7 +1,7 @@
 export type PlaceType = "veterinary" | "shelter" | "pet_shop" | "hospital";
 
 export type Place = {
-  id: number;
+  id: number | string;
   lat: number;
   lng: number;
   name: string;

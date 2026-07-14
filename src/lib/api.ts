@@ -108,6 +108,35 @@ export async function fetchRoute(
 
 // helper: fetch place details by OSM node ID
 export async function fetchPlaceDetails(id: string): Promise<Place | null> {
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const isNumeric = /^\d+$/.test(id);
+
+  if (apiKey && !isNumeric) {
+    try {
+      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&fields=name,geometry,formatted_phone_number,opening_hours,website,types&key=${apiKey}`;
+      const { data } = await axios.get(url, { timeout: 10000 });
+      if (data.status === "OK" && data.result) {
+        const res = data.result;
+        let resolvedType: PlaceType = "veterinary";
+        if (res.types?.includes("pet_store")) resolvedType = "pet_shop";
+        else if (res.types?.includes("animal_shelter") || res.name?.toLowerCase().includes("shelter")) resolvedType = "shelter";
+
+        return {
+          id,
+          lat: res.geometry?.location?.lat,
+          lng: res.geometry?.location?.lng,
+          name: res.name || "Verified Rescue Facility",
+          type: resolvedType,
+          phone: res.formatted_phone_number,
+          hours: res.opening_hours?.weekday_text?.join(", ") || (res.opening_hours?.open_now ? "Open Now" : undefined),
+          website: res.website,
+        };
+      }
+    } catch (e) {
+      console.error("Google Place Details fetch failed:", e);
+    }
+  }
+
   try {
     const query = `
     [out:json][timeout:15];
