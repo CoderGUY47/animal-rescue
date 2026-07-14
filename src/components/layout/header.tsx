@@ -15,20 +15,21 @@ import {
 } from '@/components/ui/dialog';
 import { buttonVariants } from '@/components/ui/button';
 import { useLanguage } from '@/components/providers/language-provider';
-
-// To test populated notifications, add objects to this array
-const MOCK_NOTIFICATIONS: any[] = [];
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { markAllRead, clearAll } from '@/store/slices/notificationsSlice';
 
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const { t } = useLanguage();
+  const dispatch = useAppDispatch();
+  const notifications = useAppSelector((s) => s.notifications.items);
   // only show back arrow on sub-pages (e.g. /settings/notifications, /rescues/[id])
   // not on top-level tabs like /map, /settings, /rescues, /report, /analytics
   const segments = pathname.split('/').filter(Boolean);
   const showBack = segments.length >= 2;
 
-  const unreadCount = MOCK_NOTIFICATIONS.filter((n) => n.unread).length;
+  const unreadCount = notifications.filter((n) => n.unread).length;
   
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -101,41 +102,58 @@ export function Header() {
               </div>
             </DialogHeader>
             <div className="flex flex-col divide-y max-h-[420px] overflow-y-auto">
-              {MOCK_NOTIFICATIONS.length === 0 ? (
+              {notifications.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
                   <div className="w-12 h-12 bg-muted/50 rounded-full flex items-center justify-center mb-3">
                     <FaBell className="w-5 h-5 text-muted-foreground/30" />
                   </div>
                   <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">No notifications yet</span>
                   <span className="text-xs text-muted-foreground mt-1 px-4 leading-relaxed">
-                    When you get updates about rescues or reports, they'll show up here.
+                    When you get updates about rescues or reports, they&apos;ll show up here.
                   </span>
                 </div>
               ) : (
-                MOCK_NOTIFICATIONS.map((n) => (
-                  <div
-                    key={n.id}
-                    className={`flex items-start gap-3 px-4 py-3 transition-colors ${n.unread ? "bg-primary/5" : "hover:bg-muted/50"}`}
-                  >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${n.bg}`}>
-                      {n.icon}
-                    </div>
-                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="font-semibold text-sm truncate">{n.title}</span>
-                        {n.unread && <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />}
+                notifications.map((n) => {
+                  const icon = n.type === 'report'
+                    ? <FaExclamationTriangle className="w-4 h-4 text-amber-500" />
+                    : n.type === 'rescue'
+                    ? <FaCheckCircle className="w-4 h-4 text-green-500" />
+                    : <FaPaw className="w-4 h-4 text-primary" />;
+                  const bg = n.type === 'report' ? 'bg-amber-50 dark:bg-amber-950' : n.type === 'rescue' ? 'bg-green-50 dark:bg-green-950' : 'bg-primary/10';
+                  return (
+                    <div
+                      key={n.id}
+                      className={`flex items-start gap-3 px-4 py-3 transition-colors ${n.unread ? 'bg-primary/5' : 'hover:bg-muted/50'}`}
+                    >
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${bg}`}>
+                        {icon}
                       </div>
-                      <span className="text-xs text-muted-foreground leading-snug">{n.desc}</span>
-                      <span className="text-[10px] text-muted-foreground/70 mt-0.5">{n.time}</span>
+                      <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-semibold text-sm truncate">{n.title}</span>
+                          {n.unread && <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />}
+                        </div>
+                        <span className="text-xs text-muted-foreground leading-snug">{n.desc}</span>
+                        <span className="text-[10px] text-muted-foreground/70 mt-0.5">{n.time}</span>
+                      </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
-            {MOCK_NOTIFICATIONS.length > 0 && (
-              <div className="px-4 py-3 border-t">
-                <button className="w-full text-xs text-primary font-semibold text-center hover:underline">
+            {notifications.length > 0 && (
+              <div className="px-4 py-3 border-t flex gap-2">
+                <button
+                  onClick={() => dispatch(markAllRead())}
+                  className="flex-1 text-xs text-primary font-semibold text-center hover:underline"
+                >
                   Mark all as read
+                </button>
+                <button
+                  onClick={() => dispatch(clearAll())}
+                  className="flex-1 text-xs text-muted-foreground text-center hover:underline"
+                >
+                  Clear all
                 </button>
               </div>
             )}

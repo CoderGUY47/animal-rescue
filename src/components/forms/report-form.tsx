@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { useAppDispatch } from "@/store/hooks";
 import { addReport } from "@/store/slices/reportsSlice";
 import { incrementReports } from "@/store/slices/userSlice";
+import { addNotification } from "@/store/slices/notificationsSlice";
 import { toast } from "react-toastify";
 import { reverseGeocode } from "@/lib/api";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -107,8 +108,9 @@ export function ReportForm() {
   // simulate api delay
   await new Promise((r) => setTimeout(r, 1200));
   // dispatch to redux store
+  const animalLabel = data.animalType === "other" ? (data.animalTypeOther ?? "Animal") : data.animalType;
   dispatch(addReport({
-    animalType: data.animalType === "other" ? (data.animalTypeOther ?? "other") : data.animalType,
+    animalType: animalLabel,
     severity: data.severity,
     condition: data.condition,
     locationInfo: data.locationInfo,
@@ -119,6 +121,11 @@ export function ReportForm() {
     images: uploadedUrls,
   }));
   dispatch(incrementReports());
+  dispatch(addNotification({
+    type: "report",
+    title: `🐾 ${animalLabel.charAt(0).toUpperCase() + animalLabel.slice(1)} report submitted`,
+    desc: `${data.condition.slice(0, 80)}${data.condition.length > 80 ? "..." : ""}`,
+  }));
   toast.success("🐾 Report submitted! Nearby rescuers have been notified.");
   setSubmitted(true);
  } catch {
