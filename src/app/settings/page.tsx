@@ -581,7 +581,7 @@ export default function SettingsPage() {
               </div>
               <FaChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
             </Link>
-            <div className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors">
+            <div className="w-full flex items-center justify-between p-4 border-b hover:bg-muted/50 transition-colors">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
                   <FaInfoCircle className="w-4 h-4" />
@@ -592,6 +592,28 @@ export default function SettingsPage() {
                   </span>
                   <span className="text-xs text-muted-foreground">
                     {t("settings.aboutSub")}
+                  </span>
+                </div>
+              </div>
+              <FaChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+            </div>
+            <div 
+              onClick={() => {
+                localStorage.removeItem("onboarding_completed");
+                window.location.reload();
+              }}
+              className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 dark:text-rose-400">
+                  <FaPaw className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="font-semibold text-sm">
+                    Reset Get Started Flow
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    Restart welcome and permission screens
                   </span>
                 </div>
               </div>
