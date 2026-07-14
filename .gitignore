@@ -47,4 +47,8 @@ CLAUDE.md
 /Animal Rescue Connect – Emergency Help Platform for Stray & Sick Animals (Frontend Project).txt
 /tsconfig.tsbuildinfo
 /src/components/layout/dist/
-
+/src/app/settings/dist/
+/src/components/ui/dist/
+/src/lib/dist/
+/src/store/slices/dist/
+src/**/dist/
