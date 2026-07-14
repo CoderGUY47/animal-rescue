@@ -307,10 +307,10 @@ export function FloatingChatbot() {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           style={{ transform: `translate(${chatDragPos.current.x}px, ${chatDragPos.current.y}px)` }}
-          className="absolute bottom-20 right-4 w-[calc(100%-32px)] sm:w-[360px] h-[420px] border border-border/30 shadow-xl rounded-xl flex flex-col overflow-hidden bg-black/30 backdrop-blur-lg pointer-events-auto animate-in slide-in-from-bottom-5 duration-300 select-none cursor-grab active:cursor-grabbing touch-none z-50"
+          className="absolute bottom-20 right-4 w-[calc(100%-32px)] sm:w-[360px] h-[420px] border border-white/15 shadow-2xl rounded-2xl flex flex-col overflow-hidden bg-slate-950/80 backdrop-blur-xl pointer-events-auto animate-in slide-in-from-bottom-5 duration-300 select-none cursor-grab active:cursor-grabbing touch-none z-50 text-white ring-0 ring-transparent"
         >
           {/* Header */}
-          <div className="bg-transparent border-b border-border/15 p-2.5 text-foreground flex justify-between items-center select-none">
+          <div className="bg-transparent border-b border-white/10 p-2.5 text-white flex justify-between items-center select-none">
             <div className="flex items-center gap-3">
               <div className="bg-transparent shrink-0">
                 {/* Custom mini AI Rescue Bot SVG - Paw Print Style */}
@@ -338,16 +338,16 @@ export function FloatingChatbot() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-bold text-base leading-none flex items-center gap-1.5 text-foreground">
+                <h3 className="font-bold text-base leading-none flex items-center gap-1.5 text-white">
                   Rescue Assistant
                   <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse inline-block" />
                 </h3>
-                <span className="text-sm text-muted-foreground font-medium">First-Aid Veterinary Guide</span>
+                <span className="text-sm text-slate-400 font-medium">First-Aid Veterinary Guide</span>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted/40 active:scale-95 transition-all"
+              className="text-slate-400 hover:text-white p-2 rounded-full hover:bg-white/10 active:scale-95 transition-all"
             >
               <FaTimes className="w-5 h-5" />
             </button>
@@ -361,8 +361,8 @@ export function FloatingChatbot() {
                 className={cn(
                   "flex flex-col max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs shadow-sm border leading-relaxed animate-in fade-in zoom-in-95 duration-200",
                   msg.sender === "user"
-                    ? "bg-primary text-primary-foreground self-end rounded-tr-none border-primary/20"
-                    : "bg-muted/40 text-foreground self-start rounded-tl-none border-border"
+                    ? "bg-slate-800 text-white self-end rounded-tr-none border-white/10"
+                    : "bg-white/10 text-slate-100 self-start rounded-tl-none border-white/5"
                 )}
               >
                 {/* Simple Markdown Bold/List formatting logic */}
@@ -372,7 +372,7 @@ export function FloatingChatbot() {
                     if (line.trim().startsWith("* ") || line.trim().startsWith("- ")) {
                       return (
                         <div key={idx} className="flex gap-1.5 pl-1.5">
-                          <span className="text-primary font-bold">•</span>
+                          <span className="text-white/80 font-bold">•</span>
                           <span>{line.replace(/^[\*\-]\s+/, "")}</span>
                         </div>
                       );
@@ -383,7 +383,7 @@ export function FloatingChatbot() {
                       return (
                         <div key={idx}>
                           {parts.map((part, pIdx) =>
-                             pIdx % 2 === 1 ? <strong key={pIdx} className="font-extrabold text-foreground">{part}</strong> : part
+                             pIdx % 2 === 1 ? <strong key={pIdx} className="font-extrabold text-white">{part}</strong> : part
                           )}
                         </div>
                       );
@@ -393,7 +393,7 @@ export function FloatingChatbot() {
                 </div>
                 <span className={cn(
                   "text-[8px] mt-1 self-end opacity-60",
-                  msg.sender === "user" ? "text-primary-foreground/80" : "text-muted-foreground"
+                  msg.sender === "user" ? "text-white/60" : "text-slate-400"
                 )}>
                   {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
@@ -401,8 +401,8 @@ export function FloatingChatbot() {
             ))}
 
             {loading && (
-              <div className="bg-muted/40 text-foreground self-start rounded-2xl rounded-tl-none px-4 py-3 text-xs border max-w-[80%] flex items-center gap-2">
-                <FaSpinner className="w-3.5 h-3.5 animate-spin text-primary" />
+              <div className="bg-white/10 text-slate-100 self-start rounded-2xl rounded-tl-none px-4 py-3 text-xs border border-white/5 max-w-[80%] flex items-center gap-2">
+                <FaSpinner className="w-3.5 h-3.5 animate-spin text-white" />
                 <span>Typing guides...</span>
               </div>
             )}
@@ -424,7 +424,7 @@ export function FloatingChatbot() {
                 type="button"
                 onClick={() => handleQuickAction(action.label)}
                 disabled={loading}
-                className="text-[11px] bg-card border border-border px-3.5 py-1.5 rounded-full hover:border-primary/50 text-foreground hover:text-primary transition-colors cursor-pointer active:scale-95 disabled:opacity-50 whitespace-nowrap shrink-0"
+                className="text-[11px] bg-white/10 border border-white/10 px-3.5 py-1.5 rounded-full hover:border-white/30 hover:bg-white/15 text-slate-200 hover:text-white transition-all cursor-pointer active:scale-95 disabled:opacity-50 whitespace-nowrap shrink-0"
               >
                 {action.label}
               </button>
@@ -445,15 +445,15 @@ export function FloatingChatbot() {
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Ask a rescue/first-aid question..."
               disabled={loading}
-              className="flex-1 border bg-background/50 backdrop-blur-sm rounded-full px-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 border-border"
+              className="flex-1 border border-white/15 bg-slate-950/40 backdrop-blur-sm rounded-full px-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 text-white placeholder-slate-400"
             />
             <Button
               type="submit"
               size="icon"
               disabled={loading || !inputText.trim()}
-              className="rounded-full shrink-0 h-9 w-9 bg-primary text-primary-foreground"
+              className="rounded-full shrink-0 h-9 w-9 bg-white text-slate-950 hover:bg-white/90 transition-colors flex items-center justify-center border-0 cursor-pointer active:scale-95 disabled:opacity-50"
             >
-              <FaPaperPlane className="w-3.5 h-3.5" />
+              <FaPaperPlane className="w-3.5 h-3.5 text-slate-950" />
             </Button>
           </form>
 
