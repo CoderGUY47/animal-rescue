@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { MapView } from '@/components/map/map-view';
 
 export const metadata = {
@@ -14,11 +13,8 @@ export default async function MapPage({
  const q = typeof queryParams.q === 'string' ? queryParams.q.toLowerCase() : '';
 
  return (
-  <div className="relative" style={{ height: 'calc(100vh - 120px)' }}>
-    <Suspense fallback={<div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">Loading map...</div>}>
-      <MapView searchQuery={q} />
-    </Suspense>
-  </div>
+ <div className="relative" style={{ height: 'calc(100vh - 120px)' }}>
+ <MapView searchQuery={q} />
+ </div>
  );
 }
-
