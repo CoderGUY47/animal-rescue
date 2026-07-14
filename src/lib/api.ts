@@ -109,9 +109,10 @@ export async function fetchRoute(
   ];
 }
 
-// helper: fetch place details by OSM node ID
+// helper: fetch place details by OSM node ID or Google Place ID or Foursquare ID
 export async function fetchPlaceDetails(id: string): Promise<Place | null> {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const fsqKey = process.env.FOURSQUARE_API_KEY;
   const isNumeric = /^\d+$/.test(id);
 
   if (apiKey && !isNumeric) {
@@ -137,6 +138,42 @@ export async function fetchPlaceDetails(id: string): Promise<Place | null> {
       }
     } catch (e) {
       console.error("Google Place Details fetch failed:", e);
+    }
+  }
+
+  if (fsqKey && !isNumeric) {
+    try {
+      const url = `https://api.foursquare.com/v3/places/${id}`;
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: fsqKey,
+          Accept: "application/json",
+        },
+        params: {
+          fields: "fsq_id,name,geocodes,categories,location,tel,website,hours",
+        },
+        timeout: 10000,
+      });
+
+      if (data) {
+        const cat = data.categories?.[0]?.id ?? 0;
+        let resolvedType: PlaceType = "veterinary";
+        if (cat === 11134) resolvedType = "pet_shop";
+        else if (cat === 17067 || cat === 15014) resolvedType = "shelter";
+
+        return {
+          id: data.fsq_id,
+          lat: data.geocodes?.main?.latitude ?? 0,
+          lng: data.geocodes?.main?.longitude ?? 0,
+          name: data.name || "Verified Rescue Facility",
+          type: resolvedType,
+          phone: data.tel,
+          hours: data.hours?.display,
+          website: data.website,
+        };
+      }
+    } catch (e) {
+      console.error("Foursquare Place Details fetch failed:", e);
     }
   }
 
