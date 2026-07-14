@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export type UserProfile = {
   name: string;
-  avatar: string; // e.g. "/avatars/avatar1.svg"
+  avatar: string; //   "/avatars/avatar1.svg"
   gender: "male" | "female" | "other" | "";
   address: string;
 };
@@ -26,7 +26,9 @@ const loadProfile = (): UserProfile => {
   if (typeof window === "undefined") return DEFAULT_PROFILE;
   try {
     const saved = localStorage.getItem("rescue_user_profile");
-    return saved ? { ...DEFAULT_PROFILE, ...JSON.parse(saved) } : DEFAULT_PROFILE;
+    return saved
+      ? { ...DEFAULT_PROFILE, ...JSON.parse(saved) }
+      : DEFAULT_PROFILE;
   } catch {
     return DEFAULT_PROFILE;
   }
@@ -70,5 +72,11 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, updateProfile, clearProfile, incrementReports, setVolunteer } = userSlice.actions;
+export const {
+  setUser,
+  updateProfile,
+  clearProfile,
+  incrementReports,
+  setVolunteer,
+} = userSlice.actions;
 export default userSlice.reducer;
