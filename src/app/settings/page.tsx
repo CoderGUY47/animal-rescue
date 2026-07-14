@@ -31,6 +31,15 @@ const AVATARS = [
   '/avatars/avatar4.svg',
   '/avatars/avatar5.svg',
   '/avatars/avatar6.svg',
+  '/avatars/avatar7.svg',
+  '/avatars/avatar8.svg',
+  '/avatars/avatar9.svg',
+  '/avatars/avatar10.svg',
+  '/avatars/avatar11.svg',
+  '/avatars/avatar12.svg',
+  '/avatars/avatar13.svg',
+  '/avatars/avatar14.svg',
+  '/avatars/avatar15.svg',
 ];
 
 const LANGUAGE_LIST = [
@@ -164,7 +173,7 @@ export default function SettingsPage() {
                 {/* Avatar picker */}
                 <div>
                   <Label className="text-xs text-muted-foreground mb-2 block">Choose Avatar</Label>
-                  <div className="grid grid-cols-6 gap-2">
+                  <div className="grid grid-cols-5 gap-2">
                     {AVATARS.map((src) => (
                       <button
                         key={src}
