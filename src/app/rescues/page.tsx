@@ -7,6 +7,13 @@ import { FaMapMarkerAlt, FaClock, FaExclamationTriangle } from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/components/providers/language-provider";
 
+function formatTime(iso: string): string {
+  const d = new Date(iso);
+  const time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+  const date = d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+  return `${time} · ${date}`;
+}
+
 export default function RescuesListPage() {
   const reports = useAppSelector((state) => state.reports.items);
   const { t } = useLanguage();
@@ -60,7 +67,7 @@ export default function RescuesListPage() {
                     <div className="flex justify-between items-start">
                       <h3 className="font-semibold truncate pr-2 capitalize">{animalLabel} {t("rescues.inNeed")}</h3>
                       <span className="text-[10px] text-muted-foreground flex items-center gap-1 whitespace-nowrap">
-                        <FaClock className="w-3 h-3" /> Just now
+                        <FaClock className="w-3 h-3" /> {formatTime(rescue.createdAt)}
                       </span>
                     </div>
                     

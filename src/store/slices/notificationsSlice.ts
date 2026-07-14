@@ -41,7 +41,12 @@ const notificationsSlice = createSlice({
       const item: AppNotification = {
         ...action.payload,
         id: crypto.randomUUID(),
-        time: "Just now",
+        time: (() => {
+          const d = new Date();
+          const time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+          const date = d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+          return `${time} · ${date}`;
+        })(),
         unread: true,
       };
       state.items.unshift(item);
