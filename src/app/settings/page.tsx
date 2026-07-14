@@ -121,56 +121,73 @@ export default function SettingsPage() {
           <FaUserCircle className="w-4 h-4 text-primary" /> My Profile
         </h3>
         <Card className="overflow-hidden">
-          <CardContent className="p-4 flex flex-col gap-4">
-
-            {/* Avatar row — always visible */}
-            <div className="flex flex-col items-center gap-3">
-              <div className="relative">
-                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/20 bg-muted shadow-md">
-                  <Image
-                    src={isEditing ? draft.avatar : profile.avatar}
-                    alt="Profile avatar"
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover"
-                    unoptimized
-                  />
-                </div>
-                {!isEditing && (
+          <CardContent className="p-4">
+            {!isEditing ? (
+              /* ── View Mode: Side-by-side ── */
+              <div className="flex items-center gap-5 animate-in fade-in duration-300">
+                {/* Left: Avatar with Edit button */}
+                <div className="relative shrink-0">
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/20 bg-muted shadow-md">
+                    <Image
+                      src={profile.avatar}
+                      alt="Profile avatar"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                      unoptimized
+                    />
+                  </div>
                   <button
                     onClick={() => setIsEditing(true)}
                     className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-md hover:opacity-90 transition-opacity"
                     aria-label="Edit profile"
                   >
-                    <FaEdit className="w-3 h-3" />
+                    <FaEdit className="w-3.5 h-3.5" />
                   </button>
-                )}
-              </div>
+                </div>
 
-              {/* Display name & info when NOT editing */}
-              {!isEditing && (
-                <div className="text-center">
+                {/* Right: Profile Details */}
+                <div className="flex-1 min-w-0 flex flex-col justify-center">
                   {hasProfile ? (
-                    <>
-                      <p className="font-semibold text-base">{profile.name}</p>
+                    <div className="flex flex-col gap-1">
+                      <p className="font-semibold text-base text-foreground leading-snug">{profile.name}</p>
                       {profile.gender && (
-                        <p className="text-xs text-muted-foreground capitalize">{profile.gender}</p>
+                        <p className="text-xs text-muted-foreground capitalize leading-none">{profile.gender}</p>
                       )}
                       {profile.address && (
-                        <p className="text-xs text-muted-foreground mt-0.5 truncate max-w-[240px]">📍 {profile.address}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 truncate leading-snug">📍 {profile.address}</p>
                       )}
-                    </>
+                    </div>
                   ) : (
-                    <p className="text-sm text-muted-foreground">Tap ✏️ to set up your profile</p>
+                    <div className="flex flex-col gap-0.5">
+                      <p className="text-sm font-semibold text-foreground">Set up profile</p>
+                      <p className="text-xs text-muted-foreground">Tap the ✏️ pencil to add your name, gender and address.</p>
+                    </div>
                   )}
                 </div>
-              )}
-            </div>
-
-            {/* Edit form */}
-            {isEditing && (
+              </div>
+            ) : (
+              /* ── Edit Mode Form ── */
               <div className="flex flex-col gap-4 animate-in fade-in duration-200">
-                {/* Avatar picker */}
+                {/* Edit Mode Header: Preview avatar left, title right */}
+                <div className="flex items-center gap-4 border-b pb-3">
+                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/20 bg-muted shrink-0 shadow-sm">
+                    <Image
+                      src={draft.avatar}
+                      alt="Profile avatar preview"
+                      width={56}
+                      height={56}
+                      className="w-full h-full object-cover"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-sm text-foreground">Editing Profile</span>
+                    <span className="text-xs text-muted-foreground">Select an avatar and fill details below</span>
+                  </div>
+                </div>
+
+                {/* Avatar picker grid */}
                 <div>
                   <Label className="text-xs text-muted-foreground mb-2 block">Choose Avatar</Label>
                   <div className="grid grid-cols-5 gap-2">
