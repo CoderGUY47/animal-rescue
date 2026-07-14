@@ -115,10 +115,9 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 | **Resource Efficiency**       | Active volunteer tracking prevents duplicate rescues and coordinates responses         |
 
 ---
+</div>
 
 ## 🚀 Key Features
-
-## 📱 Core Modules
 
 | 🚨 **Emergency Reporting** | 🗺️ **Geolocation** |
 | :------------------------- | :----------------- |
@@ -138,7 +137,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ## 📋 Project Tasks & Phases
 
-### Phase 1 — Animal Reporting & Location Tracking Foundation
+### Phase 1 - Animal Reporting & Location Tracking Foundation
 
 - **Project Setup**
   - [X] Next.js project bootstrap with TypeScript & Tailwind CSS
@@ -161,7 +160,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ---
 
-### Phase 2 — Vet & Shelter Discovery System
+### Phase 2 - Vet & Shelter Discovery System
 
 - **Nearby Services Module**
   - [X] List veterinarians, animal hospitals, rescue centers, and shelters
@@ -183,7 +182,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ---
 
-### Phase 3 — Rescue Coordination & Analytics
+### Phase 3 - Rescue Coordination & Analytics
 
 - **Volunteer Coordination**
   - [X] Sign-up form with skills, availability, and preferences
@@ -328,9 +327,4 @@ If you'd like to improve **Animal Rescue Connect**, please feel free to:
   <a href="https://www.linkedin.com/in/dev-s-hasan/"><img src="https://img.shields.io/badge/LinkedIn-Dev_S_Hasan-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn"/></a>
   <a href="mailto:s.m.hasan4599@gmail.com"><img src="https://img.shields.io/badge/Email-s.m.hasan4599%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
 </p>
-
----
-
-
-
 
