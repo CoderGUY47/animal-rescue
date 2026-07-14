@@ -13,15 +13,21 @@ export type Place = {
 
 export type OverpassElement = {
   id: number;
-  lat: number;
-  lon: number;
+  type?: "node" | "way" | "relation";
+  lat?: number;
+  lon?: number;
+  center?: { lat: number; lon: number };
   tags: {
     name?: string;
     amenity?: string;
     shop?: string;
     phone?: string;
+    "contact:phone"?: string;
     website?: string;
+    "contact:website"?: string;
     "opening_hours"?: string;
+    healthcare?: string;
+    animal?: string;
   };
 };
 

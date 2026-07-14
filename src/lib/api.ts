@@ -41,16 +41,16 @@ export async function fetchNearbyPlaces(
 
     if (data && data.elements) {
       return data.elements
-        .filter((el) => el.tags?.name)
+        .filter((el) => el.lat != null && el.lon != null)
         .map((el) => ({
           id: el.id,
-          lat: el.lat,
-          lng: el.lon,
-          name: el.tags.name!,
-          type: resolveType(el.tags),
-          phone: el.tags.phone,
-          hours: el.tags["opening_hours"],
-          website: el.tags.website,
+          lat: el.lat as number,
+          lng: el.lon as number,
+          name: el.tags?.name || el.tags?.amenity?.replace(/_/g, " ") || "Animal Care Facility",
+          type: resolveType(el.tags || {}),
+          phone: el.tags?.phone || el.tags?.["contact:phone"],
+          hours: el.tags?.["opening_hours"],
+          website: el.tags?.website || el.tags?.["contact:website"],
         }));
     }
   } catch (e) {
@@ -123,8 +123,8 @@ export async function fetchPlaceDetails(id: string): Promise<Place | null> {
 
         return {
           id,
-          lat: res.geometry?.location?.lat,
-          lng: res.geometry?.location?.lng,
+          lat: res.geometry?.location?.lat ?? 0,
+          lng: res.geometry?.location?.lng ?? 0,
           name: res.name || "Verified Rescue Facility",
           type: resolvedType,
           phone: res.formatted_phone_number,
@@ -152,8 +152,8 @@ export async function fetchPlaceDetails(id: string): Promise<Place | null> {
       const tags = (el.tags || {}) as Record<string, string | undefined>;
       return {
         id: el.id,
-        lat: el.lat,
-        lng: el.lon,
+        lat: el.lat ?? 0,
+        lng: el.lon ?? 0,
         name: tags.name || "Verified Rescue Facility",
         type: resolveType(el.tags || {}),
         phone: tags.phone || tags["contact:phone"],
@@ -169,8 +169,13 @@ export async function fetchPlaceDetails(id: string): Promise<Place | null> {
 
 // helper: resolve types
 function resolveType(tags: OverpassElement["tags"]): PlaceType {
-  if (tags.amenity === "veterinary") return "veterinary";
+  if (tags.amenity === "veterinary" || tags.healthcare === "veterinary") return "veterinary";
   if (tags.amenity === "animal_shelter") return "shelter";
   if (tags.shop === "pet") return "pet_shop";
-  return "hospital";
+  if (tags.amenity === "clinic" || tags.amenity === "hospital") return "hospital";
+  // name-based fallback
+  const name = (tags.name || "").toLowerCase();
+  if (name.includes("shelter") || name.includes("rescue")) return "shelter";
+  if (name.includes("pet shop") || name.includes("pet store")) return "pet_shop";
+  return "veterinary";
 }
