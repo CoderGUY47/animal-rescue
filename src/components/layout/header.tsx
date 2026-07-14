@@ -85,7 +85,7 @@ export function Header() {
             >
               <FaBell className="h-5 w-5 text-muted-foreground" />
               {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 flex h-2 w-2 rounded-full bg-rose-500">
+                <span className="absolute top-0 right-0 flex h-2 w-2 rounded-full bg-rose-500">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
                 </span>
               )}
