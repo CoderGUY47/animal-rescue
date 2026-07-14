@@ -1,100 +1,35 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-const GOOGLE_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+// Try multiple Overpass mirrors in order — use fastest that responds
+const OVERPASS_MIRRORS = [
+  "https://overpass.kumi.systems/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+  "https://overpass-api.de/api/interpreter",
+];
 
-// Google Places Nearby Search - returns real businesses from Google Maps database
-async function fetchFromGoogle(lat: string, lng: string, radius: string) {
-  if (!GOOGLE_API_KEY) return null;
-
-  const types = ["veterinary_care", "pet_store", "animal_shelter"];
-  const allPlaces: any[] = [];
-
-  for (const type of types) {
+async function queryOverpass(query: string): Promise<any[] | null> {
+  for (const endpoint of OVERPASS_MIRRORS) {
     try {
-      const { data } = await axios.get(
-        "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+      const { data } = await axios.post(
+        endpoint,
+        `data=${encodeURIComponent(query)}`,
         {
-          params: {
-            location: `${lat},${lng}`,
-            radius: Math.min(Number(radius), 50000),
-            type,
-            key: GOOGLE_API_KEY,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "AnimalRescueConnect/1.0 (rescueconnect@email.com)",
           },
-          timeout: 8000,
+          timeout: 7000, // 7s per mirror — well within Vercel's 10s limit
         }
       );
-      if (data.status === "OK" && data.results?.length) {
-        allPlaces.push(...data.results);
-      }
-    } catch (e: any) {
-      console.error(`Google Places error for type ${type}:`, e.message);
+      const elements = data.elements ?? [];
+      if (elements.length >= 0) return elements; // accept even empty result
+    } catch {
+      // try next mirror
+      continue;
     }
   }
-
-  // Deduplicate by place_id
-  const seen = new Set<string>();
-  return allPlaces
-    .filter((p) => {
-      if (seen.has(p.place_id)) return false;
-      seen.add(p.place_id);
-      return true;
-    })
-    .map((p) => ({
-      id: p.place_id,
-      type: p.types?.includes("pet_store")
-        ? "pet_shop"
-        : p.types?.includes("animal_shelter") || p.name?.toLowerCase().includes("shelter")
-        ? "shelter"
-        : "veterinary",
-      lat: p.geometry.location.lat,
-      lon: p.geometry.location.lng,
-      tags: {
-        name: p.name,
-        amenity: p.types?.[0] ?? "veterinary",
-        phone: p.formatted_phone_number,
-        "opening_hours": p.opening_hours?.open_now ? "Open Now" : undefined,
-        website: p.website,
-      },
-    }));
-}
-
-// Overpass fallback - simplified fast query under 8s
-async function fetchFromOverpass(lat: string, lng: string, radius: string) {
-  const r = Math.min(Number(radius), 10000); // cap at 10km for speed
-  const query = `
-  [out:json][timeout:7];
-  (
-    node["amenity"="veterinary"](around:${r},${lat},${lng});
-    way["amenity"="veterinary"](around:${r},${lat},${lng});
-    node["shop"="pet"](around:${r},${lat},${lng});
-    way["shop"="pet"](around:${r},${lat},${lng});
-    node["amenity"="animal_shelter"](around:${r},${lat},${lng});
-    node["healthcare"="veterinary"](around:${r},${lat},${lng});
-    node["name"~"vet|animal|pet shop|পশু",i](around:${r},${lat},${lng});
-  );
-  out center;
-  `;
-
-  const { data } = await axios.post(
-    "https://overpass-api.de/api/interpreter",
-    `data=${encodeURIComponent(query)}`,
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "AnimalRescueConnect/1.0 (contact@rescueconnect.app)",
-      },
-      timeout: 8000,
-    }
-  );
-
-  return (data.elements ?? [])
-    .map((el: any) => ({
-      ...el,
-      lat: el.lat ?? el.center?.lat,
-      lon: el.lon ?? el.center?.lon,
-    }))
-    .filter((el: any) => el.lat && el.lon);
+  return null;
 }
 
 export async function GET(request: Request) {
@@ -107,18 +42,42 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Missing lat/lng" }, { status: 400 });
   }
 
+  const r = Math.min(Number(radius), 15000); // cap at 15km for speed
+
+  // Simple focused query — only the most common OSM tags for animal places
+  const query = `
+[out:json][timeout:6];
+(
+  node["amenity"="veterinary"](around:${r},${lat},${lng});
+  way["amenity"="veterinary"](around:${r},${lat},${lng});
+  node["shop"="pet"](around:${r},${lat},${lng});
+  way["shop"="pet"](around:${r},${lat},${lng});
+  node["amenity"="animal_shelter"](around:${r},${lat},${lng});
+  way["amenity"="animal_shelter"](around:${r},${lat},${lng});
+  node["healthcare"="veterinary"](around:${r},${lat},${lng});
+  node["animal"="yes"](around:${r},${lat},${lng});
+  node["name"~"vet|animal|pet|পশু|clinic",i]["amenity"](around:${r},${lat},${lng});
+);
+out center;
+`;
+
   try {
-    // Try Google Places first — best coverage for Bangladesh
-    if (GOOGLE_API_KEY) {
-      const googleResults = await fetchFromGoogle(lat, lng, radius);
-      if (googleResults && googleResults.length > 0) {
-        return NextResponse.json({ elements: googleResults });
-      }
+    const elements = await queryOverpass(query);
+
+    if (elements === null) {
+      return NextResponse.json({ elements: [] });
     }
 
-    // Fallback: Overpass OSM
-    const elements = await fetchFromOverpass(lat, lng, radius);
-    return NextResponse.json({ elements });
+    // Normalize: ways have center coords, nodes have lat/lon directly
+    const normalized = elements
+      .map((el: any) => ({
+        ...el,
+        lat: el.lat ?? el.center?.lat,
+        lon: el.lon ?? el.center?.lon,
+      }))
+      .filter((el: any) => el.lat && el.lon);
+
+    return NextResponse.json({ elements: normalized });
   } catch (error: any) {
     console.error("Places proxy error:", error.message);
     return NextResponse.json({ elements: [] });
