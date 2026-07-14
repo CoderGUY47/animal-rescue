@@ -23,6 +23,8 @@ import Image from 'next/image';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { updateProfile, clearProfile, type UserProfile } from '@/store/slices/userSlice';
 import { useLanguage } from '@/components/providers/language-provider';
+import { TbPhotoEdit } from 'react-icons/tb';
+import { FaPaw } from 'react-icons/fa';
 
 const AVATARS = [
   '/avatars/avatar1.svg',
@@ -108,6 +110,21 @@ export default function SettingsPage() {
   if (!mounted) return null;
 
   const hasProfile = profile.name.trim() !== '';
+  const [isOnline, setIsOnline] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsOnline(navigator.onLine);
+      const goOnline = () => setIsOnline(true);
+      const goOffline = () => setIsOnline(false);
+      window.addEventListener('online', goOnline);
+      window.addEventListener('offline', goOffline);
+      return () => {
+        window.removeEventListener('online', goOnline);
+        window.removeEventListener('offline', goOffline);
+      };
+    }
+  }, []);
 
   return (
     <div className="flex flex-col flex-1 p-4 gap-6 animate-in fade-in duration-500 pb-20">
@@ -127,7 +144,7 @@ export default function SettingsPage() {
               <div className="flex items-center gap-5 animate-in fade-in duration-300">
                 {/* Left: Avatar with Edit button */}
                 <div className="relative shrink-0">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/20 bg-muted shadow-md">
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-black/60 dark:border-white/60 bg-muted shadow-md">
                     <Image
                       src={profile.avatar}
                       alt="Profile avatar"
@@ -137,12 +154,25 @@ export default function SettingsPage() {
                       unoptimized
                     />
                   </div>
+                  {/* Status Indicator Paw (Top Right) */}
+                  <div
+                    className={cn(
+                      "absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full flex items-center justify-center border-2 border-background shadow-md transition-all duration-300",
+                      isOnline
+                        ? "bg-emerald-500 text-white animate-pulse"
+                        : "bg-slate-400 text-white"
+                    )}
+                    title={isOnline ? "Active (Online)" : "Offline"}
+                  >
+                    <FaPaw className="w-3 h-3" />
+                  </div>
+                  {/* Edit Button (Bottom Right) */}
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-md hover:opacity-90 transition-opacity"
+                    className="absolute -bottom-1 -right-1 w-7 h-7 bg-black hover:bg-black/90 text-white rounded-full flex items-center justify-center shadow-md active:scale-95 transition-all border border-white/20"
                     aria-label="Edit profile"
                   >
-                    <FaEdit className="w-3.5 h-3.5" />
+                    <TbPhotoEdit className="w-4 h-4" />
                   </button>
                 </div>
 
@@ -171,15 +201,28 @@ export default function SettingsPage() {
               <div className="flex flex-col gap-4 animate-in fade-in duration-200">
                 {/* Edit Mode Header: Preview avatar left, title right */}
                 <div className="flex items-center gap-4 border-b pb-3">
-                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/20 bg-muted shrink-0 shadow-sm">
-                    <Image
-                      src={draft.avatar}
-                      alt="Profile avatar preview"
-                      width={56}
-                      height={56}
-                      className="w-full h-full object-cover"
-                      unoptimized
-                    />
+                  <div className="relative shrink-0">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-black/60 dark:border-white/60 bg-muted shadow-sm">
+                      <Image
+                        src={draft.avatar}
+                        alt="Profile avatar preview"
+                        width={56}
+                        height={56}
+                        className="w-full h-full object-cover"
+                        unoptimized
+                      />
+                    </div>
+                    {/* Status Indicator Paw (Top Right) */}
+                    <div
+                      className={cn(
+                        "absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full flex items-center justify-center border border-background shadow-sm transition-all duration-300",
+                        isOnline
+                          ? "bg-emerald-500 text-white"
+                          : "bg-slate-400 text-white"
+                      )}
+                    >
+                      <FaPaw className="w-2 h-2" />
+                    </div>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-semibold text-sm text-foreground">Editing Profile</span>
