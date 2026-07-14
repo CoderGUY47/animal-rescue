@@ -1,86 +1,98 @@
 import axios from "axios";
-import type { 
-  Place, 
-  PlaceType, 
-  SearchResult, 
-  NominatimResult, 
-  OverpassElement 
+import type {
+  Place,
+  PlaceType,
+  SearchResult,
+  NominatimResult,
+  OverpassElement,
 } from "@/types";
 
-// internal: http client for the overpass openstreetmap api
+// internal: http client for the overpass openstreetmap api (runs server-side)
 const overpassApi = axios.create({
- baseURL: "https://overpass-api.de/api",
- timeout: 15000,
- headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  baseURL: "https://overpass-api.de/api",
+  timeout: 15000,
+  headers: { 
+    "Content-Type": "application/x-www-form-urlencoded",
+    "User-Agent": "AnimalRescueConnect/1.0 (contact@rescueconnect.app)"
+  },
 });
 
 // internal: http client for reverse geocoding and location search
 const nominatimApi = axios.create({
- baseURL: "https://nominatim.openstreetmap.org",
- timeout: 10000,
- headers: {
- "Accept": "application/json",
- // nominatim requires a user-agent string
- "User-Agent": "AnimalRescueConnect/1.0 (contact@rescueconnect.app)",
- },
+  baseURL: "https://nominatim.openstreetmap.org",
+  timeout: 10000,
+  headers: {
+    Accept: "application/json",
+    // nominatim requires a user-agent string
+    "User-Agent": "AnimalRescueConnect/1.0 (contact@rescueconnect.app)",
+  },
 });
 
-// helper: find nearby animal-related places via overpass
-export async function fetchNearbyPlaces(lat: number, lng: number, radiusMeters = 100000) {
- const query = `
- [out:json][timeout:25];
- (
- node["amenity"="veterinary"](around:${radiusMeters},${lat},${lng});
- node["amenity"="animal_shelter"](around:${radiusMeters},${lat},${lng});
- node["shop"="pet"](around:${radiusMeters},${lat},${lng});
- node["amenity"="hospital"]["animal"](around:${radiusMeters},${lat},${lng});
- );
- out body;
- `;
+// helper: find nearby animal-related places via Overpass API proxy
+export async function fetchNearbyPlaces(
+  lat: number,
+  lng: number,
+  radiusMeters = 100000,
+) {
+  try {
+    const { data } = await axios.get<{ elements: OverpassElement[] }>("/api/places", {
+      params: { lat, lng, radius: radiusMeters }
+    });
 
- const { data } = await overpassApi.post<{ elements: OverpassElement[] }>(
- "/interpreter",
- `data=${encodeURIComponent(query)}`
- );
-
- return data.elements
- .filter((el) => el.tags?.name)
- .map((el) => ({
- id: el.id,
- lat: el.lat,
- lng: el.lon,
- name: el.tags.name!,
- type: resolveType(el.tags),
- phone: el.tags.phone,
- hours: el.tags["opening_hours"],
- website: el.tags.website,
- }));
+    if (data && data.elements) {
+      return data.elements
+        .filter((el) => el.tags?.name)
+        .map((el) => ({
+          id: el.id,
+          lat: el.lat,
+          lng: el.lon,
+          name: el.tags.name!,
+          type: resolveType(el.tags),
+          phone: el.tags.phone,
+          hours: el.tags["opening_hours"],
+          website: el.tags.website,
+        }));
+    }
+  } catch (e) {
+    console.error("Failed to fetch nearby places from proxy:", e);
+  }
+  return [];
 }
 
 // helper: reverse geocode a lat/lng into a readable address
-export async function reverseGeocode(lat: number, lng: number): Promise<string> {
- const { data } = await nominatimApi.get<NominatimResult>("/reverse", {
- params: { lat, lon: lng, format: "json" },
- });
- return data.display_name ?? `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+export async function reverseGeocode(
+  lat: number,
+  lng: number,
+): Promise<string> {
+  const { data } = await nominatimApi.get<NominatimResult>("/reverse", {
+    params: { lat, lon: lng, format: "json" },
+  });
+  return data.display_name ?? `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
 }
 
 // helper: search for a location by query string
 export async function searchLocation(query: string): Promise<SearchResult[]> {
- const { data } = await nominatimApi.get<NominatimResult[]>("/search", {
- params: { q: query, format: "json", limit: 5 },
- });
- return data.map(item => ({
- name: item.display_name,
- lat: parseFloat(item.lat),
- lng: parseFloat(item.lon)
- }));
+  const { data } = await nominatimApi.get<NominatimResult[]>("/search", {
+    params: { q: query, format: "json", limit: 5 },
+  });
+  return data.map((item) => ({
+    name: item.display_name,
+    lat: parseFloat(item.lat),
+    lng: parseFloat(item.lon),
+  }));
 }
 
 // helper: fetch a driving route via osrm
-export async function fetchRoute(startLng: number, startLat: number, endLng: number, endLat: number): Promise<[number, number][]> {
+export async function fetchRoute(
+  startLng: number,
+  startLat: number,
+  endLng: number,
+  endLat: number,
+): Promise<[number, number][]> {
   try {
-    const { data } = await axios.get(`https://router.project-osrm.org/route/v1/driving/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`);
+    const { data } = await axios.get(
+      `https://router.project-osrm.org/route/v1/driving/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`,
+    );
     if (data.routes && data.routes.length > 0) {
       return data.routes[0].geometry.coordinates as [number, number][];
     }
@@ -88,7 +100,10 @@ export async function fetchRoute(startLng: number, startLat: number, endLng: num
     console.error("Route fetch failed", e);
   }
   // fallback to straight line
-  return [[startLng, startLat], [endLng, endLat]];
+  return [
+    [startLng, startLat],
+    [endLng, endLat],
+  ];
 }
 
 // helper: fetch place details by OSM node ID
@@ -101,7 +116,7 @@ export async function fetchPlaceDetails(id: string): Promise<Place | null> {
     `;
     const { data } = await overpassApi.post<{ elements: OverpassElement[] }>(
       "/interpreter",
-      `data=${encodeURIComponent(query)}`
+      `data=${encodeURIComponent(query)}`,
     );
     if (data.elements && data.elements.length > 0) {
       const el = data.elements[0];
