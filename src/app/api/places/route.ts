@@ -50,7 +50,7 @@ async function fetchFromFoursquare(lat: string, lng: string, radius: string) {
   }).filter((p: any) => p.lat && p.lon);
 }
 
-// Overpass fallback with fast mirrors
+// Overpass fallback with fast mirrors queried in parallel
 async function fetchFromOverpass(lat: string, lng: string, radius: string) {
   const mirrors = [
     "https://overpass.kumi.systems/api/interpreter",
@@ -60,7 +60,7 @@ async function fetchFromOverpass(lat: string, lng: string, radius: string) {
 
   const r = Math.min(Number(radius), 15000);
   const query = `
-[out:json][timeout:6];
+[out:json][timeout:5];
 (
   node["amenity"="veterinary"](around:${r},${lat},${lng});
   way["amenity"="veterinary"](around:${r},${lat},${lng});
@@ -72,31 +72,37 @@ async function fetchFromOverpass(lat: string, lng: string, radius: string) {
 out center;
 `;
 
-  for (const endpoint of mirrors) {
-    try {
-      const { data } = await axios.post(
-        endpoint,
-        `data=${encodeURIComponent(query)}`,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "AnimalRescueConnect/1.0",
-          },
-          timeout: 7000,
-        }
-      );
-      return (data.elements ?? [])
-        .map((el: any) => ({
-          ...el,
-          lat: el.lat ?? el.center?.lat,
-          lon: el.lon ?? el.center?.lon,
-        }))
-        .filter((el: any) => el.lat && el.lon);
-    } catch {
-      continue;
+  const promises = mirrors.map(async (endpoint) => {
+    const { data } = await axios.post(
+      endpoint,
+      `data=${encodeURIComponent(query)}`,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "User-Agent": "AnimalRescueConnect/1.0",
+        },
+        timeout: 5000,
+      }
+    );
+    if (!data.elements) {
+      throw new Error("No elements in response");
     }
+    return data.elements;
+  });
+
+  try {
+    const elements = await Promise.any(promises);
+    return elements
+      .map((el: any) => ({
+        ...el,
+        lat: el.lat ?? el.center?.lat,
+        lon: el.lon ?? el.center?.lon,
+      }))
+      .filter((el: any) => el.lat && el.lon);
+  } catch (err) {
+    console.error("All Overpass mirrors failed or timed out");
+    return [];
   }
-  return [];
 }
 
 export async function GET(request: Request) {
