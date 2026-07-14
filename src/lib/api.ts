@@ -28,15 +28,16 @@ const nominatimApi = axios.create({
   },
 });
 
-// helper: find nearby animal-related places via Overpass API proxy
+// helper: find nearby animal-related places via API proxy (Google Places → OSM fallback)
 export async function fetchNearbyPlaces(
   lat: number,
   lng: number,
-  radiusMeters = 100000,
+  radiusMeters = 10000,
 ) {
   try {
-    const { data } = await axios.get<{ elements: OverpassElement[] }>("/api/places", {
-      params: { lat, lng, radius: radiusMeters }
+    const { data } = await axios.get<{ elements: (OverpassElement & { type?: string | "node" | "way" | "relation"; id: number | string; })[] }>("/api/places", {
+      params: { lat, lng, radius: radiusMeters },
+      timeout: 12000,
     });
 
     if (data && data.elements) {
@@ -47,7 +48,9 @@ export async function fetchNearbyPlaces(
           lat: el.lat as number,
           lng: el.lon as number,
           name: el.tags?.name || el.tags?.amenity?.replace(/_/g, " ") || "Animal Care Facility",
-          type: resolveType(el.tags || {}),
+          type: (el as any).type && ["veterinary","shelter","pet_shop","hospital"].includes((el as any).type)
+            ? (el as any).type as PlaceType
+            : resolveType(el.tags || {}),
           phone: el.tags?.phone || el.tags?.["contact:phone"],
           hours: el.tags?.["opening_hours"],
           website: el.tags?.website || el.tags?.["contact:website"],
