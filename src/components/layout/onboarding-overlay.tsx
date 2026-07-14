@@ -133,27 +133,14 @@ export function OnboardingOverlay() {
           </div>
 
           {/* Top Info & Brand Logo */}
-          <div className="relative z-10 pt-12 flex flex-col items-center gap-5 text-center animate-in fade-in slide-in-from-top-4 duration-700">
-            <div className="relative group">
-              {/* Glowing ring around logo */}
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-[#f07b31] via-[#ffb555] to-[#ff91c4] rounded-full blur opacity-40 group-hover:opacity-60 transition duration-500"></div>
-              <div className="relative w-20 h-20 bg-[#303256]/80 rounded-full flex items-center justify-center border border-white/10 shadow-lg">
-                <Image
-                  src="/logo.svg"
-                  alt="Rescue Connect Logo"
-                  width={64}
-                  height={64}
-                  className="w-16 h-16 object-contain"
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-inner">
-              <FaPaw className="w-3 h-3 text-[#f07b31]" />
-              <span className="text-[10px] font-bold text-slate-300 tracking-widest uppercase">
-                Welcome to Rescue Connect
-              </span>
-            </div>
+          <div className="relative z-10 pt-16 flex flex-col items-center gap-6 text-center animate-in fade-in zoom-in-95 duration-1000">
+            <Image
+              src="/logo.svg"
+              alt="Rescue Connect Logo"
+              width={128}
+              height={128}
+              className="w-32 h-32 object-contain drop-shadow-[0_8px_32px_rgba(240,123,49,0.3)] animate-pulse"
+            />
           </div>
 
           {/* Bottom Heading & Swipe Slider */}
