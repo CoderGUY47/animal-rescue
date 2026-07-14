@@ -342,12 +342,12 @@ export function FloatingChatbot() {
                   Rescue Assistant
                   <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse inline-block" />
                 </h3>
-                <span className="text-sm text-slate-400 font-medium">First-Aid Veterinary Guide</span>
+                <span className="text-sm text-white/90 font-medium">First-Aid Veterinary Guide</span>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-slate-400 hover:text-white p-2 rounded-full hover:bg-white/10 active:scale-95 transition-all"
+              className="text-white hover:text-white/80 p-2 rounded-full hover:bg-white/10 active:scale-95 transition-all"
             >
               <FaTimes className="w-5 h-5" />
             </button>
@@ -391,10 +391,7 @@ export function FloatingChatbot() {
                     return <div key={idx}>{line}</div>;
                   })}
                 </div>
-                <span className={cn(
-                  "text-[8px] mt-1 self-end opacity-60",
-                  msg.sender === "user" ? "text-white/60" : "text-slate-400"
-                )}>
+                <span className="text-[8px] mt-1 self-end opacity-60 text-white/60">
                   {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
@@ -447,14 +444,13 @@ export function FloatingChatbot() {
               disabled={loading}
               className="flex-1 border border-white/15 bg-slate-950/40 backdrop-blur-sm rounded-full px-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-50 text-white placeholder-slate-400"
             />
-            <Button
+            <button
               type="submit"
-              size="icon"
               disabled={loading || !inputText.trim()}
-              className="rounded-full shrink-0 h-9 w-9 bg-white text-slate-950 hover:bg-white/90 transition-colors flex items-center justify-center border-0 cursor-pointer active:scale-95 disabled:opacity-50"
+              className="rounded-full shrink-0 h-9 w-9 bg-white/10 border border-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center cursor-pointer active:scale-95 disabled:opacity-50"
             >
-              <FaPaperPlane className="w-3.5 h-3.5 text-slate-950" />
-            </Button>
+              <FaPaperPlane className="w-3.5 h-3.5 text-white" />
+            </button>
           </form>
 
         </Card>

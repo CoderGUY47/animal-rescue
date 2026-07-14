@@ -18,13 +18,13 @@ export function BottomNav() {
     return cn(
       "flex items-center justify-center p-3 rounded-full transition-all duration-300 relative border border-transparent",
       active
-        ? "bg-white/10 backdrop-blur-md border-white/15 text-white scale-110 shadow-md"
+        ? "bg-black/50 backdrop-blur-md border-white/15 text-white scale-110 shadow-md"
         : "text-white active:scale-95"
     );
   };
 
   return (
-    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-[416px] bg-black/20 border border-white/10 backdrop-blur-lg rounded-full shadow-2xl">
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-[416px] bg-black/40 border border-white/10 backdrop-blur-lg rounded-full shadow-2xl">
       <div className="flex justify-between items-center h-16 px-4">
         <Link href="/" className={getTabClass("/", true)}>
           <FaHome className="h-5.5 w-5.5" />
