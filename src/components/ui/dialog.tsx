@@ -47,7 +47,11 @@ function DialogContent({
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean
 }) {
-  const isBottom = className?.includes("bottom-") || className?.includes("mb-") || className?.includes("dialog-bottom");
+  const classNameString = typeof className === "function" ? "" : className;
+  const isBottom =
+    classNameString?.includes("bottom-") ||
+    classNameString?.includes("mb-") ||
+    classNameString?.includes("dialog-bottom");
 
   return (
     <DialogPortal>
