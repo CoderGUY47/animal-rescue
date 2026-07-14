@@ -37,7 +37,7 @@ const getPlaceTypeTranslation = (type: PlaceType, t: (k: string) => string) => {
   }
 };
 
-const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128]; // nyc fallback
+const DEFAULT_CENTER: [number, number] = [90.4125, 23.8103]; // Dhaka fallback
 // cache location across page navigations
 let cachedCoords: [number, number] | null = null;
 
@@ -138,41 +138,52 @@ export function MapView({ searchQuery }: { searchQuery: string }) {
  };
 
  useEffect(() => {
- if (hasFetched.current) return;
- hasFetched.current = true;
+  if (hasFetched.current) return;
+  hasFetched.current = true;
 
- // if we already have cached coords, load data immediately
- if (cachedCoords) {
- const [lng, lat] = cachedCoords;
- setLocating(false);
- loadData(lat, lng);
- return;
- }
+  // if we already have cached coords, load data immediately
+  if (cachedCoords) {
+  const [lng, lat] = cachedCoords;
+  setLocating(false);
+  mapRef.current?.flyTo({ center: [lng, lat], zoom: 14, duration: 1000 });
+  loadData(lat, lng);
+  return;
+  }
 
- navigator.geolocation.getCurrentPosition(
- async ({ coords }) => {
- const { latitude, longitude } = coords;
- cachedCoords = [longitude, latitude];
- setCenter([longitude, latitude]);
- setLocating(false);
- await loadData(latitude, longitude);
- },
- async () => {
- // Fallback to NYC
- setLocating(false);
- await loadData(DEFAULT_CENTER[1], DEFAULT_CENTER[0]);
- },
- { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
- );
- // eslint-disable-next-line react-hooks/exhaustive-deps
- }, []);
+  // Auto-request GPS on mount — no button click needed
+  if (!navigator.geolocation) {
+  setLocating(false);
+  loadData(DEFAULT_CENTER[1], DEFAULT_CENTER[0]);
+  return;
+  }
 
- // Separate function so it can be called from both paths
- async function loadData(lat: number, lng: number) {
- setLoading(true);
- const [addr, results] = await Promise.allSettled([
- reverseGeocode(lat, lng),
- fetchNearbyPlaces(lat, lng, 100000),
+  navigator.geolocation.getCurrentPosition(
+  async ({ coords }) => {
+  const { latitude, longitude } = coords;
+  cachedCoords = [longitude, latitude];
+  setCenter([longitude, latitude]);
+  setLocating(false);
+  mapRef.current?.flyTo({ center: [longitude, latitude], zoom: 14, duration: 1200 });
+  await loadData(latitude, longitude);
+  },
+  async () => {
+  // Fallback to Dhaka city center
+  setLocating(false);
+  setCenter(DEFAULT_CENTER);
+  mapRef.current?.flyTo({ center: DEFAULT_CENTER, zoom: 13, duration: 800 });
+  await loadData(DEFAULT_CENTER[1], DEFAULT_CENTER[0]);
+  },
+  { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+  );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Separate function so it can be called from both paths
+  async function loadData(lat: number, lng: number) {
+  setLoading(true);
+  const [addr, results] = await Promise.allSettled([
+  reverseGeocode(lat, lng),
+  fetchNearbyPlaces(lat, lng, 25000),
  ]);
  if (addr.status === "fulfilled") setAddress(addr.value);
  if (results.status === "fulfilled") setPlaces(results.value);
