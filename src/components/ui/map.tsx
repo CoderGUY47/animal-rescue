@@ -184,6 +184,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
   const [mapInstance, setMapInstance] = useState<MapLibreGL.Map | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isStyleLoaded, setIsStyleLoaded] = useState(false);
+  const [webglError, setWebglError] = useState<string | null>(null);
   const currentStyleRef = useRef<MapStyleOption | null>(null);
   const styleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const internalUpdateRef = useRef(false);
@@ -220,16 +221,30 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
     currentStyleRef.current = initialStyle;
 
-    const map = new MapLibreGL.Map({
-      container: containerRef.current,
-      style: initialStyle,
-      renderWorldCopies: false,
-      attributionControl: {
-        compact: true,
-      },
-      ...props,
-      ...viewport,
-    });
+    // Detect WebGL failure before MapLibre throws
+    const handleWebGLError = () => {
+      setWebglError("WebGL is not supported or has been disabled in your browser.");
+    };
+    const canvas = containerRef.current.querySelector("canvas");
+    if (canvas) canvas.addEventListener("webglcontextcreationerror", handleWebGLError);
+
+    let map: MapLibreGL.Map;
+    try {
+      map = new MapLibreGL.Map({
+        container: containerRef.current,
+        style: initialStyle,
+        renderWorldCopies: false,
+        attributionControl: {
+          compact: true,
+        },
+        ...props,
+        ...viewport,
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setWebglError(msg.includes("WebGL") ? "WebGL is not supported or has been disabled in your browser." : "Map failed to initialize.");
+      return;
+    }
 
     const styleDataHandler = () => {
       clearStyleTimeout();
@@ -258,6 +273,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
 
     return () => {
       clearStyleTimeout();
+      if (canvas) canvas.removeEventListener("webglcontextcreationerror", handleWebGLError);
       map.off("load", loadHandler);
       map.off("styledata", styleDataHandler);
       map.off("move", handleMove);
@@ -268,6 +284,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   // Sync controlled viewport to map
   useEffect(() => {
@@ -320,6 +337,22 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     }),
     [mapInstance, isLoaded, isStyleLoaded],
   );
+
+  // WebGL not available — show a friendly fallback instead of crashing
+  if (webglError) {
+    return (
+      <div className={cn("relative h-full w-full flex flex-col items-center justify-center gap-4 bg-muted/30 rounded-xl border border-border", className)}>
+        <div className="text-4xl">🗺️</div>
+        <div className="flex flex-col items-center gap-1 text-center px-6">
+          <p className="font-semibold text-sm text-foreground">Map unavailable</p>
+          <p className="text-xs text-muted-foreground max-w-64">
+            Your browser or device does not support WebGL, which is required to render the map.
+            Try opening this page in Chrome or Firefox with hardware acceleration enabled.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <MapContext.Provider value={contextValue}>
