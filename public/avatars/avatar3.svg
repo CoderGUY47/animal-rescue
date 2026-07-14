@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <circle cx="50" cy="50" r="50" fill="#FDE8D8"/>
+  <!-- Long hair back -->
+  <ellipse cx="50" cy="60" rx="26" ry="28" fill="#8B5E3C"/>
+  <!-- Face -->
+  <circle cx="50" cy="46" r="22" fill="#F5C6A0"/>
+  <!-- Long hair front sides -->
+  <rect x="24" y="28" width="10" height="36" rx="5" fill="#8B5E3C"/>
+  <rect x="66" y="28" width="10" height="36" rx="5" fill="#8B5E3C"/>
+  <!-- Hair top -->
+  <ellipse cx="50" cy="27" rx="22" ry="12" fill="#8B5E3C"/>
+  <!-- Ears -->
+  <ellipse cx="29" cy="46" rx="4" ry="5" fill="#F5C6A0"/>
+  <ellipse cx="71" cy="46" rx="4" ry="5" fill="#F5C6A0"/>
+  <!-- Eyes -->
+  <ellipse cx="42" cy="44" rx="3" ry="3.5" fill="#2D1B0E"/>
+  <ellipse cx="58" cy="44" rx="3" ry="3.5" fill="#2D1B0E"/>
+  <circle cx="43" cy="43" r="1" fill="white"/>
+  <circle cx="59" cy="43" r="1" fill="white"/>
+  <!-- Eyelashes -->
+  <path d="M39 41 L38 38 M41.5 40.5 L41 37.5 M44 41 L44.5 38" stroke="#2D1B0E" stroke-width="1" stroke-linecap="round"/>
+  <path d="M55 41 L54.5 38 M57.5 40.5 L58 37.5 M60 41 L60.5 38" stroke="#2D1B0E" stroke-width="1" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="51" rx="2" ry="1.5" fill="#E8967A"/>
+  <!-- Lips -->
+  <path d="M44 56 Q50 60 56 56" stroke="#C0705A" stroke-width="1.5" fill="#E8897A" stroke-linecap="round"/>
+  <!-- Cheeks -->
+  <ellipse cx="37" cy="52" rx="5" ry="3" fill="#F4A07A" opacity="0.5"/>
+  <ellipse cx="63" cy="52" rx="5" ry="3" fill="#F4A07A" opacity="0.5"/>
+  <!-- Body -->
+  <path d="M22 100 Q22 76 50 76 Q78 76 78 100Z" fill="#E91E8C"/>
+</svg>

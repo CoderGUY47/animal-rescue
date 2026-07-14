@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <circle cx="50" cy="50" r="50" fill="#FFF8E7"/>
+  <!-- Face -->
+  <circle cx="50" cy="48" r="22" fill="#FDBF97"/>
+  <!-- Hat brim -->
+  <ellipse cx="50" cy="28" rx="28" ry="5" fill="#E67E22"/>
+  <!-- Hat body -->
+  <rect x="30" y="10" width="40" height="20" rx="4" fill="#D35400"/>
+  <!-- Hat band -->
+  <rect x="30" y="26" width="40" height="4" fill="#E67E22"/>
+  <!-- Ears -->
+  <ellipse cx="29" cy="48" rx="4" ry="5" fill="#FDBF97"/>
+  <ellipse cx="71" cy="48" rx="4" ry="5" fill="#FDBF97"/>
+  <!-- Eyes -->
+  <ellipse cx="42" cy="46" rx="3" ry="3.5" fill="#2D1B0E"/>
+  <ellipse cx="58" cy="46" rx="3" ry="3.5" fill="#2D1B0E"/>
+  <circle cx="43" cy="45" r="1" fill="white"/>
+  <circle cx="59" cy="45" r="1" fill="white"/>
+  <!-- Eyebrows -->
+  <path d="M38 41 Q42 39 46 41" stroke="#4A3728" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <path d="M54 41 Q58 39 62 41" stroke="#4A3728" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="52" rx="2" ry="1.5" fill="#E8967A"/>
+  <!-- Smile -->
+  <path d="M43 58 Q50 64 57 58" stroke="#C0705A" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Cheeks -->
+  <ellipse cx="38" cy="54" rx="5" ry="3" fill="#F4A07A" opacity="0.5"/>
+  <ellipse cx="62" cy="54" rx="5" ry="3" fill="#F4A07A" opacity="0.5"/>
+  <!-- Body -->
+  <path d="M22 100 Q22 78 50 78 Q78 78 78 100Z" fill="#16A085"/>
+</svg>

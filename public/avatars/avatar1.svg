@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <circle cx="50" cy="50" r="50" fill="#FFD6B8"/>
+  <!-- Face -->
+  <circle cx="50" cy="46" r="22" fill="#FDBF97"/>
+  <!-- Bun hair -->
+  <ellipse cx="50" cy="24" rx="14" ry="10" fill="#4A3728"/>
+  <ellipse cx="50" cy="28" rx="22" ry="14" fill="#4A3728"/>
+  <!-- Ears -->
+  <ellipse cx="29" cy="46" rx="4" ry="5" fill="#FDBF97"/>
+  <ellipse cx="71" cy="46" rx="4" ry="5" fill="#FDBF97"/>
+  <!-- Eyes -->
+  <ellipse cx="42" cy="44" rx="3" ry="3.5" fill="#2D1B0E"/>
+  <ellipse cx="58" cy="44" rx="3" ry="3.5" fill="#2D1B0E"/>
+  <circle cx="43" cy="43" r="1" fill="white"/>
+  <circle cx="59" cy="43" r="1" fill="white"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="51" rx="2" ry="1.5" fill="#E8967A"/>
+  <!-- Smile -->
+  <path d="M43 56 Q50 62 57 56" stroke="#C0705A" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Cheeks -->
+  <ellipse cx="38" cy="52" rx="5" ry="3" fill="#F4A07A" opacity="0.5"/>
+  <ellipse cx="62" cy="52" rx="5" ry="3" fill="#F4A07A" opacity="0.5"/>
+  <!-- Body -->
+  <path d="M22 100 Q22 76 50 76 Q78 76 78 100Z" fill="#6C63FF"/>
+  <!-- Collar -->
+  <path d="M40 76 L50 85 L60 76" fill="#5A52D5"/>
+</svg>

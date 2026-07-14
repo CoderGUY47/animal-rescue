@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <circle cx="50" cy="50" r="50" fill="#E8EAF6"/>
+  <!-- Face -->
+  <circle cx="50" cy="46" r="22" fill="#FDBF97"/>
+  <!-- Hair -->
+  <ellipse cx="50" cy="26" rx="22" ry="12" fill="#2C3E50"/>
+  <rect x="28" y="26" width="44" height="6" fill="#2C3E50"/>
+  <!-- Ears -->
+  <ellipse cx="29" cy="46" rx="4" ry="5" fill="#FDBF97"/>
+  <ellipse cx="71" cy="46" rx="4" ry="5" fill="#FDBF97"/>
+  <!-- Glasses frame -->
+  <rect x="33" y="40" width="14" height="10" rx="4" stroke="#2C3E50" stroke-width="2" fill="none"/>
+  <rect x="53" y="40" width="14" height="10" rx="4" stroke="#2C3E50" stroke-width="2" fill="none"/>
+  <line x1="47" y1="45" x2="53" y2="45" stroke="#2C3E50" stroke-width="1.5"/>
+  <line x1="33" y1="45" x2="30" y2="43" stroke="#2C3E50" stroke-width="1.5"/>
+  <line x1="67" y1="45" x2="70" y2="43" stroke="#2C3E50" stroke-width="1.5"/>
+  <!-- Eyes behind glasses -->
+  <ellipse cx="40" cy="45" rx="2.5" ry="2.5" fill="#2D1B0E"/>
+  <ellipse cx="60" cy="45" rx="2.5" ry="2.5" fill="#2D1B0E"/>
+  <circle cx="41" cy="44" r="0.8" fill="white"/>
+  <circle cx="61" cy="44" r="0.8" fill="white"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="51" rx="2" ry="1.5" fill="#E8967A"/>
+  <!-- Smile -->
+  <path d="M43 56 Q50 62 57 56" stroke="#C0705A" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Body -->
+  <path d="M22 100 Q22 76 50 76 Q78 76 78 100Z" fill="#3498DB"/>
+  <!-- Tie -->
+  <path d="M47 76 L50 82 L53 76" fill="#2980B9"/>
+  <path d="M47 76 L44 84 L50 94 L56 84 L53 76 L50 82 Z" fill="#E74C3C"/>
+</svg>
