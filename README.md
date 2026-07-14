@@ -66,22 +66,27 @@ When an animal is in distress, traditional emergency response mechanisms are slo
 
 <table>
   <tr>
-    <td width="33.3%">
+    <td width="25%">
       <img src="./public/assets/home.png" alt="Home Page" width="100%" style="border-radius:8px;aspect-ratio:9/16;object-fit:cover" />
     </td>
-    <td width="33.3%">
+    <td width="25%">
       <img src="./public/assets/map.png" alt="Map View" width="100%" style="border-radius:8px;aspect-ratio:9/16;object-fit:cover" />
     </td>
-    <td width="33.3%">
+    <td width="25%">
+      <img src="./public/assets/emergency.png" alt="Report Emergency" width="100%" style="border-radius:8px;aspect-ratio:9/16;object-fit:cover" />
+    </td>
+    <td width="25%">
       <img src="./public/assets/settings.png" alt="Settings Page" width="100%" style="border-radius:8px;aspect-ratio:9/16;object-fit:cover" />
     </td>
   </tr>
   <tr>
-    <td align="center"><sub>🐾 Emergency Home Reporting</sub></td>
-    <td align="center"><sub>📍 Geolocation Map Discovery</sub></td>
-    <td align="center"><sub>⚙️ Settings & Privacy</sub></td>
+    <td align="center"><sub>🏠 Home Dashboard</sub></td>
+    <td align="center"><sub>📍 Geolocation Map</sub></td>
+    <td align="center"><sub>🚨 Report Emergency</sub></td>
+    <td align="center"><sub>⚙️ Profile & Settings</sub></td>
   </tr>
 </table>
+
 
 ---
 
