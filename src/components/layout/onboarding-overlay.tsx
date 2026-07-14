@@ -134,10 +134,54 @@ export function OnboardingOverlay() {
     setActivePrompt(type);
   };
 
-  const handleAllow = () => {
-    if (activePrompt) {
-      setPermissions((prev) => ({ ...prev, [activePrompt]: true }));
-      setActivePrompt(null);
+  const handleAllow = async () => {
+    if (!activePrompt) return;
+
+    const currentPrompt = activePrompt;
+    // Close the prompt modal first
+    setActivePrompt(null);
+
+    if (currentPrompt === 'location') {
+      if (typeof window !== "undefined" && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log("Location permission granted:", position);
+            setPermissions((prev) => ({ ...prev, location: true }));
+          },
+          (error) => {
+            console.warn("Location permission error or denied:", error);
+            // Mark as true so they are not blocked
+            setPermissions((prev) => ({ ...prev, location: true }));
+          },
+          { enableHighAccuracy: false, timeout: 5000 }
+        );
+      } else {
+        setPermissions((prev) => ({ ...prev, location: true }));
+      }
+    } else if (currentPrompt === 'contacts') {
+      if (typeof window !== "undefined" && 'contacts' in navigator && 'ContactsManager' in window) {
+        try {
+          await (navigator as any).contacts.select(['name'], { multiple: false });
+          setPermissions((prev) => ({ ...prev, contacts: true }));
+        } catch (err) {
+          console.warn("Contacts Picker API error:", err);
+          setPermissions((prev) => ({ ...prev, contacts: true }));
+        }
+      } else {
+        setPermissions((prev) => ({ ...prev, contacts: true }));
+      }
+    } else if (currentPrompt === 'gallery') {
+      if (typeof window !== "undefined") {
+        try {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = 'image/*';
+          input.click();
+        } catch (err) {
+          console.warn("File picker trigger failed:", err);
+        }
+      }
+      setPermissions((prev) => ({ ...prev, gallery: true }));
     }
   };
 
@@ -228,14 +272,14 @@ export function OnboardingOverlay() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/onboarding_bg_2.png"
+              src="/onboarding_bg_2_new.png"
               alt="Permissions Background"
               fill
-              className="object-cover opacity-30"
+              className="object-cover opacity-60"
               priority
               unoptimized
             />
-            <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-slate-950/70" />
           </div>
 
           {/* Top Title & OS badge */}
