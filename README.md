@@ -1,4 +1,4 @@
-<div align="">
+<div align="center">
 
 ---
 <p align="center">
@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/Developed%20By-CoderGuy47-111827?style=for-the-badge&logo=github&logoColor=white" />
 </p>
 
-## 📖 Table of Contents
+<h2 align="center">📖 Table of Contents</h2>
 
 | Section | Description |
 | :------ | :---------- |
@@ -31,8 +31,7 @@
 | 🚢 [Deployment](#-production-deployment) | Production hosting information |
 | 🤝 [Contributing](#-social--contributing) | Contributing guidelines and contact |
 
-<div align="left">
-## ✨ Overview
+<h2 align="center">✨ Overview</h2>
 
 Animal Rescue Connect is a production-ready mobile-first rescue platform that enables users to instantly report sick, injured, or abandoned animals while connecting them with nearby veterinarians, shelters, rescue organizations, and volunteers using real-time geolocation services.
 
@@ -41,7 +40,7 @@ Built with Next.js 16, React 19, TypeScript, Tailwind CSS, and Redux Toolkit, th
 ---
 
 
-## 🎯 Project Objectives
+<h2 align="center">🎯 Project Objectives</h2>
 
 • Reduce rescue response time
 
@@ -54,13 +53,13 @@ Built with Next.js 16, React 19, TypeScript, Tailwind CSS, and Redux Toolkit, th
 • Deliver an accessible mobile-first experience
 
 • Demonstrate modern frontend architecture
-</div>
 
 
-## 🚀 **Live Link:** [https://animal-rescue-seven.vercel.app](https://animal-rescue-seven.vercel.app)
+<h2 align="center">🚀 **Live Link:** [https://animal-rescue-seven.vercel.app](https://animal-rescue-seven.vercel.app)</h2>
+
 ---
 
-# 📱 Application Preview
+<h1 align="center">📱 Application Preview</h1>
 
 <table align="center">
 <tr>
@@ -88,7 +87,7 @@ Built with Next.js 16, React 19, TypeScript, Tailwind CSS, and Redux Toolkit, th
 
 ---
 
-## ❌ The Problem & ✅ The Solution
+<h2 align="center">❌ The Problem & ✅ The Solution</h2>
 
 > **Stray and injured animals deserve immediate coordination.**
 
@@ -103,8 +102,8 @@ When an animal is in distress, traditional emergency response mechanisms are slo
 | Volunteer efforts are disjointed with no coordinate hub        | Volunteer sign-up with dynamic availability and location coordination     |
 
 ---
-<div align="left">
-## 💡 Business Value & SEO
+
+<h2 align="center">💡 Business Value & SEO</h2>
 
 By balancing beautiful aesthetics with robust security, Animal Rescue Connect yields remarkable utility:
 
@@ -116,10 +115,8 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 | **Resource Efficiency**       | Active volunteer tracking prevents duplicate rescues and coordinates responses         |
 
 ---
-</div>
-</div>
 
-## 🚀 Key Features
+<h2 align="center">🚀 Key Features</h2>
 
 | 🚨 **Emergency Reporting** | 🗺️ **Geolocation** |
 | :------------------------- | :----------------- |
@@ -137,9 +134,9 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ---
 
-## 📋 Project Tasks & Phases
+<h2 align="center">📋 Project Tasks & Phases</h2>
 
-### Phase 1 - Animal Reporting & Location Tracking Foundation
+<h3 align="center">Phase 1 - Animal Reporting & Location Tracking Foundation</h3>
 
 - **Project Setup**
   - [X] Next.js project bootstrap with TypeScript & Tailwind CSS
@@ -162,7 +159,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ---
 
-### Phase 2 - Vet & Shelter Discovery System
+<h3 align="center">Phase 2 - Vet & Shelter Discovery System</h3>
 
 - **Nearby Services Module**
   - [X] List veterinarians, animal hospitals, rescue centers, and shelters
@@ -184,7 +181,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ---
 
-### Phase 3 - Rescue Coordination & Analytics
+<h3 align="center">Phase 3 - Rescue Coordination & Analytics</h3>
 
 - **Volunteer Coordination**
   - [X] Sign-up form with skills, availability, and preferences
@@ -202,7 +199,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ---
 
-## 📦 Tech Stack & Architecture
+<h2 align="center">📦 Tech Stack & Architecture</h2>
 
 | Technology                 | Category           | Purpose / Notes                                       |
 | :------------------------- | :----------------- | :---------------------------------------------------- |
@@ -227,7 +224,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 ---
 
-## 📁 Project Structure
+<h2 align="center">📁 Project Structure</h2>
 
 ```
 src/
@@ -258,14 +255,14 @@ src/
 
 ---
 
-## 🛠️ Installation & Setup
+<h2 align="center">🛠️ Installation & Setup</h2>
 
-### Prerequisites
+<h3 align="center">Prerequisites</h3>
 
 - Node.js `v18+`
 - npm or yarn
 
-### Installation
+<h3 align="center">Installation</h3>
 
 ```bash
 # 1. Clone the repository
@@ -287,7 +284,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🔑 Environment Variables
+<h2 align="center">🔑 Environment Variables</h2>
 
 ```env
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
@@ -300,14 +297,14 @@ FOURSQUARE_API_KEY=
 
 ---
 
-## 🚢 Production Deployment
+<h2 align="center">🚢 Production Deployment</h2>
 
 - **Frontend Hosting (Next.js):** Deployed on **Vercel** (`animal-rescue-seven.vercel.app`).
 - **Deployment Pipeline:** Automatic CI/CD pipeline integrated directly via GitHub.
 
 ---
 
-## 🤝 Social & Contributing
+<h2 align="center">🤝 Social & Contributing</h2>
 
 Contributions, feature suggestions, and issue reports are always welcome!
 
@@ -321,7 +318,7 @@ If you'd like to improve **Animal Rescue Connect**, please feel free to:
 
 ---
 
-### 👨‍💻 Developed By
+<h3 align="center">👨‍💻 Developed By</h3>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Developed%20By-CoderGuy47-2563EB?style=for-the-badge&logo=github&logoColor=white" alt="Developed By"/>
