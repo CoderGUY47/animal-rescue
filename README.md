@@ -1,4 +1,4 @@
-<div align="center">
+<div align="">
 
 ---
 <p align="center">
@@ -31,6 +31,7 @@
 | 🚢 [Deployment](#-production-deployment) | Production hosting information |
 | 🤝 [Contributing](#-social--contributing) | Contributing guidelines and contact |
 
+<div align="left">
 ## ✨ Overview
 
 Animal Rescue Connect is a production-ready mobile-first rescue platform that enables users to instantly report sick, injured, or abandoned animals while connecting them with nearby veterinarians, shelters, rescue organizations, and volunteers using real-time geolocation services.
@@ -53,7 +54,7 @@ Built with Next.js 16, React 19, TypeScript, Tailwind CSS, and Redux Toolkit, th
 • Deliver an accessible mobile-first experience
 
 • Demonstrate modern frontend architecture
-
+</div>
 
 
 ## 🚀 **Live Link:** [https://animal-rescue-seven.vercel.app](https://animal-rescue-seven.vercel.app)
@@ -102,7 +103,7 @@ When an animal is in distress, traditional emergency response mechanisms are slo
 | Volunteer efforts are disjointed with no coordinate hub        | Volunteer sign-up with dynamic availability and location coordination     |
 
 ---
-
+<div align="left">
 ## 💡 Business Value & SEO
 
 By balancing beautiful aesthetics with robust security, Animal Rescue Connect yields remarkable utility:
@@ -115,6 +116,7 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 | **Resource Efficiency**       | Active volunteer tracking prevents duplicate rescues and coordinates responses         |
 
 ---
+</div>
 </div>
 
 ## 🚀 Key Features
