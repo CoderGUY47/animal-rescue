@@ -1,6 +1,7 @@
 <div align="center">
 
 ---
+
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" />
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" />
@@ -12,24 +13,25 @@
   <img src="https://img.shields.io/badge/Redux-Toolkit-764ABC?style=for-the-badge&logo=redux" />
   <img src="https://img.shields.io/badge/Developed%20By-CoderGuy47-111827?style=for-the-badge&logo=github&logoColor=white" />
 </p>
+</div>
 
 <h2 align="center">📖 Table of Contents</h2>
 
-| Section | Description |
-| :------ | :---------- |
-| 🏠 [Overview](#-overview) | Introduction to Animal Rescue Connect |
-| 📱 [Application Preview](#-application-preview) | UI screenshots of the application |
-| 🚀 [Live Demo](#-live-demo) | Access the deployed application |
+| Section                                              | Description                                |
+| :--------------------------------------------------- | :----------------------------------------- |
+| 🏠 [Overview](#-overview)                            | Introduction to Animal Rescue Connect      |
+| 📱 [Application Preview](#-application-preview)      | UI screenshots of the application          |
+| 🚀 [Live Demo](#-live-demo)                          | Access the deployed application            |
 | ❌ [Problem & Solution](#-the-problem--the-solution) | Challenges addressed and proposed solution |
-| 💡 [Business Value](#-business-value--seo) | Impact, benefits, and SEO strategy |
-| 🚀 [Key Features](#-key-features) | Core functionality of the platform |
-| 📋 [Project Phases](#-project-tasks--phases) | Development roadmap and completed tasks |
-| 📦 [Tech Stack](#-tech-stack--architecture) | Technologies and architecture overview |
-| 📁 [Project Structure](#-project-structure) | Folder organization |
-| 🛠️ [Installation](#-installation--setup) | Local development setup |
-| 🔑 [Environment Variables](#-environment-variables) | Required configuration |
-| 🚢 [Deployment](#-production-deployment) | Production hosting information |
-| 🤝 [Contributing](#-social--contributing) | Contributing guidelines and contact |
+| 💡 [Business Value](#-business-value--seo)           | Impact, benefits, and SEO strategy         |
+| 🚀 [Key Features](#-key-features)                    | Core functionality of the platform         |
+| 📋 [Project Phases](#-project-tasks--phases)         | Development roadmap and completed tasks    |
+| 📦 [Tech Stack](#-tech-stack--architecture)          | Technologies and architecture overview     |
+| 📁 [Project Structure](#-project-structure)          | Folder organization                        |
+| 🛠️ [Installation](#-installation--setup)             | Local development setup                    |
+| 🔑 [Environment Variables](#-environment-variables)  | Required configuration                     |
+| 🚢 [Deployment](#-production-deployment)             | Production hosting information             |
+| 🤝 [Contributing](#-social--contributing)            | Contributing guidelines and contact        |
 
 <h2 align="center">✨ Overview</h2>
 
@@ -38,7 +40,6 @@ Animal Rescue Connect is a production-ready mobile-first rescue platform that en
 Built with Next.js 16, React 19, TypeScript, Tailwind CSS, and Redux Toolkit, the application combines emergency reporting, interactive mapping, route visualization, image uploads, and community-driven rescue coordination into a fast, accessible, and responsive experience.
 
 ---
-
 
 <h2 align="center">🎯 Project Objectives</h2>
 
@@ -107,8 +108,8 @@ When an animal is in distress, traditional emergency response mechanisms are slo
 
 By balancing beautiful aesthetics with robust security, Animal Rescue Connect yields remarkable utility:
 
-| Feature                             | Impact                                                                                 |
-| :---------------------------------- | :------------------------------------------------------------------------------------- |
+| Feature                       | Impact                                                                                 |
+| :---------------------------- | :------------------------------------------------------------------------------------- |
 | **Life-Saving Speed**         | Fast report submittal reduces emergency response time by minutes                       |
 | **Eager Geolocation**         | Direct live navigation saves critical transit time to the nearest vet clinic           |
 | **SEO & Access Optimization** | Search Engine indexing and semantic structures maximize organic reach for lost animals |
@@ -118,19 +119,19 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 
 <h2 align="center">🚀 Key Features</h2>
 
-| 🚨 **Emergency Reporting** | 🗺️ **Geolocation** |
-| :------------------------- | :----------------- |
-| ✔️ Photo Upload | ✔️ Interactive Maps |
-| ✔️ GPS Detection | ✔️ Live Route Navigation |
-| ✔️ Severity Selection | ✔️ Nearby Vet Discovery |
-| ✔️ Animal Category | ✔️ Shelter Discovery |
+| 🚨 **Emergency Reporting** | 🗺️ **Geolocation**       |
+| :------------------------- | :----------------------- |
+| ✔️ Photo Upload            | ✔️ Interactive Maps      |
+| ✔️ GPS Detection           | ✔️ Live Route Navigation |
+| ✔️ Severity Selection      | ✔️ Nearby Vet Discovery  |
+| ✔️ Animal Category         | ✔️ Shelter Discovery     |
 
-| 🤝 **Volunteer System** | 📊 **Analytics Dashboard** |
-| :---------------------- | :------------------------- |
-| ✔️ Volunteer Registration | ✔️ Interactive Charts |
-| ✔️ Rescue Coordination | ✔️ Community Statistics |
-| ✔️ Participation Tracking | ✔️ Rescue Trends |
-| ✔️ Availability Status | ✔️ Response Metrics |
+| 🤝 **Volunteer System**   | 📊 **Analytics Dashboard** |
+| :------------------------ | :------------------------- |
+| ✔️ Volunteer Registration | ✔️ Interactive Charts      |
+| ✔️ Rescue Coordination    | ✔️ Community Statistics    |
+| ✔️ Participation Tracking | ✔️ Rescue Trends           |
+| ✔️ Availability Status    | ✔️ Response Metrics        |
 
 ---
 
@@ -139,70 +140,70 @@ By balancing beautiful aesthetics with robust security, Animal Rescue Connect yi
 <h3 align="center">Phase 1 - Animal Reporting & Location Tracking Foundation</h3>
 
 - **Project Setup**
-  - [X] Next.js project bootstrap with TypeScript & Tailwind CSS
-  - [X] Clean directory structure & mobile-first design configuration
+  - [x] Next.js project bootstrap with TypeScript & Tailwind CSS
+  - [x] Clean directory structure & mobile-first design configuration
 - **Homepage Development**
-  - [X] Quick action report button
-  - [X] Emergency help & immediate assistance guidelines
-  - [X] Dynamic nearby rescue overview card
+  - [x] Quick action report button
+  - [x] Emergency help & immediate assistance guidelines
+  - [x] Dynamic nearby rescue overview card
 - **Animal Reporting Module**
-  - [X] Photo upload integration with Cloudinary widget
-  - [X] Detailed fields for condition, type, and severity selection
+  - [x] Photo upload integration with Cloudinary widget
+  - [x] Detailed fields for condition, type, and severity selection
 - **Geolocation Integration**
-  - [X] Automatic GPS-based location detection
-  - [X] Location permission handling and manual marker adjustment
+  - [x] Automatic GPS-based location detection
+  - [x] Location permission handling and manual marker adjustment
 - **Report Details Page**
-  - [X] Uploaded image preview carousel
-  - [X] Detailed case status, reporter name, and share options
+  - [x] Uploaded image preview carousel
+  - [x] Detailed case status, reporter name, and share options
 - **Mobile Experience**
-  - [X] Responsive layouts tailored for smartphones, tablets, and desktop
+  - [x] Responsive layouts tailored for smartphones, tablets, and desktop
 
 ---
 
 <h3 align="center">Phase 2 - Vet & Shelter Discovery System</h3>
 
 - **Nearby Services Module**
-  - [X] List veterinarians, animal hospitals, rescue centers, and shelters
+  - [x] List veterinarians, animal hospitals, rescue centers, and shelters
 - **Interactive Map Integration**
-  - [X] Live markers for verified animal services
-  - [X] OSRM route drawing with color-coded traffic overlay (Red/Green)
-  - [X] Interactive popup cards with ratings, directions button, and address
+  - [x] Live markers for verified animal services
+  - [x] OSRM route drawing with color-coded traffic overlay (Red/Green)
+  - [x] Interactive popup cards with ratings, directions button, and address
 - **Advanced Search & Filtering**
-  - [X] Filter service list by type (Vet, Shelter, Hospital, Pet Shop)
-  - [X] Filter by 24/7 availability
-  - [X] Location search autocompletion
+  - [x] Filter service list by type (Vet, Shelter, Hospital, Pet Shop)
+  - [x] Filter by 24/7 availability
+  - [x] Location search autocompletion
 - **Service Details Page**
-  - [X] Detailed view of contact info, hours, website, and phone
+  - [x] Detailed view of contact info, hours, website, and phone
 - **Emergency Contact Features**
-  - [X] One-tap direct phone calls
-  - [X] Direct messaging UI
+  - [x] One-tap direct phone calls
+  - [x] Direct messaging UI
 - **Rescue Dashboard**
-  - [X] Manage submitted cases, update status, and track Redux state
+  - [x] Manage submitted cases, update status, and track Redux state
 
 ---
 
 <h3 align="center">Phase 3 - Rescue Coordination & Analytics</h3>
 
 - **Volunteer Coordination**
-  - [X] Sign-up form with skills, availability, and preferences
-  - [X] Active participation tracking in nearby cases
+  - [x] Sign-up form with skills, availability, and preferences
+  - [x] Active participation tracking in nearby cases
 - **Community & Leaderboards**
-  - [X] Live community board showing recent activities
-  - [X] Contribution counter and leaderboards
+  - [x] Live community board showing recent activities
+  - [x] Contribution counter and leaderboards
 - **Analytics Dashboard**
-  - [X] Interactive charts built with Recharts (Monthly Rescues, Adoption Rate)
-  - [X] Key Performance Indicators (Total Rescues, Active Volunteers, Avg Response Time)
+  - [x] Interactive charts built with Recharts (Monthly Rescues, Adoption Rate)
+  - [x] Key Performance Indicators (Total Rescues, Active Volunteers, Avg Response Time)
 - **Production Optimization**
-  - [X] TypeScript compiler error checking
-  - [X] Security measures (Inspect elements & drag-and-drop disabled)
-  - [X] Deployment pipeline configuration on Vercel
+  - [x] TypeScript compiler error checking
+  - [x] Security measures (Inspect elements & drag-and-drop disabled)
+  - [x] Deployment pipeline configuration on Vercel
 
 ---
 
 <h2 align="center">📦 Tech Stack & Architecture</h2>
 
-| Technology                 | Category           | Purpose / Notes                                       |
-| :------------------------- | :----------------- | :---------------------------------------------------- |
+| Technology           | Category           | Purpose / Notes                                       |
+| :------------------- | :----------------- | :---------------------------------------------------- |
 | **Next.js 16**       | Frontend Framework | App Router, Server Components & SEO                   |
 | **React 19**         | Library            | Concurrent rendering, modern hooks                    |
 | **TypeScript**       | Language           | Strict type safety across components and store        |
@@ -326,4 +327,3 @@ If you'd like to improve **Animal Rescue Connect**, please feel free to:
   <a href="https://www.linkedin.com/in/dev-s-hasan/"><img src="https://img.shields.io/badge/LinkedIn-Dev_S_Hasan-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn"/></a>
   <a href="mailto:s.m.hasan4599@gmail.com"><img src="https://img.shields.io/badge/Email-s.m.hasan4599%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
 </p>
-
